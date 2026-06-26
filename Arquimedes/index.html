@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arquímedes y el Límite: El Laboratorio de Exhausción</title>
+    <title>Arquímedes y el Límite | Laboratorio Virtual</title>
     
     <!-- Google Fonts: Outfit & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
     <!-- Main App Container -->
@@ -66,31 +69,31 @@
                     </li>
                     <li>
                         <button id="nav-btn-welcome" class="nav-item active" data-target="section-welcome">
-                            <span class="nav-icon"></span>
+                            <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
                             <span class="nav-label">Inicio</span>
                         </button>
                     </li>
                     <li>
                         <button id="nav-btn-paradox" class="nav-item" data-target="section-paradox">
-                            <span class="nav-icon"></span>
+                            <span class="nav-icon"><i class="fa-solid fa-infinity"></i></span>
                             <span class="nav-label">Paradojas del Infinito</span>
                         </button>
                     </li>
                     <li>
                         <button id="nav-btn-lab" class="nav-item" data-target="section-lab">
-                            <span class="nav-icon"></span>
+                            <span class="nav-icon"><i class="fa-solid fa-draw-polygon"></i></span>
                             <span class="nav-label">Lab de Exhausción</span>
                         </button>
                     </li>
                     <li>
                         <button id="nav-btn-limit" class="nav-item" data-target="section-limit">
-                            <span class="nav-icon"></span>
+                            <span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
                             <span class="nav-label">Sintonizar Límite</span>
                         </button>
                     </li>
                     <li>
                         <button id="nav-btn-history" class="nav-item" data-target="section-history">
-                            <span class="nav-icon"></span>
+                            <span class="nav-icon"><i class="fa-solid fa-landmark"></i></span>
                             <span class="nav-label">El Legado de Arquímedes</span>
                         </button>
                     </li>
@@ -123,14 +126,7 @@
                     <p class="story-text">El terreno del nuevo templo no es cuadrado ni rectangular; es una enorme bahía circular. Cada vez que los constructores intentan rodear la curva con sus varas rectas, cometen errores. Si usan pocas varas largas, el círculo se convierte en un tosco cuadrado y les queda un montón de terreno afuera. Si intentan forzar la madera para que copie la curva, esta simplemente cruje y se quiebra. La frustración crece entre los hombres del rey ante la imposibilidad de atrapar esa forma perfecta con sus herramientas rígidas.</p>
                     <p class="story-text">Arquímedes observa la escena en silencio. Tras unos momentos, se levanta, se acerca al grupo y toma una sola de esas varas rígidas. Con un par de trazos rápidos a los pies de los constructores, dibuja un enigma visual que desafía toda la lógica de la época. Sin decir una sola palabra, vuelve a sentarse frente al mar, dejando a los hombres sumergidos en un misterio absoluto.</p>
                     <p class="story-text"><strong>¿Qué descubrió el genio de Siracusa en la arena? ¿Cómo pueden unas piezas de madera rectas y rígidas ayudarnos a descifrar el borde exacto de una curva perfecta sin que sobre ni falte un solo grano de arena?</strong></p>
-                    <div class="story-questions">
-                      
-                      <ul>
-                        <li>¿Cómo podríais fijar la cuerda para que forme un círculo perfecto?</li>
-                        <li>¿Qué relación hay entre el radio y la longitud de la cuerda?</li>
-                        <li>¿Qué otras herramientas simples podríais emplear para comprobar la exactitud del círculo?</li>
-                      </ul>
-                    </div>
+
 
                     <div class="welcome-grid">
                         <div class="explore-card" onclick="document.getElementById('nav-btn-paradox').click()">
@@ -172,9 +168,12 @@
             
             <!-- SECTION 1: PARADOJAS DEL INFINITO (CHOCOLATE GAME) -->
             <section id="section-paradox" class="content-section">
-                <div class="section-header">
-                    <h2>Paradojas del Infinito</h2>
-                    <p>¿Es posible sumar infinitas partes y no superar un límite establecido?</p>
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2>Paradojas del Infinito</h2>
+                        <p>¿Es posible sumar infinitas partes y no superar un límite establecido?</p>
+                    </div>
+                    <i class="fa-solid fa-infinity" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
                 </div>
  
                 <div class="grid-layout cols-2-large">
@@ -232,6 +231,50 @@
                                     <g id="chocolate-blocks-group"></g>
                                 </svg>
                             </div>
+                            
+                                <!-- Simulación: Desenrollando el Círculo -->
+                        <div class="interactive-panel card" id="unroll-circle-block">
+                            <h3>Desenrollando el Círculo</h3>
+                            <p class="panel-instruction">Deslizá el control para "desenrollar" la circunferencia y transformarla en un triángulo rectángulo. El área se conserva.</p>
+                            
+                            <div class="svg-container graph-container" style="aspect-ratio: 16/9; padding: 1rem; position: relative;">
+                                <svg id="unroll-svg" viewBox="0 0 500 280" width="100%" height="100%">
+                                    <!-- Base line -->
+                                    <line x1="20" y1="240" x2="480" y2="240" stroke="var(--color-text-muted)" stroke-width="2" stroke-dasharray="4,4" />
+                                    
+                                    <!-- The unrolled triangle -->
+                                    <polygon id="unroll-triangle" points="70,240 70,240 70,240" fill="var(--color-accent-light)" stroke="var(--color-accent)" stroke-width="2" opacity="0" />
+                                    
+                                    <!-- The rolling circle -->
+                                    <g id="rolling-circle-group" transform="translate(70, 190)">
+                                        <circle cx="0" cy="0" r="50" fill="rgba(255,255,255,0.05)" stroke="var(--color-primary)" stroke-width="2" />
+                                        <line x1="0" y1="0" x2="0" y2="50" stroke="var(--color-warning)" stroke-width="2" id="circle-radius-line" />
+                                        <circle cx="0" cy="0" r="3" fill="var(--color-primary)" />
+                                    </g>
+                                    
+                                    <!-- The unrolled path (perimeter) -->
+                                    <path id="unrolled-path" d="M 70 240 L 70 240" stroke="var(--color-primary)" stroke-width="3" fill="none" />
+                                    
+                                    <!-- Labels -->
+                                    <text id="unroll-label-h" x="15" y="190" fill="var(--color-text-muted)" font-size="14" opacity="0" transform="rotate(-90 15 190)">Altura = Radio (r)</text>
+                                    <text id="unroll-label-b" x="150" y="260" fill="var(--color-text-muted)" font-size="14" opacity="0">Base = Perímetro (2πr)</text>
+                                </svg>
+                            </div>
+                            
+                            <div class="slider-group" style="margin-top: 1rem;">
+                                <label for="unroll-slider" style="font-weight: 700;">Progreso de Desenrollado: <span id="unroll-val" class="highlight-val">0%</span></label>
+                                <input type="range" id="unroll-slider" min="0" max="100" step="1" value="0">
+                            </div>
+                            
+                            <!-- Archimedes Dialogue for Unroll -->
+                            <div class="archimedes-dialogue" style="margin-top: 1.25rem;">
+                                <div class="archimedes-avatar">🏛️</div>
+                                <div class="archimedes-speech">
+                                    <h4>Sabiduría de Arquímedes</h4>
+                                    <p>¡El círculo esconde un triángulo! Al desenrollar el perímetro sobre una línea recta, la figura resultante tiene exactamente la misma área que el círculo. Así demostré que el Área = \( \frac{1}{2} \cdot \text{base} \cdot \text{altura} \).</p>
+                                </div>
+                            </div>
+                        </div>
      
                             <!-- Game Status Grid -->
                             <div class="grid-layout cols-2" style="gap: 1rem; margin-bottom: 1.5rem;">
@@ -257,7 +300,6 @@
      
                             <!-- Challenge Panel -->
                             <div class="bounds-container" style="background-color: var(--color-bg-primary); border: 2px solid var(--color-accent); color: var(--color-text-dark); padding: 1.25rem;">
-                                <span class="badge" id="choc-challenge-badge" style="background-color: var(--color-accent); color: white; margin-bottom: 0.5rem;">Misión Activa</span>
                                 <h4 id="choc-challenge-title" style="color: var(--color-primary); margin-bottom: 0.5rem; font-weight: 700;">Desafío del 1% (Tolerancia \(\varepsilon = 0.01\))</h4>
                                 <p id="choc-challenge-desc" style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.75rem;">
                                     Comé suficiente chocolate para que el trozo sobrante sea menor al 1% (\(0.01\)) de la barra original.
@@ -321,7 +363,6 @@
                             
                             <!-- Mission Box -->
                             <div class="bounds-container" style="background-color: var(--color-bg-primary); border: 2px solid var(--color-accent); color: var(--color-text-dark); padding: 1.25rem;">
-                                <span class="badge" id="race-challenge-badge" style="background-color: var(--color-accent); color: white; margin-bottom: 0.5rem;">Misión Zenón</span>
                                 <h4 id="race-challenge-title" style="color: var(--color-primary); margin-bottom: 0.5rem; font-weight: 700;">Desafío de la Distancia Mínima</h4>
                                 <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.75rem;">
                                     Da suficientes pasos para que la distancia restante entre Aquiles y la Tortuga sea menor a 1.9 metros (\(0.01\) de la distancia inicial de 190m).
@@ -337,9 +378,12 @@
  
             <!-- SECTION 2: GEOMETRIC LAB -->
             <section id="section-lab" class="content-section">
-                <div class="section-header">
-                    <h2>El Laboratorio de Exhausción</h2>
-                    <p>Aproximando curvas mediante polígonos inscritos y circunscritos</p>
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2>El Laboratorio de Exhausción</h2>
+                        <p>Aproximando curvas mediante polígonos inscritos y circunscritos</p>
+                    </div>
+                    <i class="fa-solid fa-draw-polygon" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
                 </div>
  
                 <div class="grid-layout cols-2-large">
@@ -532,7 +576,7 @@
                                 <p class="bounds-inequality" style="font-size: 1.6rem; margin-bottom: 0.25rem;">
                                     <span id="bound-lower" class="bound-val text-blue">3.0000</span>
                                     <span class="bound-symbol">&lt;</span>
-                                    <span class="bound-target" style="padding: 0.05rem 0.5rem;">&pi;</span>
+                                    <span id="bound-target" style="padding: 0.05rem 0.5rem;">&pi;</span>
                                     <span class="bound-symbol">&lt;</span>
                                     <span id="bound-upper" class="bound-val text-green">3.4641</span>
                                 </p>
@@ -551,21 +595,6 @@
                             </div>
                         </div>
 
-                        <!-- Laboratory Missions (Interactive Games) -->
-                        <div class="bounds-container" style="background-color: var(--color-bg-primary); border: 2px solid var(--color-primary); color: var(--color-text-dark); padding: 1.25rem; text-align: left;">
-                            <span class="badge" style="background-color: var(--color-primary); color: white; margin-bottom: 0.5rem;">Misiones del Laboratorio</span>
-                            
-                            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(27,69,87,0.08); padding-bottom: 0.5rem;">
-                                    <span style="font-size: 0.9rem; font-weight: 700;">🎯 Misión 1: Acotación de Error &lt; 0.05</span>
-                                    <span id="mission-cota-1" class="badge secondary" style="margin: 0;">Pendiente</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.25rem;">
-                                    <span style="font-size: 0.9rem; font-weight: 700;">🎯 Misión 2: Acotación de Error &lt; 0.003 (Arquímedes)</span>
-                                    <span id="mission-cota-2" class="badge secondary" style="margin: 0;">Pendiente</span>
-                                </div>
-                            </div>
-                            
                             <div id="lab-feedback" class="callout warning" style="margin: 0; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
                                 Ajustá el control de lados para verificar las misiones.
                             </div>
@@ -576,9 +605,12 @@
  
             <!-- SECTION 3: THE LEAP TO INFINITY (LIMIT) -->
             <section id="section-limit" class="content-section">
-                <div class="section-header">
-                    <h2>El Sintonizador de Épsilon (\(\varepsilon\))</h2>
-                    <p>Encontrando el paso crítico donde la aproximación se vuelve eterna</p>
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2>El Sintonizador de Épsilon (\(\varepsilon\))</h2>
+                        <p>Encontrando el paso crítico donde la aproximación se vuelve eterna</p>
+                    </div>
+                    <i class="fa-solid fa-sliders" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
                 </div>
  
                 <div class="grid-layout cols-2-large">
@@ -673,9 +705,12 @@
 
             <!-- SECTION 4: HISTORICAL LEGACY (ARCHIMEDES) -->
             <section id="section-history" class="content-section">
-                <div class="section-header">
-                    <h2>El Legado de Arquímedes</h2>
-                    <p>El filósofo de Siracusa y los primeros pasos hacia el cálculo infinitesimal</p>
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2>El Legado de Arquímedes</h2>
+                        <p>El filósofo de Siracusa y los primeros pasos hacia el cálculo infinitesimal</p>
+                    </div>
+                    <i class="fa-solid fa-landmark" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
                 </div>
 
                 <div class="grid-layout cols-2-large">
@@ -852,6 +887,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- Modern App Logic -->
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=3"></script>
 </body>
 </html>
+
