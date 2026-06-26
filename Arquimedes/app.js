@@ -306,11 +306,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateChocolateGame();
 
     /* ==========================================================================
-       2b. INSTANCE 1b: AQUILES Y LA TORTUGA
+       2b. INSTANCE 1b: LA TORTUGA PERSIGUE A AQUILES (CARRERA INVERTIDA)
        ========================================================================== */
     let raceStepVal = 0;
-    let achillesPosVal = 0.00;
-    let tortoisePosVal = 190.00;
+    let achillesPosVal = 100.00;
+    let tortoisePosVal = 300.00;
     
     const raceStepDisplay = document.getElementById('race-step');
     const raceDistanceDisplay = document.getElementById('race-distance');
@@ -325,21 +325,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const avatarTortoise = document.getElementById('avatar-tortoise');
 
     function updateRaceGame() {
-        const distanceVal = 190 / Math.pow(10, raceStepVal);
-        
-        if (raceStepVal === 0) {
-            achillesPosVal = 0.00;
-            tortoisePosVal = 190.00;
-        } else {
-            let aPos = 0;
-            let tPos = 190;
-            for (let i = 1; i <= raceStepVal; i++) {
-                aPos = tPos;
-                tPos = aPos + 190 / Math.pow(10, i);
-            }
-            achillesPosVal = aPos;
-            tortoisePosVal = tPos;
-        }
+        // Converges to 50m with ratio r = 0.2
+        const ratio = Math.pow(0.2, raceStepVal);
+        tortoisePosVal = 50 + 250 * ratio;
+        achillesPosVal = 50 + 50 * ratio;
+        const distanceVal = tortoisePosVal - achillesPosVal;
         
         if (raceStepDisplay) raceStepDisplay.textContent = raceStepVal;
         if (raceDistanceDisplay) raceDistanceDisplay.textContent = distanceVal.toFixed(2) + 'm';
@@ -347,24 +337,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (posTortoiseDisplay) posTortoiseDisplay.textContent = tortoisePosVal.toFixed(2) + 'm';
         
         if (avatarAchilles && avatarTortoise) {
-            // Map pos to SVG (0 to 211.11 maps to x=10 to x=320)
-            const achillesX = 10 + (achillesPosVal / 211.111) * 310;
-            const tortoiseX = 10 + (tortoisePosVal / 211.111) * 310;
+            // Map p to SVG x (x = p + 10)
+            const achillesX = achillesPosVal + 10;
+            const tortoiseX = tortoisePosVal + 10;
             
             avatarAchilles.setAttribute('x', achillesX.toFixed(2));
             avatarTortoise.setAttribute('x', tortoiseX.toFixed(2));
         }
         
         if (raceFeedback) {
-            if (distanceVal < 1.901) {
-                raceFeedback.textContent = `¡Logrado! La distancia restante es ${distanceVal.toFixed(2)}m (< 1.9m) en el paso ${raceStepVal}. Aquiles está infinitamente cerca de la Tortuga.`;
+            if (distanceVal < 2.01) {
+                raceFeedback.textContent = `¡Logrado! La distancia restante es ${distanceVal.toFixed(2)}m (< 2.0m) en el paso ${raceStepVal}. La Tortuga está infinitamente cerca de Aquiles.`;
                 raceFeedback.className = 'callout success';
                 if (raceChallengeBadge) {
                     raceChallengeBadge.textContent = '¡Completado!';
                     raceChallengeBadge.className = 'badge success-pulse';
                 }
             } else {
-                raceFeedback.textContent = `Distancia actual: ${distanceVal.toFixed(2)}m. ¡Da más pasos para acercar a Aquiles!`;
+                raceFeedback.textContent = `Distancia actual: ${distanceVal.toFixed(2)}m. ¡Da más pasos para acercar la Tortuga!`;
                 raceFeedback.className = 'callout warning';
                 if (raceChallengeBadge) {
                     raceChallengeBadge.textContent = 'Misión Zenón';
@@ -391,6 +381,156 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     updateRaceGame();
+
+    /* ==========================================================================
+       2c. INSTANCE 1c: LA CUADRÍCULA DEL INFINITO (MOSAICO DE FRACCIONES)
+       ========================================================================== */
+    let gridStep = 0;
+    
+    const gridTerm = document.getElementById('grid-term');
+    const gridRemaining = document.getElementById('grid-remaining');
+    const gridSumExpression = document.getElementById('grid-sum-expression');
+    const gridSumVal = document.getElementById('grid-sum-val');
+    const btnGridAdd = document.getElementById('btn-grid-add');
+    const btnGridReset = document.getElementById('btn-grid-reset');
+    const gridFeedback = document.getElementById('grid-feedback');
+    const gridChallengeBadge = document.getElementById('grid-challenge-badge');
+    const squareBlocksGroup = document.getElementById('square-blocks-group');
+
+    function drawGridBlocks() {
+        if (!squareBlocksGroup) return;
+        squareBlocksGroup.innerHTML = '';
+        
+        let xMin = 10, xMax = 210;
+        let yMin = 10, yMax = 210;
+        
+        const colors = ['#6366f1', '#ec4899', '#14b8a6', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#3b82f6'];
+        
+        for (let i = 1; i <= gridStep; i++) {
+            const isOdd = (i % 2 !== 0);
+            let x, y, w, h;
+            
+            if (isOdd) {
+                const xMid = (xMin + xMax) / 2;
+                x = xMin;
+                y = yMin;
+                w = xMid - xMin;
+                h = yMax - yMin;
+                xMin = xMid;
+            } else {
+                const yMid = (yMin + yMax) / 2;
+                x = xMin;
+                y = yMin;
+                w = xMax - xMin;
+                h = yMid - yMin;
+                yMin = yMid;
+            }
+            
+            // Draw rect
+            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            rect.setAttribute('x', x);
+            rect.setAttribute('y', y);
+            rect.setAttribute('width', w);
+            rect.setAttribute('height', h);
+            rect.setAttribute('fill', colors[(i - 1) % colors.length]);
+            rect.setAttribute('stroke', 'var(--color-card-bg)');
+            rect.setAttribute('stroke-width', '1.5');
+            rect.setAttribute('rx', '2');
+            rect.setAttribute('style', 'transition: all 0.3s ease;');
+            squareBlocksGroup.appendChild(rect);
+            
+            // Draw text label if large enough
+            if (w >= 20 && h >= 20) {
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', x + w / 2);
+                text.setAttribute('y', y + h / 2 + 3);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('fill', '#ffffff');
+                text.setAttribute('font-size', '10px');
+                text.setAttribute('font-weight', '700');
+                text.textContent = `1/${Math.pow(2, i)}`;
+                squareBlocksGroup.appendChild(text);
+            }
+        }
+        
+        // Update red dashed remaining block
+        const whiteBlock = document.getElementById('square-white-block');
+        if (whiteBlock) {
+            whiteBlock.setAttribute('x', xMin);
+            whiteBlock.setAttribute('y', yMin);
+            whiteBlock.setAttribute('width', xMax - xMin);
+            whiteBlock.setAttribute('height', yMax - yMin);
+            if (gridStep >= 8) {
+                whiteBlock.setAttribute('stroke', 'none');
+            } else {
+                whiteBlock.setAttribute('stroke', 'var(--color-danger)');
+            }
+        }
+    }
+
+    function updateGridGame() {
+        drawGridBlocks();
+        
+        const termVal = gridStep === 0 ? 'Ninguno' : `1/${Math.pow(2, gridStep)}`;
+        const remainingVal = 1 / Math.pow(2, gridStep);
+        const sumVal = 1 - remainingVal;
+        
+        if (gridTerm) gridTerm.textContent = termVal;
+        if (gridRemaining) gridRemaining.textContent = remainingVal.toFixed(4);
+        if (gridSumVal) gridSumVal.textContent = `Valor = ${sumVal.toFixed(4)}`;
+        
+        let expr = '0';
+        if (gridStep > 0) {
+            let terms = [];
+            for (let i = 1; i <= Math.min(gridStep, 4); i++) {
+                terms.push(`1/${Math.pow(2, i)}`);
+            }
+            if (gridStep > 4) {
+                terms.push('...');
+            }
+            expr = terms.join(' + ');
+        }
+        if (gridSumExpression) gridSumExpression.textContent = expr;
+        
+        if (gridFeedback) {
+            if (gridStep === 0) {
+                gridFeedback.textContent = '¡Coloreá fracciones para rellenar la cuadrícula!';
+                gridFeedback.className = 'callout warning';
+                if (gridChallengeBadge) {
+                    gridChallengeBadge.textContent = 'Misión Mosaico';
+                    gridChallengeBadge.className = 'badge';
+                }
+            } else if (gridStep < 6) {
+                gridFeedback.textContent = `Paso ${gridStep}: la suma es ${sumVal.toFixed(4)}. Queda un ${(remainingVal*100).toFixed(1)}% sin colorear.`;
+                gridFeedback.className = 'callout warning';
+            } else {
+                gridFeedback.textContent = `¡Excelente! Rellenaste el ${(sumVal*100).toFixed(2)}% del cuadrado. El límite es claramente 1.`;
+                gridFeedback.className = 'callout success';
+                if (gridChallengeBadge) {
+                    gridChallengeBadge.textContent = '¡Completado!';
+                    gridChallengeBadge.className = 'badge success-pulse';
+                }
+            }
+        }
+    }
+
+    if (btnGridAdd) {
+        btnGridAdd.addEventListener('click', () => {
+            if (gridStep < 8) {
+                gridStep++;
+                updateGridGame();
+            }
+        });
+    }
+
+    if (btnGridReset) {
+        btnGridReset.addEventListener('click', () => {
+            gridStep = 0;
+            updateGridGame();
+        });
+    }
+
+    updateGridGame();
 
     /* ==========================================================================
        3. INSTANCE 2: GEOMETRIC LAB - EXHAUSTION METHOD SIMULATOR
@@ -729,23 +869,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listener for exhaustion slider
     if (sidesSlider) {
         sidesSlider.addEventListener('input', (e) => {
-            if (isZoomActive) {
-                updateZoomView(e.target.value);
-            } else {
-                updateSimulation(e.target.value);
-            }
+            const n = parseInt(e.target.value);
+            updateSimulation(n);
+            updateZoomView(180 / n);
         });
     }
 
     // Event listeners for exhaustion presets
     presetBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            if (!isZoomActive) {
-                const val = btn.getAttribute('data-val');
-                updateSimulation(val);
-            }
+            const n = parseInt(btn.getAttribute('data-val'));
+            updateSimulation(n);
+            updateZoomView(180 / n);
         });
     });
+
+    // Initial synchronization
+    if (sidesSlider) {
+        const initialN = parseInt(sidesSlider.value);
+        updateSimulation(initialN);
+        updateZoomView(180 / initialN);
+    }
 
     /* ==========================================================================
        3b. INSTANCE 2b: TIRO AL BLANCO DE AREAS
@@ -969,28 +1113,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatbotFab = document.getElementById('chatbot-fab');
     const chatbotWindow = document.getElementById('chatbot-window');
     const chatbotCloseBtn = document.getElementById('chatbot-close-btn');
-    const chatbotIframe = document.getElementById('chatbot-iframe');
-    
-    // Developer: Replace this placeholder string with your production Chatbot URL
-    const CHATBOT_URL = "about:blank"; // Can be replaced by e.g. "https://chatbot.educacion.cba.gov.ar"
+    const chatbotForm = document.getElementById('chatbot-input-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotChips = document.querySelectorAll('.chatbot-quick-chips .chip-btn');
 
     function openChatbot() {
-        chatbotWindow.classList.add('active');
-        
-        // Lazy load chatbot iframe source only when opened
-        if (chatbotIframe.src === "about:blank" || chatbotIframe.src === "") {
-            chatbotIframe.src = CHATBOT_URL;
-        }
+        if (chatbotWindow) chatbotWindow.classList.add('active');
     }
 
     function closeChatbot() {
-        chatbotWindow.classList.remove('active');
+        if (chatbotWindow) chatbotWindow.classList.remove('active');
     }
 
     if (chatbotFab) {
         chatbotFab.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (chatbotWindow.classList.contains('active')) {
+            if (chatbotWindow && chatbotWindow.classList.contains('active')) {
                 closeChatbot();
             } else {
                 openChatbot();
@@ -1005,12 +1143,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Let user tap chatbot window container without closing it
-    chatbotWindow.addEventListener('click', (e) => {
-        e.stopPropagation();
+    if (chatbotForm) {
+        chatbotForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (chatbotInput) {
+                // As this is a mock chatbot UI, we just clear the input to complete the interaction
+                chatbotInput.value = '';
+            }
+        });
+    }
+
+    chatbotChips.forEach(chip => {
+        chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const question = chip.getAttribute('data-question');
+            if (chatbotInput) {
+                chatbotInput.value = question;
+                chatbotInput.focus();
+            }
+        });
     });
 
-    // Tap outside chatbot closes it
+    if (chatbotWindow) {
+        chatbotWindow.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+
     document.addEventListener('click', () => {
         closeChatbot();
     });
