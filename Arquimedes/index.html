@@ -165,121 +165,42 @@
                     </div>
                 </div>
             </section>
-            
-            <!-- SECTION 1: PARADOJAS DEL INFINITO (CHOCOLATE GAME) -->
+
+            <!-- SECTION 1: PARADOJAS DEL INFINITO (ACTIVIDADES INDEPENDIENTES) -->
             <section id="section-paradox" class="content-section">
-                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h2>Paradojas del Infinito</h2>
-                        <p>¿Es posible sumar infinitas partes y no superar un límite establecido?</p>
-                    </div>
-                    <i class="fa-solid fa-infinity" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
+                <div class="section-header">
+                    <h2>Paradojas del Infinito</h2>
+                    <p>¿Es posible sumar infinitas partes y no superar un límite establecido?</p>
                 </div>
- 
-                <div class="grid-layout cols-2-large">
-                    <!-- Column 1: Explicaciones y Sabiduría de Arquímedes -->
-                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                        <div class="story-panel card">
+  
+                <div class="grid-layout">
+                    <!-- TARJETA 1.1: EL CHOCOLATE DE ZENÓN -->
+                    <div class="card interactive-activity" id="choc-activity-card">
+                        <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                             <h3>El Chocolate de Zenón</h3>
-                            <p>
-                                Imaginá que tenés una barra de chocolate de tamaño entero (\(1\)). Cada día decidís comer exactamente <strong>la mitad</strong> de lo que te queda.
-                            </p>
-                            <p>
-                                El primer día comés \(\frac{1}{2}\), el segundo día comés la mitad de lo restante (\(\frac{1}{4}\)), el tercero \(\frac{1}{8}\)...
-                            </p>
-                            <p>
-                                Si sumamos lo que vas comiendo día tras día, obtenemos una suma interminable:
-                            </p>
-                            <div class="math-definition" style="margin: 1rem 0; padding: 1rem;">
-                                \[\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \frac{1}{16} + \frac{1}{32} + \dots\]
-                            </div>
-                            <p>
-                                ¿Llegará un día en que comas más de 1 barra completa? Intuitivamente sabés que no, porque siempre te queda un pedacito.
-                            </p>
-                            <div class="callout warning">
-                                <h4>Conceptos Clave Descubiertos:</h4>
-                                <ul>
-                                    <li><strong>Infinitésimo:</strong> El trozo sobrante (\(\frac{1}{2^n}\)) se achica infinitamente. Se acerca tanto a cero como quieras, sin llegar a ser cero.</li>
-                                    <li><strong>Límite:</strong> La suma total de chocolate consumido se acerca cada vez más a <strong>\(1\)</strong>. Decimos que \(1\) es el <em>límite</em> de la suma.</li>
-                                </ul>
-                            </div>
+                            <span class="badge" id="choc-challenge-badge">Misión Activa</span>
                         </div>
                         
-                        <!-- Archimedes Dialogue Bubble in Section 1 -->
-                        <div class="archimedes-dialogue">
-                            <div class="archimedes-avatar">🏛️</div>
-                            <div class="archimedes-speech">
-                                <h4>🏛️ Sabiduría de Arquímedes</h4>
-                                <p>Zenón propuso estas paradojas para probar que el movimiento no existía. Pero fíjate en esto: al sumar fracciones cada vez más pequeñas, la suma total se acerca tanto como desees a una sola unidad entera sin superarla jamás. ¡El límite atrapa la infinitud!</p>
-                            </div>
+                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
+                                Zenón propone que para comer una barra de chocolate de tamaño 1, cada día comés exactamente la mitad de lo restante. Hacé clic en <strong>"Comer la Mitad"</strong> para observar cómo divides la barra indefinidamente sin rebasarla nunca.
+                            </p>
                         </div>
-                    </div>
- 
-                    <!-- Column 2: Los Juegos en Bloques Separados -->
-                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                        <!-- Bloque Chocolate -->
-                        <div class="interactive-panel card" id="choc-game-block">
-                            <h3>Simulación: El Chocolate</h3>
-                            <p class="panel-instruction">Hacé clic en "Comer la Mitad" para ver cómo se divide el chocolate. Intentá cumplir las misiones.</p>
-                            
+                        
+                        <div class="activity-simulation-area">
                             <!-- Chocolate Visual Representation (SVG) -->
-                            <div class="chocolate-container">
+                            <div class="chocolate-container" style="margin-bottom: 1.25rem;">
                                 <svg id="chocolate-svg" viewBox="0 0 400 90" width="100%" height="90px">
-                                    <!-- Background grid representing chocolate bar -->
                                     <rect x="0" y="20" width="400" height="50" rx="6" class="chocolate-bg-rect" stroke-width="1.5"/>
-                                    <!-- Chocolate bar groups will be drawn here dynamically -->
                                     <g id="chocolate-blocks-group"></g>
                                 </svg>
                             </div>
                             
-                                <!-- Simulación: Desenrollando el Círculo -->
-                        <div class="interactive-panel card" id="unroll-circle-block">
-                            <h3>Desenrollando el Círculo</h3>
-                            <p class="panel-instruction">Deslizá el control para "desenrollar" la circunferencia y transformarla en un triángulo rectángulo. El área se conserva.</p>
-                            
-                            <div class="svg-container graph-container" style="aspect-ratio: 16/9; padding: 1rem; position: relative;">
-                                <svg id="unroll-svg" viewBox="0 0 500 280" width="100%" height="100%">
-                                    <!-- Base line -->
-                                    <line x1="20" y1="240" x2="480" y2="240" stroke="var(--color-text-muted)" stroke-width="2" stroke-dasharray="4,4" />
-                                    
-                                    <!-- The unrolled triangle -->
-                                    <polygon id="unroll-triangle" points="70,240 70,240 70,240" fill="var(--color-accent-light)" stroke="var(--color-accent)" stroke-width="2" opacity="0" />
-                                    
-                                    <!-- The rolling circle -->
-                                    <g id="rolling-circle-group" transform="translate(70, 190)">
-                                        <circle cx="0" cy="0" r="50" fill="rgba(255,255,255,0.05)" stroke="var(--color-primary)" stroke-width="2" />
-                                        <line x1="0" y1="0" x2="0" y2="50" stroke="var(--color-warning)" stroke-width="2" id="circle-radius-line" />
-                                        <circle cx="0" cy="0" r="3" fill="var(--color-primary)" />
-                                    </g>
-                                    
-                                    <!-- The unrolled path (perimeter) -->
-                                    <path id="unrolled-path" d="M 70 240 L 70 240" stroke="var(--color-primary)" stroke-width="3" fill="none" />
-                                    
-                                    <!-- Labels -->
-                                    <text id="unroll-label-h" x="15" y="190" fill="var(--color-text-muted)" font-size="14" opacity="0" transform="rotate(-90 15 190)">Altura = Radio (r)</text>
-                                    <text id="unroll-label-b" x="150" y="260" fill="var(--color-text-muted)" font-size="14" opacity="0">Base = Perímetro (2πr)</text>
-                                </svg>
-                            </div>
-                            
-                            <div class="slider-group" style="margin-top: 1rem;">
-                                <label for="unroll-slider" style="font-weight: 700;">Progreso de Desenrollado: <span id="unroll-val" class="highlight-val">0%</span></label>
-                                <input type="range" id="unroll-slider" min="0" max="100" step="1" value="0">
-                            </div>
-                            
-                            <!-- Archimedes Dialogue for Unroll -->
-                            <div class="archimedes-dialogue" style="margin-top: 1.25rem;">
-                                <div class="archimedes-avatar">🏛️</div>
-                                <div class="archimedes-speech">
-                                    <h4>Sabiduría de Arquímedes</h4>
-                                    <p>¡El círculo esconde un triángulo! Al desenrollar el perímetro sobre una línea recta, la figura resultante tiene exactamente la misma área que el círculo. Así demostré que el Área = \( \frac{1}{2} \cdot \text{base} \cdot \text{altura} \).</p>
-                                </div>
-                            </div>
-                        </div>
-     
                             <!-- Game Status Grid -->
-                            <div class="grid-layout cols-2" style="gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="grid-layout cols-2" style="gap: 1rem; margin-bottom: 1.25rem;">
                                 <div class="math-item" style="margin: 0; padding: 0.75rem 1rem;">
-                                    <span class="math-label">Día / Pasos (\(n\)):</span>
+                                    <span class="math-label">Bocados / Pasos (\(n\)):</span>
                                     <span class="math-formula" id="choc-step" style="font-size: 1.2rem;">0</span>
                                 </div>
                                 <div class="math-item" style="margin: 0; padding: 0.75rem 1rem; border-left-color: var(--color-warning);">
@@ -293,13 +214,13 @@
                             </div>
      
                             <!-- Game Controls -->
-                            <div class="preset-buttons" style="margin-bottom: 1.5rem; justify-content: center;">
+                            <div class="preset-buttons" style="margin-bottom: 1.25rem; justify-content: center;">
                                 <button id="btn-choc-eat" class="btn-preset active" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Comer la Mitad</button>
                                 <button id="btn-choc-reset" class="btn-preset" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Reiniciar</button>
                             </div>
      
                             <!-- Challenge Panel -->
-                            <div class="bounds-container" style="background-color: var(--color-bg-primary); border: 2px solid var(--color-accent); color: var(--color-text-dark); padding: 1.25rem;">
+                            <div class="bounds-container" style="background-color: var(--color-bg-primary); border: 1px solid var(--color-svg-border); color: var(--color-text-dark); padding: 1.25rem; margin-bottom: 1.25rem;">
                                 <h4 id="choc-challenge-title" style="color: var(--color-primary); margin-bottom: 0.5rem; font-weight: 700;">Desafío del 1% (Tolerancia \(\varepsilon = 0.01\))</h4>
                                 <p id="choc-challenge-desc" style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.75rem;">
                                     Comé suficiente chocolate para que el trozo sobrante sea menor al 1% (\(0.01\)) de la barra original.
@@ -309,192 +230,291 @@
                                 </div>
                             </div>
                         </div>
- 
-                        <!-- Bloque Carrera -->
-                        <div class="interactive-panel card" id="race-game-block">
-                            <h3>Simulación: Aquiles y la Tortuga</h3>
-                            <p class="panel-instruction">Acompañá a Aquiles en su carrera contra la tortuga. ¿Podrá alcanzarla dividiendo los pasos?</p>
-                            
+
+                        <!-- Archimedes Dialogue Bubble -->
+                        <div class="archimedes-dialogue">
+                            <div class="archimedes-avatar">🏛️</div>
+                            <div class="archimedes-speech">
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p>Zenón propuso estas paradojas para probar que el movimiento no existía. Pero fíjate en esto: al sumar fracciones cada vez más pequeñas (\(\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \dots\)), la suma total se acerca tanto como desees a una sola unidad entera sin superarla jamás. ¡El límite atrapa la infinitud!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TARJETA 1.2: LA CARRERA INVERTIDA (AQUILES Y LA TORTUGA) -->
+                    <div class="card interactive-activity" id="race-activity-card">
+                        <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>La Tortuga Persigue a Aquiles</h3>
+                            <span class="badge" id="race-challenge-badge">Misión Zenón</span>
+                        </div>
+                        
+                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
+                                En esta versión responsiva de la paradoja de Zenón, <strong>la Tortuga 🐢 persigue a Aquiles 🏃 de derecha a izquierda</strong>. La Tortuga parte de 300m y Aquiles de 100m (con ventaja). Hacé clic en <strong>"Dar un Paso"</strong> para ver cómo la Tortuga avanza al punto donde estaba Aquiles, mientras Aquiles avanza una proporción suave para no ser alcanzado.
+                            </p>
+                        </div>
+                        
+                        <div class="activity-simulation-area">
                             <!-- Race Visual representation (SVG) -->
-                            <div class="race-container">
+                            <div class="race-container" style="margin-bottom: 1.25rem;">
                                 <svg id="race-svg" viewBox="0 0 400 100" width="100%" height="100px">
-                                    <!-- Race tracks -->
                                     <rect x="10" y="15" width="380" height="25" rx="4" class="race-track-bg"/>
                                     <rect x="10" y="55" width="380" height="25" rx="4" class="race-track-bg"/>
                                     
+                                    <text x="25" y="31" font-size="8px" fill="var(--color-text-muted)" font-weight="700">Pista Aquiles 🏃</text>
+                                    <text x="25" y="71" font-size="8px" fill="var(--color-text-muted)" font-weight="700">Pista Tortuga 🐢</text>
+                                    
                                     <!-- Distance Step indicators (Vertical lines) -->
-                                    <line id="race-marker-1" x1="10" y1="10" x2="10" y2="90" class="race-step-marker"/>
-                                    <line id="race-marker-2" x1="200" y1="10" x2="200" y2="90" class="race-step-marker"/>
-                                    <line id="race-marker-3" x1="300" y1="10" x2="300" y2="90" class="race-step-marker"/>
-                                    <line id="race-marker-4" x1="350" y1="10" x2="350" y2="90" class="race-step-marker"/>
+                                    <line x1="10" y1="10" x2="10" y2="90" class="race-step-marker"/>
+                                    <line x1="110" y1="10" x2="110" y2="90" class="race-step-marker"/>
+                                    <line x1="210" y1="10" x2="210" y2="90" class="race-step-marker"/>
+                                    <line x1="310" y1="10" x2="310" y2="90" class="race-step-marker"/>
                                     
-                                    <!-- Achilles (🏃) on track 1 -->
-                                    <text id="avatar-achilles" x="10" y="27" class="race-avatar">🏃</text>
+                                    <!-- Achilles (🏃) on track 1 (runs to the left) -->
+                                    <text id="avatar-achilles" x="110" y="32" class="race-avatar">🏃</text>
                                     
-                                    <!-- Tortoise (🐢) on track 2 -->
-                                    <text id="avatar-tortoise" x="200" y="67" class="race-avatar">🐢</text>
-                                    
-                                    <!-- Flag (🚩) indicating tortoise start/end goals -->
-                                    <text x="380" y="47" font-size="16px" text-anchor="middle">🚩</text>
+                                    <!-- Tortoise (🐢) on track 2 (chases from right) -->
+                                    <text id="avatar-tortoise" x="310" y="72" class="race-avatar">🐢</text>
                                 </svg>
                             </div>
                             
                             <!-- Status Grid -->
-                            <div class="grid-layout cols-2" style="gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="grid-layout cols-2" style="gap: 1rem; margin-bottom: 1.25rem;">
                                 <div class="math-item" style="margin: 0; padding: 0.75rem 1rem;">
                                     <span class="math-label">Paso en la Carrera (n):</span>
                                     <span class="math-formula" id="race-step" style="font-size: 1.2rem;">0</span>
                                 </div>
                                 <div class="math-item" style="margin: 0; padding: 0.75rem 1rem; border-left-color: var(--color-warning);">
-                                    <span class="math-label">Distancia restante:</span>
-                                    <span class="math-formula" id="race-distance" style="font-size: 1.2rem; font-family: monospace;">190.00m</span>
+                                    <span class="math-label">Distancia entre ambos:</span>
+                                    <span class="math-formula" id="race-distance" style="font-size: 1.2rem; font-family: monospace;">200.00m</span>
                                 </div>
-                                <div class="math-item" style="margin: 0; padding: 0.5rem 0.75rem; grid-column: span 2; font-size: 0.8rem; line-height: 1.3;">
-                                    <span class="math-label">Posición de Aquiles:</span> <span id="pos-achilles" style="font-weight: 800; font-family: monospace;">0.00m</span> | 
-                                    <span class="math-label" style="display:inline;">Posición Tortuga:</span> <span id="pos-tortoise" style="font-weight: 800; font-family: monospace;">190.00m</span>
+                                <div class="math-item" style="margin: 0; padding: 0.5rem 0.75rem; grid-column: span 2; font-size: 0.85rem; line-height: 1.3;">
+                                    <span class="math-label" style="display:inline;">Posición Aquiles:</span> <span id="pos-achilles" style="font-weight: 800; font-family: monospace;">100.00m</span> | 
+                                    <span class="math-label" style="display:inline;">Posición Tortuga:</span> <span id="pos-tortoise" style="font-weight: 800; font-family: monospace;">300.00m</span>
                                 </div>
                             </div>
                             
                             <!-- Controls -->
-                            <div class="preset-buttons" style="margin-bottom: 1.5rem; justify-content: center;">
+                            <div class="preset-buttons" style="margin-bottom: 1.25rem; justify-content: center;">
                                 <button id="btn-race-step" class="btn-preset active" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Dar un Paso</button>
                                 <button id="btn-race-reset" class="btn-preset" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Reiniciar</button>
                             </div>
                             
                             <!-- Mission Box -->
-                            <div class="bounds-container" style="background-color: var(--color-bg-primary); border: 2px solid var(--color-accent); color: var(--color-text-dark); padding: 1.25rem;">
-                                <h4 id="race-challenge-title" style="color: var(--color-primary); margin-bottom: 0.5rem; font-weight: 700;">Desafío de la Distancia Mínima</h4>
+                            <div class="bounds-container" style="background-color: var(--color-bg-primary); border: 2px solid var(--color-accent); color: var(--color-text-dark); padding: 1.25rem; margin-bottom: 1.25rem;">
+                                <h4 style="color: var(--color-primary); margin-bottom: 0.5rem; font-weight: 700;">Desafío de Distancia Mínima</h4>
                                 <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.75rem;">
-                                    Da suficientes pasos para que la distancia restante entre Aquiles y la Tortuga sea menor a 1.9 metros (\(0.01\) de la distancia inicial de 190m).
+                                    Da suficientes pasos para que la distancia restante entre la Tortuga y Aquiles sea menor a 2 metros (\(0.01\) de la distancia inicial de 200m).
                                 </p>
                                 <div id="race-feedback" class="callout warning" style="margin: 0; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
                                     Esperando el primer paso...
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Archimedes Dialogue Bubble -->
+                        <div class="archimedes-dialogue">
+                            <div class="archimedes-avatar">🏛️</div>
+                            <div class="archimedes-speech">
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p>¡Una carrera que desafía el sentido común! La Tortuga nunca llega a tocar a Aquiles en esta sucesión porque cada paso representa un intervalo de tiempo cada vez más pequeño. No obstante, en la física real, la suma infinita de estos tiempos da un valor límite perfectamente finito, momento en el cual la tortuga lo rebasa.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TARJETA 1.3: LA CUADRÍCULA DEL INFINITO -->
+                    <div class="card interactive-activity" id="grid-activity-card">
+                        <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>La Cuadrícula del Infinito</h3>
+                            <span class="badge" id="grid-challenge-badge">Misión Mosaico</span>
+                        </div>
+                        
+                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
+                                Visualizá las sumas infinitas de forma puramente geométrica. El cuadrado completo representa una superficie de área 1. Hacé clic en <strong>"Añadir Fracción"</strong> para ir coloreando pedazos proporcionales del espacio sobrante (\(1/2\), luego \(1/4\), \(1/8\)...) y observa cómo se agota el color blanco.
+                            </p>
+                        </div>
+                        
+                        <div class="activity-simulation-area">
+                            <!-- Visual Square Area (SVG) -->
+                            <div class="square-grid-container" style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
+                                <svg id="square-grid-svg" viewBox="0 0 220 220" width="220px" height="220px" style="background-color: var(--color-svg-bg); border: 2px solid var(--color-svg-border); border-radius: 8px;">
+                                    <rect x="10" y="10" width="200" height="200" fill="none" stroke="var(--color-svg-border)" stroke-width="1"/>
+                                    <g id="square-blocks-group"></g>
+                                    <rect id="square-white-block" x="10" y="10" width="200" height="200" fill="none" stroke="var(--color-danger)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                </svg>
+                            </div>
+                            
+                            <!-- Game Status -->
+                            <div class="grid-layout cols-2" style="gap: 1rem; margin-bottom: 1.25rem;">
+                                <div class="math-item" style="margin: 0; padding: 0.75rem 1rem;">
+                                    <span class="math-label">Término Añadido:</span>
+                                    <span class="math-formula" id="grid-term" style="font-size: 1.2rem; color: var(--color-accent);">Ninguno</span>
+                                </div>
+                                <div class="math-item" style="margin: 0; padding: 0.75rem 1rem; border-left-color: var(--color-warning);">
+                                    <span class="math-label font-bold text-slate-500">Área Blanca Sobrante:</span>
+                                    <span class="math-formula" id="grid-remaining" style="font-size: 1.2rem; font-family: monospace;">1.0000</span>
+                                </div>
+                                <div class="math-item" style="margin: 0; padding: 0.75rem 1rem; border-left-color: var(--color-success); grid-column: span 2;">
+                                    <span class="math-label">Suma del Mosaico:</span>
+                                    <span class="math-formula" id="grid-sum-expression" style="font-size: 1.05rem; font-family: monospace; word-break: break-all;">0</span>
+                                    <span class="math-calc" id="grid-sum-val">Valor = 0.0000</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Controls -->
+                            <div class="preset-buttons" style="margin-bottom: 1.25rem; justify-content: center;">
+                                <button id="btn-grid-add" class="btn-preset active" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Añadir Fracción</button>
+                                <button id="btn-grid-reset" class="btn-preset" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Reiniciar</button>
+                            </div>
+                            
+                            <div id="grid-feedback" class="callout warning" style="margin: 0; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
+                                ¡Coloreá fracciones para rellenar la cuadrícula!
+                            </div>
+                        </div>
+                        
+                        <!-- Archimedes Dialogue Bubble -->
+                        <div class="archimedes-dialogue">
+                            <div class="archimedes-avatar">🏛️</div>
+                            <div class="archimedes-speech">
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p>¡Geometría pura en acción! Al colorear la mitad del espacio restante en cada paso, estás construyendo la serie geométrica \(\sum_{i=1}^{\infty} \frac{1}{2^i}\). Físicamente, ves cómo las fracciones llenan el cuadrado de área 1 por completo, demostrando de forma innegable que la suma infinita converge a 1.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
- 
-            <!-- SECTION 2: GEOMETRIC LAB -->
+
+            <!-- SECTION 2: LABORATORIO DE EXHAUSCIÓN (ACTIVIDADES INDEPENDIENTES) -->
             <section id="section-lab" class="content-section">
-                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h2>El Laboratorio de Exhausción</h2>
-                        <p>Aproximando curvas mediante polígonos inscritos y circunscritos</p>
-                    </div>
-                    <i class="fa-solid fa-draw-polygon" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
+                <div class="section-header">
+                    <h2>El Laboratorio de Exhausción</h2>
+                    <p>Acorralando el círculo con polígonos inscritos y circunscritos</p>
                 </div>
- 
-                <div class="grid-layout cols-2-large">
-                    <!-- Left Column: Both Simulation Blocks Stacked -->
-                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                        <!-- Bloque 1: Simulador y Lupa -->
-                        <div class="simulator-card card" id="poly-simulator-block">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 2px solid rgba(27,69,87,0.06); padding-bottom: 0.5rem;">
-                                <h3 style="margin: 0; border: none; font-size: 1.2rem;">Lupa y Simulador de Polígonos</h3>
-                                
-                                <!-- Toggle View Checkbox -->
-                                <label class="toggle-view-label" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--color-accent); cursor: pointer;">
-                                    <input type="checkbox" id="toggle-zoom-view" style="width: 16px; height: 16px; accent-color: var(--color-accent);">
-                                    Ver Lupa de Sector 🔍
-                                </label>
+  
+                <div class="grid-layout">
+                    <!-- TARJETA 2.1: SIMULADOR Y LUPA DEL SÁNDWICH TRIGONOMÉTRICO -->
+                    <div class="card interactive-activity" id="exhaustion-activity-card">
+                        <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>Simulador y Lupa del Sándwich Trigonométrico</h3>
+                        </div>
+                        
+                        <!-- Sister Panels Layout -->
+                        <div class="sister-panels-layout" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <!-- Panel A: Full Circle Simulator -->
+                            <div class="sister-panel" id="panel-full-circle" style="display: flex; flex-direction: column; align-items: center;">
+                                <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; text-align: center; color: var(--color-primary);">El Círculo Unitario y los Polígonos</h4>
+                                <div class="svg-container" style="width: 100%; max-width: 280px; aspect-ratio: 1/1;">
+                                    <svg id="exhaustion-svg" viewBox="-120 -120 240 240" width="100%" height="100%">
+                                        <line x1="-120" y1="0" x2="120" y2="0" class="svg-grid" />
+                                        <line x1="0" y1="-120" x2="0" y2="120" class="svg-grid" />
+                                        
+                                        <circle cx="0" cy="0" r="80" class="svg-unit-circle" />
+                                        
+                                        <polygon id="inscribed-poly" points="" class="svg-poly-inscribed" />
+                                        <polygon id="circumscribed-poly" points="" class="svg-poly-circumscribed" />
+                                        
+                                        <g id="angle-indicators"></g>
+                                        <text x="85" y="-5" class="svg-label">r = 1</text>
+                                    </svg>
+                                </div>
                             </div>
                             
-                            <!-- VIEW 1: FULL CIRCLE EXHAUSTION -->
-                            <div id="exhaustion-normal-view" class="svg-container">
-                                <svg id="exhaustion-svg" viewBox="-120 -120 240 240" width="100%" height="100%">
-                                    <!-- Grid lines for unit circle context -->
-                                    <line x1="-120" y1="0" x2="120" y2="0" class="svg-grid" />
-                                    <line x1="0" y1="-120" x2="0" y2="120" class="svg-grid" />
-                                    
-                                    <!-- Unit Circle (r=1) -->
-                                    <circle cx="0" cy="0" r="80" class="svg-unit-circle" />
-                                    
-                                    <!-- Polygon elements updated via JS -->
-                                    <polygon id="inscribed-poly" points="" class="svg-poly-inscribed" />
-                                    <polygon id="circumscribed-poly" points="" class="svg-poly-circumscribed" />
-                                    
-                                    <!-- Radii and angles indicators -->
-                                    <g id="angle-indicators"></g>
-                                    
-                                    <!-- Labels inside SVG -->
-                                    <text x="85" y="-5" class="svg-label">r = 1</text>
-                                </svg>
-                            </div>
-      
-                            <!-- VIEW 2: ZOOM SECTOR (SANDWICH TRIGONOMETRICO) -->
-                            <div id="exhaustion-zoom-view" class="svg-container" style="display: none;">
-                                <svg id="sector-zoom-svg" viewBox="0 0 220 200" width="100%" height="100%">
-                                    <!-- Coordinate axis lines -->
-                                    <line x1="20" y1="180" x2="210" y2="180" class="zoom-axis" stroke-width="1.5"/>
-                                    <line x1="20" y1="10" x2="20" y2="190" class="zoom-axis" stroke-width="1.5"/>
-                                    
-                                    <!-- Circle Arc: R=150 center at (20,180) -->
-                                    <path id="zoom-arc" d="M 170 180 A 150 150 0 0 0 126.06 73.93" fill="none" class="zoom-arc" stroke-dasharray="3,3" stroke-width="2"/>
-                                    
-                                    <!-- Radial Line (hypotenuse) -->
-                                    <line id="zoom-radius" x1="20" y1="180" x2="126.06" y2="73.93" class="zoom-radial" stroke-width="1.5"/>
-                                    
-                                    <!-- Inscribed line (Sine base): blue -->
-                                    <line id="zoom-sine" x1="126.06" y1="73.93" x2="126.06" y2="180" stroke="#3875b7" stroke-width="3" stroke-linecap="round"/>
-                                    
-                                    <!-- Tangent line (Tangent base at R=150): green -->
-                                    <line id="zoom-tangent" x1="170" y1="180" x2="170" y2="50" stroke="#387b5b" stroke-width="3" stroke-linecap="round"/>
-                                    <!-- Tangent outer radial projection line -->
-                                    <line id="zoom-secant" x1="20" y1="180" x2="170" y2="50" class="zoom-secant" stroke-width="1" stroke-dasharray="2,2"/>
-                                    
-                                    <!-- Arc line (actual curve representation): orange/red -->
-                                    <path id="zoom-curve-arc" d="M 170 180 A 150 150 0 0 0 126.06 73.93" fill="none" stroke="#b78a38" stroke-width="3"/>
-                                    
-                                    <!-- Origin marker -->
-                                    <circle cx="20" cy="180" r="3" class="zoom-radial"/>
-                                    
-                                    <!-- Text labels -->
-                                    <text x="14" y="193" font-size="8px" class="zoom-arc" font-weight="700">O</text>
-                                    <text x="110" y="140" font-size="9px" fill="#3875b7" font-weight="700">Inscrita (Sen)</text>
-                                    <text x="140" y="105" font-size="9px" fill="#b78a38" font-weight="700">Curva (Arco)</text>
-                                    <text x="175" y="110" font-size="9px" fill="#387b5b" font-weight="700">Circunscrita (Tan)</text>
-                                </svg>
-                            </div>
-      
-                            <!-- Simulation Controls -->
-                            <div class="controls-panel">
-                                <!-- Slider (for Normal View or Zoom View) -->
-                                <div class="slider-group">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <label id="slider-label" for="polygon-sides-slider" style="font-weight: 700;">Número de Lados (\(n\)): <span id="sides-val" class="highlight-val">6</span></label>
-                                        <span id="angle-value-display" style="font-size: 0.85rem; font-weight: 700; color: var(--color-warning); display: none;">Ángulo \(\theta\): 30.0°</span>
-                                    </div>
-                                    <input type="range" id="polygon-sides-slider" min="4" max="96" step="1" value="6" list="archimedes-steps">
-                                    <datalist id="archimedes-steps">
-                                        <option value="6">6</option>
-                                        <option value="12">12</option>
-                                        <option value="24">24</option>
-                                        <option value="48">48</option>
-                                        <option value="96">96</option>
-                                    </datalist>
-                                </div>
-                                
-                                <!-- Presets (hidden when in zoom view) -->
-                                <div class="preset-buttons" id="presets-container">
-                                    <button type="button" class="btn-preset active" data-val="6">n = 6</button>
-                                    <button type="button" class="btn-preset" data-val="12">n = 12</button>
-                                    <button type="button" class="btn-preset" data-val="24">n = 24</button>
-                                    <button type="button" class="btn-preset" data-val="48">n = 48</button>
-                                    <button type="button" class="btn-preset" data-val="96">n = 96</button>
+                            <!-- Panel B: Sector Zoom (Magnifying Glass) -->
+                            <div class="sister-panel" id="panel-sector-zoom" style="display: flex; flex-direction: column; align-items: center;">
+                                <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; text-align: center; color: var(--color-primary);">Lupa de Sector: Inecuación de Áreas</h4>
+                                <div class="svg-container" style="width: 100%; max-width: 280px; aspect-ratio: 1/1; background-color: #0f172a;">
+                                    <svg id="sector-zoom-svg" viewBox="0 0 220 200" width="100%" height="100%">
+                                        <line x1="20" y1="180" x2="210" y2="180" class="zoom-axis" stroke-width="1.5"/>
+                                        <line x1="20" y1="10" x2="20" y2="190" class="zoom-axis" stroke-width="1.5"/>
+                                        
+                                        <path id="zoom-arc" d="M 170 180 A 150 150 0 0 0 126.06 73.93" fill="none" class="zoom-arc" stroke-dasharray="3,3" stroke-width="2"/>
+                                        <line id="zoom-radius" x1="20" y1="180" x2="126.06" y2="73.93" class="zoom-radial" stroke-width="1.5"/>
+                                        
+                                        <line id="zoom-sine" x1="126.06" y1="73.93" x2="126.06" y2="180" stroke="#3875b7" stroke-width="3" stroke-linecap="round"/>
+                                        <line id="zoom-tangent" x1="170" y1="180" x2="170" y2="50" stroke="#387b5b" stroke-width="3" stroke-linecap="round"/>
+                                        <line id="zoom-secant" x1="20" y1="180" x2="170" y2="50" class="zoom-secant" stroke-width="1" stroke-dasharray="2,2"/>
+                                        <path id="zoom-curve-arc" d="M 170 180 A 150 150 0 0 0 126.06 73.93" fill="none" stroke="#b78a38" stroke-width="3"/>
+                                        
+                                        <circle cx="20" cy="180" r="3" class="zoom-radial"/>
+                                        
+                                        <text x="14" y="193" font-size="8px" class="zoom-arc" font-weight="700">O</text>
+                                        <text x="100" y="140" font-size="8px" fill="#3875b7" font-weight="700">Sen(θ) [Inscrita]</text>
+                                        <text x="135" y="95" font-size="8px" fill="#b78a38" font-weight="700">Arco θ [Curva]</text>
+                                        <text x="175" y="110" font-size="8px" fill="#387b5b" font-weight="700">Tan(θ) [Circ.]</text>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bloque 2: Tiro al Blanco de Áreas -->
-                        <div class="interactive-panel card" id="aim-target-block">
+                        <!-- Controls for Both Panels -->
+                        <div class="controls-panel" style="margin-bottom: 1.25rem;">
+                            <div class="slider-group">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <label for="polygon-sides-slider" style="font-weight: 700;">Número de Lados (\(n\)): <span id="sides-val" class="highlight-val">6</span></label>
+                                    <span id="angle-value-display" style="font-size: 0.85rem; font-weight: 700; color: var(--color-warning);">Ángulo \(\theta\): 30.00°</span>
+                                </div>
+                                <input type="range" id="polygon-sides-slider" min="6" max="96" step="1" value="6">
+                            </div>
+                            
+                            <div class="preset-buttons" id="presets-container" style="margin-top: 0.75rem; justify-content: center;">
+                                <button type="button" class="btn-preset active" data-val="6">n = 6</button>
+                                <button type="button" class="btn-preset" data-val="12">n = 12</button>
+                                <button type="button" class="btn-preset" data-val="24">n = 24</button>
+                                <button type="button" class="btn-preset" data-val="48">n = 48</button>
+                                <button type="button" class="btn-preset" data-val="96">n = 96</button>
+                            </div>
+                        </div>
+
+                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
+                                Deslizá el control de número de lados (\(n\)) o hacé clic en los accesos rápidos. Observá cómo al aumentar \(n\), el círculo unitario en el panel izquierdo queda encerrado por polígonos cada vez más ajustados. Al mismo tiempo, en la Lupa de Sector a la derecha, verás cómo el ángulo disminuye y el segmento recto del Seno (azul) y la Tangente (verde) estrangulan al arco circular (naranja), reduciendo el error a cero.
+                            </p>
+                        </div>
+                        
+                        <!-- Archimedes Dialogue Bubble -->
+                        <div class="archimedes-dialogue">
+                            <div class="archimedes-avatar">🏛️</div>
+                            <div class="archimedes-speech">
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p>Al aumentar los lados \(n\), los polígonos inscrito y circunscrito acorralan al círculo. En la lupa del sector verás claramente el sándwich de límites: la recta del Seno es menor al arco, y este menor a la Tangente. A medida que \(n\) tiende a infinito, ¡la curva es atrapada por las rectas!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TARJETA 2.2: TIRO AL BLANCO DE ÁREAS (MISIÓN DE CONJETURA) -->
+                    <div class="card interactive-activity" id="target-activity-card">
+                        <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                             <h3>Tiro al Blanco de Áreas</h3>
-                            <p class="panel-instruction">Ajustá la mira e intentá disparar al área exacta del círculo (\(\pi \approx 3.1416\)) dentro del rango acotado.</p>
+                        </div>
+                        
+                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
+                                Poné a prueba tu puntería matemática. Mueve el control de **"Tu Disparo"** para lanzar una conjetura sobre el valor del área (Pi). Tu objetivo es disparar dentro del rango de la <strong>"Zona Verde"</strong> acotado por los polígonos. ¡A mayor cantidad de lados, la zona verde será más estrecha y recibirás un multiplicador de puntaje mucho mayor!
+                            </p>
+                        </div>
+                        
+                        <div class="activity-simulation-area">
+                            <!-- Inequalities details -->
+                            <div class="bounds-container" style="padding: 1rem; margin-bottom: 1.25rem; background-color: var(--color-bg-primary); border: 1px solid var(--color-svg-border);">
+                                <p class="bounds-inequality" style="font-size: 1.6rem; margin-bottom: 0.25rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+                                    <span id="bound-lower" class="bound-val text-blue">3.0000</span>
+                                    <span class="bound-symbol">&lt;</span>
+                                    <span id="bound-target" style="padding: 0 0.5rem; background-color: rgba(255,255,255,0.1); border-radius:4px;">&pi;</span>
+                                    <span class="bound-symbol">&lt;</span>
+                                    <span id="bound-upper" class="bound-val text-green">3.4641</span>
+                                </p>
+                                <div class="error-display" style="font-size: 0.85rem; color: var(--color-text-muted);">
+                                    Diferencia (Error de Exhaustión): <strong id="bound-error" class="highlight-val" style="color: var(--color-warning);">0.4641</strong>
+                                </div>
+                            </div>
                             
                             <!-- Area Gauges (Inscribed vs Circumscribed) -->
-                            <div class="target-gauge-container">
-                                <!-- Inscribed area bar gauge -->
+                            <div class="target-gauge-container" style="margin-bottom: 1.25rem;">
                                 <div class="gauge-bar-wrapper">
                                     <span class="gauge-label">Área Inscrita:</span>
                                     <div class="gauge-track">
@@ -502,9 +522,7 @@
                                     </div>
                                     <span id="gauge-val-inscribed" class="gauge-val-display">3.0000</span>
                                 </div>
-                                
-                                <!-- Circumscribed area bar gauge -->
-                                <div class="gauge-bar-wrapper">
+                                <div class="gauge-bar-wrapper" style="margin-top: 0.5rem;">
                                     <span class="gauge-label">Área Circuns.:</span>
                                     <div class="gauge-track">
                                         <div id="gauge-fill-circumscribed" class="gauge-fill circumscribed" style="width: 80%;"></div>
@@ -514,35 +532,33 @@
                             </div>
                             
                             <!-- Aim box visual with safety zone and shot indicator -->
-                            <div class="shot-target-visual">
-                                <div class="shot-target-title">Mira Telescópica de Áreas</div>
-                                <div class="target-aim-box">
-                                    <!-- Green zone where the circle area actually falls (between inscribed and circumscribed) -->
+                            <div class="shot-target-visual" style="margin-bottom: 1.25rem;">
+                                <div class="shot-target-title" style="font-size: 0.9rem; font-weight: bold; margin-bottom: 0.5rem;">Mira Telescópica de Áreas</div>
+                                <div class="target-aim-box" style="height: 32px; background-color: var(--color-card-bg); border: 1px solid var(--color-svg-border); position: relative; border-radius: 4px; overflow: hidden;">
                                     <div id="target-safe-zone" class="target-safe-zone" style="left: 10%; width: 40%;"></div>
-                                    <!-- Red line representing user shot -->
                                     <div id="target-shot-pin" class="target-shot-pin" style="left: 50%;"></div>
                                 </div>
-                                <div style="font-size: 0.8rem; color: var(--color-text-muted);">
-                                    Zona Verde = Rango de Conjetura Segura. ¡Dispará adentro!
+                                <div style="font-size: 0.8rem; color: var(--color-text-muted); text-align: center; margin-top: 0.25rem;">
+                                    Zona Verde = Rango Seguro de Conjetura. ¡Ajustá el slider y dispará!
                                 </div>
                             </div>
                             
                             <!-- Draggable Shot controls -->
-                            <div class="controls-panel" style="gap: 1rem;">
+                            <div class="controls-panel" style="gap: 1rem; margin-bottom: 1.25rem;">
                                 <div class="slider-group">
                                     <label for="aim-shot-slider" style="font-weight: 700;">Tu Disparo (Conjetura de Área): <span id="aim-shot-val" class="highlight-val" style="color: var(--color-danger);">3.2000</span></label>
-                                    <input type="range" id="aim-shot-slider" min="2.0000" max="4.0000" step="0.0001" value="3.2000">
+                                    <input type="range" id="aim-shot-slider" min="2.8000" max="3.5000" step="0.0001" value="3.2000">
                                 </div>
                             </div>
                             
                             <!-- Score board and feedback -->
-                            <div class="grid-layout cols-2" style="gap: 1rem; margin-top: 1rem; margin-bottom: 1.25rem;">
+                            <div class="grid-layout cols-2" style="gap: 1rem; margin-bottom: 1.25rem;">
                                 <div class="math-item" style="margin: 0; padding: 0.75rem 1rem;">
-                                    <span class="math-label">Puntaje Obtenido:</span>
+                                    <span class="math-label font-bold">Puntaje Obtenido:</span>
                                     <span class="math-formula" id="target-score" style="font-size: 1.2rem;">0 pts</span>
                                 </div>
                                 <div class="math-item" style="margin: 0; padding: 0.75rem 1rem; border-left-color: var(--color-success);">
-                                    <span class="math-label">Multiplicador (n Lados):</span>
+                                    <span class="math-label font-bold">Multiplicador (n Lados):</span>
                                     <span class="math-formula" id="target-multiplier" style="font-size: 1.2rem;">x1.0 (n=6)</span>
                                 </div>
                             </div>
@@ -551,153 +567,105 @@
                                 ¡Ajustá el slider y realizá tu disparo!
                             </div>
                         </div>
-                    </div>
- 
-                    <!-- Right: Math & Missions Window -->
-                    <div class="math-card card">
-                        <h3>El Sándwich de Pi</h3>
-                        <p>
-                            Al acotar la circunferencia unitaria (\(r = 1\)), el círculo queda atrapado ("encerrado") entre el perímetro interior y el exterior. 
-                        </p>
                         
-                        <div class="unit-math-explanation">
-                            <div class="math-block">
-                                <div class="math-item" style="padding: 0.75rem 1rem;">
-                                    <span class="math-label">Polígono Inscrito (Límite Inferior):</span>
-                                    <span class="math-formula" id="calc-inscribed">6 &middot; sin(30&deg;) = 3.0000</span>
-                                </div>
-                                <div class="math-item" style="padding: 0.75rem 1rem; border-left-color: var(--color-accent);">
-                                    <span class="math-label">Polígono Circunscrito (Límite Superior):</span>
-                                    <span class="math-formula" id="calc-circumscribed">6 &middot; tan(30&deg;) = 3.4641</span>
-                                </div>
-                            </div>
- 
-                            <div class="bounds-container" style="padding: 1rem; margin-bottom: 1.5rem;">
-                                <p class="bounds-inequality" style="font-size: 1.6rem; margin-bottom: 0.25rem;">
-                                    <span id="bound-lower" class="bound-val text-blue">3.0000</span>
-                                    <span class="bound-symbol">&lt;</span>
-                                    <span id="bound-target" style="padding: 0.05rem 0.5rem;">&pi;</span>
-                                    <span class="bound-symbol">&lt;</span>
-                                    <span id="bound-upper" class="bound-val text-green">3.4641</span>
-                                </p>
-                                <div class="error-display" style="font-size: 0.85rem; color: rgba(255,255,255,0.85);">
-                                    Diferencia (Error de Exhaustión): <strong id="bound-error" class="highlight-val" style="color: var(--color-warning);">0.4641</strong>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Archimedes Dialogue Bubble in Section 2 -->
+                        <!-- Archimedes Dialogue Bubble -->
                         <div class="archimedes-dialogue" style="margin-top: 1.25rem;">
-                            <div class="archimedes-avatar"></div>
+                            <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
-                                <h4>Sabiduría de Arquímedes</h4>
-                                <p>¡Piensa en esto! Con mi polígono de 96 lados encontré que Pi está acotado entre \(3.1408\) y \(3.1428\). El error es mínimo, pero existe. Al aumentar los lados, las áreas de los polígonos inscrito y circunscrito se exprimen hasta casi tocarse. ¡Eso es exhausción!</p>
-                            </div>
-                        </div>
-
-                            <div id="lab-feedback" class="callout warning" style="margin: 0; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
-                                Ajustá el control de lados para verificar las misiones.
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p>¡Las matemáticas acotan el error! Un científico nunca adivina a ciegas. Los límites inferior (inscrito) y superior (circunscrito) te definen matemáticamente la 'zona segura'. A medida que aumentamos los lados, esa zona se estrecha tanto que no queda más opción que dar en el blanco exacto de Pi.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
  
-            <!-- SECTION 3: THE LEAP TO INFINITY (LIMIT) -->
+            <!-- SECTION 3: THE LEAP TO INFINITY (LIMIT) (ACTIVIDADES INDEPENDIENTES) -->
             <section id="section-limit" class="content-section">
-                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h2>El Sintonizador de Épsilon (\(\varepsilon\))</h2>
-                        <p>Encontrando el paso crítico donde la aproximación se vuelve eterna</p>
-                    </div>
-                    <i class="fa-solid fa-sliders" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
+                <div class="section-header">
+                    <h2>El Sintonizador de Épsilon (\(\varepsilon\))</h2>
+                    <p>Encontrando el paso crítico donde la aproximación se vuelve eterna</p>
                 </div>
- 
-                <div class="grid-layout cols-2-large">
-                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                        <div class="theory-panel card">
-                            <h3>La Definición Visual de Límite</h3>
-                            <p>
-                                En matemáticas, no hace falta asustarse con fórmulas gigantes. Decimos que una secuencia de números tiene un <strong>límite \(L\)</strong> si, al elegir cualquier margen de error tolerable (que llamamos <strong>épsilon \(\varepsilon\)</strong>), podemos encontrar un paso del proceso (que llamamos <strong>\(N\)</strong>) a partir del cual <strong>todos</strong> los siguientes valores quedan atrapados dentro de ese margen de error.
-                            </p>
-                            <p>
-                                Usaremos la secuencia de chocolate consumido del juego anterior: 
-                                \(a_n = 1 - \frac{1}{2^n}\). Queremos demostrar que su límite es <strong>\(1\)</strong>.
-                            </p>
-                            <div class="callout success" style="margin-top: 1rem;">
-                                <h4>El Desafío del Sintonizador:</h4>
-                                <p>Tu misión es definir una tolerancia \(\varepsilon\). Automáticamente se creará una "zona de tolerancia segura" alrededor del límite \(1\) (entre \(1 - \varepsilon\) y \(1 + \varepsilon\)). Luego, debés encontrar el menor paso \(N\) tal que a partir de allí, ningún punto posterior se escape de esa zona.</p>
-                            </div>
+  
+                <div class="grid-layout">
+                    <!-- TARJETA 3.1: SINTONIZADOR DE ÉPSILON -->
+                    <div class="card interactive-activity" id="epsilon-activity-card">
+                        <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>Sintonizador de Tolerancia y Límite</h3>
                         </div>
                         
-                        <!-- Archimedes Dialogue Bubble in Section 3 -->
-                        <div class="archimedes-dialogue">
-                            <div class="archimedes-avatar"></div>
-                            <div class="archimedes-speech">
-                                <h4>Sabiduría de Arquímedes</h4>
-                                <p>Esta sintonía de Épsilon (\(\varepsilon\)) es la base del método de doble contradicción. Si alguien duda de que el límite es \(1\), me basta con pedirle que elija un margen \(\varepsilon\) tan pequeño como desee, y yo le demostraré que a partir de cierto paso \(N\), la diferencia se vuelve irrelevante. ¡La lógica vence al infinito!</p>
-                            </div>
+                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
+                                El límite formal indica que para cualquier margen de error (\( \varepsilon \)) que elijas, podés hallar un paso crítico (\( N \)) a partir del cual todos los puntos siguientes caen dentro del margen. Seleccioná la sucesión (Estable u Oscilante), definí la tolerancia \( \varepsilon \) y luego mové el control de **Paso Mínimo Elegido (\( N \))** para encerrar todos los puntos de ese paso en adelante dentro de la franja verde.
+                            </p>
                         </div>
-                    </div>
- 
-                    <div class="error-graph-panel card">
-                        <h3>Visualizador de Tolerancia y Sintonía</h3>
-                        <p class="panel-instruction">Ajustá la Tolerancia (\(\varepsilon\)) y deslizá el Paso Crítico (\(N\)) para encerrar los puntos.</p>
                         
-                        <!-- Interactive SVG Graph for Epsilon Squeezing -->
-                        <div class="svg-container graph-container" style="aspect-ratio: 1.8 / 1; padding: 0.5rem;">
-                            <svg id="epsilon-graph-svg" viewBox="0 0 400 200" width="100%" height="100%">
-                                <!-- Shaded Epsilon Band (Green Zone) - updated via JS -->
-                                <rect id="epsilon-band" x="40" y="50" width="340" height="40" fill="rgba(56, 123, 91, 0.15)" stroke="rgba(56, 123, 91, 0.3)" stroke-width="1" stroke-dasharray="2,2"/>
-                                
-                                <!-- Limit Target Line (L = 1) -->
-                                <line x1="40" y1="70" x2="380" y2="70" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="4,4"/>
-                                <text x="345" y="65" font-size="8px" fill="var(--color-primary)" font-weight="800">Límite L = 1.0</text>
-                                
-                                <!-- Axes -->
-                                <line x1="40" y1="170" x2="380" y2="170" class="graph-axis" stroke-width="1.5"/>
-                                <line x1="40" y1="20" x2="40" y2="170" class="graph-axis" stroke-width="1.5"/>
-                                
-                                <!-- Axis Labels -->
-                                <text x="355" y="190" class="graph-label-text">Paso (n)</text>
-                                <text x="10" y="25" class="graph-label-text">Valor (an)</text>
-                                
-                                <!-- Guessed Step N Line (Vertical Red/Blue Indicator) -->
-                                <line id="indicator-n-line" x1="40" y1="20" x2="40" y2="170" stroke="var(--color-warning)" stroke-width="2" stroke-dasharray="3,3"/>
-                                
-                                <!-- Points group populated via JS -->
-                                <g id="epsilon-points-group"></g>
-                            </svg>
-                        </div>
- 
-                        <!-- Game Controls -->
-                        <div class="controls-panel" style="gap: 1rem; margin-top: 1rem;">
-                            <!-- Sequence Type Toggle -->
-                            <div class="slider-group">
-                                <label style="font-weight: 700; display: block;">Sucesión en Pantalla:</label>
-                                <div style="display: flex; gap: 1.5rem; margin-top: 0.25rem;">
-                                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: var(--color-primary);">
-                                        <input type="radio" name="sequence-type" value="monotonic" checked style="width:16px; height:16px; accent-color: var(--color-accent);">
-                                        Estable (\(1 - \frac{1}{2^n}\))
-                                    </label>
-                                    <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: var(--color-primary);">
-                                        <input type="radio" name="sequence-type" value="oscillating" style="width:16px; height:16px; accent-color: var(--color-accent);">
-                                        Sismógrafo (\(1 + \frac{(-1)^n}{n}\))
-                                    </label>
+                        <div class="activity-simulation-area" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                            <!-- Interactive SVG Graph for Epsilon Squeezing -->
+                            <div class="svg-container graph-container" style="aspect-ratio: 1.8 / 1; padding: 0.5rem; width: 100%; height: auto; margin-bottom: 0;">
+                                <svg id="epsilon-graph-svg" viewBox="0 0 400 200" width="100%" height="100%">
+                                    <!-- Shaded Epsilon Band (Green Zone) -->
+                                    <rect id="epsilon-band" x="40" y="50" width="340" height="40" fill="rgba(56, 123, 91, 0.15)" stroke="rgba(56, 123, 91, 0.3)" stroke-width="1" stroke-dasharray="2,2"/>
+                                    
+                                    <!-- Limit Target Line (L = 1) -->
+                                    <line x1="40" y1="70" x2="380" y2="70" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="4,4"/>
+                                    <text x="345" y="65" font-size="8px" fill="var(--color-primary)" font-weight="800">Límite L = 1.0</text>
+                                    
+                                    <!-- Axes -->
+                                    <line x1="40" y1="170" x2="380" y2="170" class="graph-axis" stroke-width="1.5"/>
+                                    <line x1="40" y1="20" x2="40" y2="170" class="graph-axis" stroke-width="1.5"/>
+                                    
+                                    <!-- Axis Labels -->
+                                    <text x="355" y="190" class="graph-label-text">Paso (n)</text>
+                                    <text x="10" y="25" class="graph-label-text">Valor (an)</text>
+                                    
+                                    <!-- Guessed Step N Line (Vertical Red/Blue Indicator) -->
+                                    <line id="indicator-n-line" x1="40" y1="20" x2="40" y2="170" stroke="var(--color-warning)" stroke-width="2" stroke-dasharray="3,3"/>
+                                    
+                                    <!-- Points group populated via JS -->
+                                    <g id="epsilon-points-group"></g>
+                                </svg>
+                            </div>
+     
+                            <!-- Game Controls -->
+                            <div class="controls-panel" style="gap: 1rem;">
+                                <!-- Sequence Type Toggle -->
+                                <div class="slider-group">
+                                    <label style="font-weight: 700; display: block;">Sucesión en Pantalla:</label>
+                                    <div style="display: flex; gap: 1.5rem; margin-top: 0.25rem;">
+                                        <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: var(--color-primary);">
+                                            <input type="radio" name="sequence-type" value="monotonic" checked style="width:16px; height:16px; accent-color: var(--color-accent);">
+                                            Estable (\(1 - \frac{1}{2^n}\))
+                                        </label>
+                                        <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: var(--color-primary);">
+                                            <input type="radio" name="sequence-type" value="oscillating" style="width:16px; height:16px; accent-color: var(--color-accent);">
+                                            Sismógrafo (\(1 + \frac{(-1)^n}{n}\))
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="slider-group" style="margin-top: 0.5rem;">
+                                    <label for="epsilon-slider">Tolerancia de Error (\(\varepsilon\)): <span id="epsilon-val" class="highlight-val">0.10</span></label>
+                                    <input type="range" id="epsilon-slider" min="0.01" max="0.25" step="0.01" value="0.10">
+                                </div>
+                                <div class="slider-group" style="margin-top: 0.5rem;">
+                                    <label for="step-n-slider">Paso Mínimo Elegido (\(N\)): <span id="step-n-val" class="highlight-val">1</span></label>
+                                    <input type="range" id="step-n-slider" min="1" max="8" step="1" value="1">
                                 </div>
                             </div>
-                            <div class="slider-group">
-                                <label for="epsilon-slider">Tolerancia de Error (\(\varepsilon\)): <span id="epsilon-val" class="highlight-val">0.10</span></label>
-                                <input type="range" id="epsilon-slider" min="0.01" max="0.25" step="0.01" value="0.10">
-                            </div>
-                            <div class="slider-group">
-                                <label for="step-n-slider">Paso Mínimo Elegido (\(N\)): <span id="step-n-val" class="highlight-val">1</span></label>
-                                <input type="range" id="step-n-slider" min="1" max="8" step="1" value="1">
+                            
+                            <div id="epsilon-feedback" class="callout warning" style="margin: 0; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
+                                Cargando sintonizador...
                             </div>
                         </div>
                         
-                        <div id="epsilon-feedback" class="callout warning" style="margin-top: 1rem; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
-                            Cargando sintonizador...
+                        <!-- Archimedes Dialogue Bubble -->
+                        <div class="archimedes-dialogue" style="margin-top: 1.25rem;">
+                            <div class="archimedes-avatar">🏛️</div>
+                            <div class="archimedes-speech">
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p>Esta sintonía de Épsilon (\(\varepsilon\)) es el lenguaje riguroso moderno. Si alguien duda de que el límite es 1.0, le pedimos que elija un margen \(\varepsilon\) tan pequeño como quiera (la franja verde), y nosotros demostraremos que a partir de cierto paso \(N\), ningún punto posterior escapa de ella. ¡La lógica vence al infinito!</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -713,50 +681,48 @@
                     <i class="fa-solid fa-landmark" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
                 </div>
 
-                <div class="grid-layout cols-2-large">
-                    <!-- Column 1: Historical explanation -->
-                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                        <div class="story-panel card">
-                            <h3>🏛️ La Geometría contra el Infinito</h3>
-                            <p>
-                                En la antigua Grecia, los matemáticos sentían pánico ante el concepto del "infinito actual" (el <em>Apeiron</em>). Argumentos como los de Zenón sugerían que sumar infinitos pasos llevaría a absurdos insolubles.
-                            </p>
-                            <p>
-                                Para resolver esto sin invocar el infinito de manera directa, <strong>Arquímedes</strong> perfeccionó el <strong>Método de Exhausción</strong>. En lugar de decir "sumamos infinitos triángulos", dijo: <em>"Podemos rellenar una forma curva con triángulos de modo que la diferencia (el error restante) se vuelva tan pequeña como queramos."</em>
-                            </p>
-                            <p>
-                                Esto es exactamente el concepto moderno de <strong>límite e infinitésimo</strong>: ¡hacer que el error tienda a cero!
-                            </p>
-                            
-                            <div class="callout warning" style="margin-top: 1rem;">
-                                <h4>Descubrimientos Clave de Arquímedes:</h4>
-                                <ul>
-                                    <li><strong>Cuadratura de la Parábola:</strong> Demostró que el área encerrada por una parábola es exactamente \(\frac{4}{3}\) del área del triángulo inscrito.</li>
-                                    <li><strong>Aproximación de Pi:</strong> Encerró el círculo entre polígonos de hasta 96 lados.</li>
-                                    <li><strong>Área de la Espiral:</strong> Realizó una de las primeras integraciones de la historia para medir espirales.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Archimedes Dialogue Bubble in History Section -->
-                        <div class="archimedes-dialogue" id="archimedes-history-dialogue">
-                            <div class="archimedes-avatar">🏛️</div>
-                            <div class="archimedes-speech">
-                                <h4>🏛️ Arquímedes</h4>
-                                <p id="history-dialogue-text">He trazado el triángulo principal en color ocre. Su área es de exactamente 1 unidad relativa. ¿Cuánto crees que mide todo el segmento curvo? ¡Prueba agregar triángulos para descubrirlo!</p>
-                            </div>
+                <div class="grid-layout">
+                    <!-- Historical explanation -->
+                    <div class="card story-panel">
+                        <h3>🏛️ La Geometría contra el Infinito</h3>
+                        <p>
+                            En la antigua Grecia, los matemáticos sentían pánico ante el concepto del "infinito actual" (el <em>Apeiron</em>). Argumentos como los de Zenón sugerían que sumar infinitos pasos llevaría a absurdos insolubles.
+                        </p>
+                        <p>
+                            Para resolver esto sin invocar el infinito de manera directa, <strong>Arquímedes</strong> perfeccionó el <strong>Método de Exhausción</strong>. En lugar de decir "sumamos infinitos triángulos", dijo: <em>"Podemos rellenar una forma curva con triángulos de modo que la diferencia (el error restante) se vuelva tan pequeña como queramos."</em>
+                        </p>
+                        <p>
+                            Esto es exactamente el concepto moderno de <strong>límite e infinitésimo</strong>: ¡hacer que el error tienda a cero!
+                        </p>
+                        
+                        <div class="callout warning" style="margin-top: 1rem;">
+                            <h4>Descubrimientos Clave de Arquímedes:</h4>
+                            <ul>
+                                <li><strong>Cuadratura de la Parábola:</strong> Demostró que el área encerrada por una parábola es exactamente \(\frac{4}{3}\) del área del triángulo inscrito.</li>
+                                <li><strong>Aproximación de Pi:</strong> Encerró el círculo entre polígonos de hasta 96 lados.</li>
+                                <li><strong>Área de la Espiral:</strong> Realizó una de las primeras integraciones de la historia para medir espirales.</li>
+                            </ul>
                         </div>
                     </div>
 
-                    <!-- Column 2: Parabola Quadrature Game -->
-                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                        <div class="interactive-panel card">
-                            <h3>📐 Actividad: La Cuadratura de la Parábola</h3>
-                            <p class="panel-instruction">Añadí pequeños triángulos en los huecos sobrantes. Observá cómo la suma agota la curva.</p>
-
+                    <!-- TARJETA 4.1: LA CUADRATURA DE LA PARÁBOLA -->
+                    <div class="card interactive-activity" id="parabola-activity-card">
+                        <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>La Cuadratura de la Parábola</h3>
+                            <span class="badge" id="parabola-challenge-badge">Misión Parábola</span>
+                        </div>
+                        
+                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
+                                Añadí pequeños triángulos en los huecos sobrantes. Observá cómo la suma de las áreas de estos triángulos agota la curva de la parábola.
+                            </p>
+                        </div>
+                        
+                        <div class="activity-simulation-area">
                             <!-- Parabola SVG visualizer -->
-                            <div class="parabola-container">
-                                <svg id="parabola-svg" viewBox="0 0 400 200" width="100%" height="200px">
+                            <div class="parabola-container" style="margin-bottom: 1.25rem;">
+                                <svg id="parabola-svg" viewBox="0 0 400 200" width="100%" height="200px" style="background-color: var(--color-svg-bg); border: 1px solid var(--color-svg-border); border-radius: 8px;">
                                     <!-- Parabolic Segment background curve and chord -->
                                     <path d="M 50 160 Q 200 -80 350 160 Z" fill="rgba(255,255,255,0.02)" stroke="none"/>
                                     
@@ -777,7 +743,7 @@
                             </div>
 
                             <!-- Parabola Game Controls -->
-                            <div class="slider-group">
+                            <div class="slider-group" style="margin-bottom: 1.25rem;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <label for="parabola-step-slider" style="font-weight: 700;">Paso de Exhausción (\(k\)): <span id="parabola-step-val" class="highlight-val">0</span></label>
                                 </div>
@@ -790,7 +756,7 @@
                             </div>
 
                             <!-- Calculations Table -->
-                            <div style="overflow-x: auto; margin-top: 1rem;">
+                            <div style="overflow-x: auto; margin-top: 1rem; margin-bottom: 1.25rem;">
                                 <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left;">
                                     <thead>
                                         <tr style="border-bottom: 2px solid var(--color-svg-border); color: var(--color-primary); font-weight: bold;">
@@ -807,11 +773,20 @@
                             </div>
 
                             <!-- Convergence Target inequality -->
-                            <div class="bounds-container" style="padding: 0.75rem; margin-top: 1rem; border: 1px solid var(--color-svg-border);">
+                            <div class="bounds-container" style="padding: 0.75rem; margin-bottom: 1.25rem; border: 1px solid var(--color-svg-border); background-color: var(--color-bg-primary);">
                                 <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0.25rem;">Límite del Área Acumulada:</div>
                                 <div style="font-size: 1.4rem; font-weight: 800;">
                                     <span id="parabola-area-sum" class="highlight-val">1.0000</span> / <span style="color: var(--color-success);">1.3333 (\(\frac{4}{3}\))</span>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Archimedes Dialogue Bubble -->
+                        <div class="archimedes-dialogue" id="archimedes-history-dialogue">
+                            <div class="archimedes-avatar">🏛️</div>
+                            <div class="archimedes-speech">
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p id="history-dialogue-text">He trazado el triángulo principal en color ocre. Su área es de exactamente 1.0000 unidad relativa. ¿Cuánto crees que mide todo el segmento curvo? ¡Prueba agregar triángulos para descubrirlo!</p>
                             </div>
                         </div>
                     </div>
@@ -858,7 +833,35 @@
                 <button class="chatbot-close-btn" id="chatbot-close-btn" aria-label="Cerrar chat">&times;</button>
             </div>
             <div class="chatbot-body">
-                <iframe id="chatbot-iframe" src="about:blank" title="Chatbot de Inteligencia Artificial Pedagógica"></iframe>
+                <div class="chatbot-chat-area" id="chatbot-chat-area">
+                    <!-- Message list -->
+                    <div class="chatbot-messages" id="chatbot-messages">
+                        <!-- Initial Message -->
+                        <div class="chat-msg-row assistant">
+                            <div class="chat-avatar">🏛️</div>
+                            <div class="chat-msg-bubble">
+                                ¡Hola! Soy tu asistente de IA de Siracusa. ¿En qué puedo ayudarte a comprender sobre el infinito, los límites o los descubrimientos de Arquímedes hoy?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Suggestion Chips -->
+                <div class="chatbot-quick-chips">
+                    <button class="chip-btn" type="button" data-question="¿Qué es el método de exhausción?">¿Qué es exhausción?</button>
+                    <button class="chip-btn" type="button" data-question="¿Cómo resolvió Arquímedes la paradoja de Zenón?">Zenón vs Arquímedes</button>
+                    <button class="chip-btn" type="button" data-question="¿Qué representa la tolerancia épsilon (ε)?">¿Qué es ε?</button>
+                </div>
+                
+                <!-- Input area -->
+                <form class="chatbot-input-area" id="chatbot-input-form">
+                    <input type="text" id="chatbot-input" placeholder="Pregúntale a la IA de Siracusa..." autocomplete="off" required>
+                    <button type="submit" id="chatbot-send-btn" aria-label="Enviar mensaje">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </form>
             </div>
         </div>
 
