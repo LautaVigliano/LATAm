@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggleDesktop.addEventListener('click', toggleTheme);
     }
 
+
+
     /* ==========================================================================
        1. ROUTING & NAVIGATION (NON-LINEAR TABS)
        ========================================================================== */
@@ -650,6 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let m2 = false;
         
         if (error < 0.05) {
+            if (window.completeMission) window.completeMission(3);
             missionCota1.textContent = '¡Completado!';
             missionCota1.className = 'badge success';
             m1 = true;
@@ -1149,4 +1152,135 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Parabola Simulation
     updateParabolaSimulation();
+
+    /* ==========================================================================
+       4. INSTANCE 4: DESENROLLANDO EL CÍRCULO (SECCIÓN 2)
+       ========================================================================== */
+    const unrollSlider = document.getElementById('unroll-slider');
+    const unrollValDisplay = document.getElementById('unroll-val');
+    const rollingCircleGroup = document.getElementById('rolling-circle-group');
+    const unrollTriangle = document.getElementById('unroll-triangle');
+    const unrolledPath = document.getElementById('unrolled-path');
+    const circleRadiusLine = document.getElementById('circle-radius-line');
+    const unrollLabelH = document.getElementById('unroll-label-h');
+    const unrollLabelB = document.getElementById('unroll-label-b');
+
+    if (unrollSlider) {
+        unrollSlider.addEventListener('input', (e) => {
+            const percent = parseInt(e.target.value);
+            if (unrollValDisplay) unrollValDisplay.textContent = percent + '%';
+            
+            // max rotation for 1 full circle is 360 deg
+            const rotation = (percent / 100) * 360;
+            // max distance is 2 * pi * 50 = 314.16
+            const distance = (percent / 100) * 314.16;
+            
+            if (rollingCircleGroup) {
+                // start at x=70. Move to right by distance.
+                rollingCircleGroup.setAttribute('transform', `translate(${70 + distance}, 190) rotate(${rotation})`);
+            }
+            
+            if (unrolledPath) {
+                // Unrolled path draws from 70 to 70+distance
+                unrolledPath.setAttribute('d', `M 70 240 L ${70 + distance} 240`);
+            }
+            
+            if (unrollTriangle) {
+                // Base is from 70 to 70+distance, height is at x=70 (from 240 to 190)
+                unrollTriangle.setAttribute('points', `70,240 ${70 + distance},240 70,190`);
+                if (percent > 0) {
+                    unrollTriangle.style.opacity = '1';
+                } else {
+                    unrollTriangle.style.opacity = '0';
+                }
+            }
+            
+            if (unrollLabelH && unrollLabelB) {
+                if (percent >= 100) {
+                    unrollLabelH.style.opacity = '1';
+                    unrollLabelB.style.opacity = '1';
+                } else {
+                    unrollLabelH.style.opacity = '0';
+                    unrollLabelB.style.opacity = '0';
+                }
+            }
+        });
+    }
+
+    /* ==========================================================================
+       5. INSTANCE 5: LA BALANZA MECÁNICA (SECCIÓN 3)
+       ========================================================================== */
+    const balanceSlider = document.getElementById('balance-slices-slider');
+    const balanceValDisplay = document.getElementById('balance-slices-val');
+    const leverGroup = document.getElementById('lever-group');
+    const parabolaSlicesGroup = document.getElementById('parabola-slices-group');
+    const balanceStatus = document.getElementById('balance-status');
+
+    function updateBalanceGame(n) {
+        if (!parabolaSlicesGroup) return;
+        
+        if (balanceValDisplay) balanceValDisplay.textContent = n;
+        
+        parabolaSlicesGroup.innerHTML = '';
+        
+        const width = 60;
+        const sliceWidth = width / n;
+        let currentArea = 0;
+        
+        for (let i = 0; i < n; i++) {
+            // inscribed rectangles
+            const x1 = i * sliceWidth;
+            const x2 = (i + 1) * sliceWidth;
+            // parabola eq: y = 90 * (1 - ( (x-30)/30 )^2 )
+            // evaluate at left, right, and take min for inscribed.
+            const h1 = 90 * (1 - Math.pow((x1 - 30)/30, 2));
+            const h2 = 90 * (1 - Math.pow((x2 - 30)/30, 2));
+            const h = Math.min(h1, h2);
+            
+            if (h > 0) {
+                currentArea += h * sliceWidth;
+                
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', x1 - 30);
+                rect.setAttribute('y', 0);
+                rect.setAttribute('width', sliceWidth);
+                rect.setAttribute('height', h);
+                rect.setAttribute('fill', 'rgba(96, 165, 250, 0.6)');
+                rect.setAttribute('stroke', 'var(--color-bound-blue)');
+                rect.setAttribute('stroke-width', n > 20 ? 0.5 : 1);
+                parabolaSlicesGroup.appendChild(rect);
+            }
+        }
+        
+        const exactArea = 3600;
+        const error = exactArea - currentArea;
+        
+        let angle = (error / 3600) * 12;
+        if (angle < 0.1 && n > 50) angle = 0; // snap to 0
+        
+        if (leverGroup) {
+            leverGroup.setAttribute('transform', `rotate(${angle}, 250, 220)`);
+        }
+        
+        if (balanceStatus) {
+            if (angle === 0 || n >= 90) {
+                balanceStatus.textContent = '¡Perfectamente Equilibrado!';
+                balanceStatus.setAttribute('fill', 'var(--color-success)');
+            } else if (n > 30) {
+                balanceStatus.textContent = 'Casi Equilibrado...';
+                balanceStatus.setAttribute('fill', 'var(--color-warning)');
+            } else {
+                balanceStatus.textContent = 'Desequilibrado';
+                balanceStatus.setAttribute('fill', 'var(--color-danger)');
+            }
+        }
+    }
+
+    if (balanceSlider) {
+        balanceSlider.addEventListener('input', (e) => {
+            updateBalanceGame(parseInt(e.target.value));
+        });
+        // Initial setup
+        updateBalanceGame(1);
+    }
 });

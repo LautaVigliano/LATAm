@@ -1942,3 +1942,193 @@ body.light-mode .highlighted-question {
 
 
 
+
+.archimedes-speech h4 {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.archimedes-speech p {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--color-text-dark);
+    margin: 0;
+}
+
+/* ==========================================================================
+   PARABOLA QUADRATURE SIMULATION STYLES
+   ========================================================================== */
+.parabola-container {
+    background-color: var(--color-svg-bg);
+    border: 1px solid var(--color-svg-border);
+    border-radius: var(--border-radius-md);
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.parabola-curve {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 2.5;
+}
+
+.parabola-chord {
+    stroke: var(--color-text-muted);
+    stroke-width: 1.5;
+    stroke-dasharray: 3,3;
+}
+
+.parabola-triangle {
+    fill: rgba(183, 138, 56, 0.25);
+    stroke: var(--color-accent);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    transition: all var(--transition-normal);
+}
+
+body.light-mode .parabola-triangle {
+    fill: rgba(183, 138, 56, 0.18);
+}
+
+.parabola-triangle-step1 {
+    fill: rgba(99, 102, 241, 0.25);
+    stroke: #818cf8;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+}
+
+body.light-mode .parabola-triangle-step1 {
+    fill: rgba(25, 118, 210, 0.18);
+    stroke: #1976d2;
+}
+
+.parabola-triangle-step2 {
+    fill: rgba(16, 185, 129, 0.25);
+    stroke: #34d399;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+}
+
+body.light-mode .parabola-triangle-step2 {
+    fill: rgba(46, 125, 50, 0.15);
+    stroke: #2e7d32;
+}
+
+.parabola-triangle-step3, .parabola-triangle-step4 {
+    fill: rgba(239, 68, 68, 0.2);
+    stroke: #ef4444;
+    stroke-width: 1;
+    stroke-linejoin: round;
+}
+
+body.light-mode .parabola-triangle-step3, body.light-mode .parabola-triangle-step4 {
+    fill: rgba(185, 28, 28, 0.12);
+    stroke: #b91c1c;
+}
+
+/* ==========================================================================
+   ARCHIMEDES INTRODUCTORY STORY BOX
+   ========================================================================== */
+.archimedes-story-box {
+    background-color: rgba(30, 41, 59, 0.7); /* slate card with transparency */
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-left: 5px solid var(--color-accent);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    margin: 1.5rem 0 2rem 0;
+    text-align: left;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(8px);
+}
+
+body.light-mode .archimedes-story-box {
+    background-color: #FAF8F5; /* parchment cream color matching primary bg */
+    border: 1px solid rgba(27, 69, 87, 0.1);
+    border-left: 5px solid var(--color-accent); /* warm amber */
+    box-shadow: 0 8px 24px rgba(27, 69, 87, 0.04);
+}
+
+.story-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.story-icon {
+    font-size: 1.5rem;
+}
+
+.story-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-accent);
+}
+
+.story-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.story-text {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--color-text-dark);
+}
+
+body.light-mode .story-text {
+    color: #334155; /* highly legible dark slate */
+}
+
+.drop-cap {
+    float: left;
+    font-size: 3.2rem;
+    line-height: 0.8;
+    padding-top: 4px;
+    padding-right: 8px;
+    font-weight: 800;
+    color: var(--color-accent);
+    font-family: Georgia, serif;
+}
+
+.highlighted-question {
+    font-weight: 700;
+    color: var(--color-primary);
+    border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+body.light-mode .highlighted-question {
+    border-top-color: rgba(27, 69, 87, 0.12);
+    color: var(--color-primary);
+}
+
+/* ==========================================================================
+   NEW JS ACTIVITIES (UNROLL & BALANCE)
+   ========================================================================== */
+#rolling-circle-group {
+    transition: transform 0.1s linear;
+}
+#unroll-triangle {
+    transition: opacity 0.5s ease;
+}
+#unrolled-path {
+    transition: stroke-dashoffset 0.1s linear;
+}
+#unroll-label-h, #unroll-label-b {
+    transition: opacity 0.3s ease;
+}
+
+#lever-group {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#parabola-slices-group rect {
+    transition: y 0.2s, height 0.2s;
+}
