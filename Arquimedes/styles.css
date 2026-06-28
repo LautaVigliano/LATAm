@@ -74,6 +74,55 @@
 }
 
 /* ==========================================================================
+   GLOSARIO EDUCATIVO (TOOLTIPS)
+   ========================================================================== */
+.tooltip-term {
+    border-bottom: 2px dotted var(--color-accent);
+    cursor: help;
+    position: relative;
+    color: var(--color-text-light); /* Maintain text color but highlight with border */
+    transition: color var(--transition-fast);
+}
+
+.tooltip-term:hover {
+    color: var(--color-accent);
+}
+
+.tooltip-term::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(calc(-50% + var(--tooltip-shift, 0px)));
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-light);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.85rem;
+    font-weight: 400;
+    font-family: var(--font-family);
+    white-space: normal;
+    width: max-content;
+    max-width: 260px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    border: 1px solid var(--color-accent);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast), bottom var(--transition-fast);
+    z-index: 1000;
+    pointer-events: none;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.tooltip-term:hover::after {
+    opacity: 1;
+    visibility: visible;
+    bottom: 110%;
+}
+
+
+/* ==========================================================================
    LIGHT MODE ACCENTS & PALETTE (LATAm Theme)
    ========================================================================== */
 body.light-mode {
@@ -1216,10 +1265,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .chat-msg-row.user .chat-msg-bubble {
-    background-color: var(--color-primary);
-    color: var(--color-text-light);
+    background-color: var(--color-accent);
+    color: #ffffff;
     border-top-right-radius: 2px;
-    box-shadow: 0 2px 6px rgba(27, 69, 87, 0.15);
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
 }
 
 /* Suggestion Chips */
@@ -1240,15 +1289,16 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .chip-btn {
     border: 1px solid var(--color-svg-border);
     background-color: var(--color-card-bg);
-    padding: 0.35rem 0.75rem;
-    border-radius: 16px;
-    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
     color: var(--color-accent);
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
     transition: all var(--transition-fast) ease;
     white-space: nowrap;
     flex-shrink: 0;
+    line-height: 1.4;
 }
 
 .chip-btn:hover {

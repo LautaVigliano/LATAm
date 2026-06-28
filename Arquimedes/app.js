@@ -325,8 +325,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const avatarTortoise = document.getElementById('avatar-tortoise');
 
     function updateRaceGame() {
-        // Converges to 50m with ratio r = 0.2
-        const ratio = Math.pow(0.2, raceStepVal);
+        // Converges to 50m with ratio r = 0.5
+        const ratio = Math.pow(0.5, raceStepVal);
         tortoisePosVal = 50 + 250 * ratio;
         achillesPosVal = 50 + 50 * ratio;
         const distanceVal = tortoisePosVal - achillesPosVal;
@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (btnRaceStep) {
         btnRaceStep.addEventListener('click', () => {
-            if (raceStepVal < 6) {
+            if (raceStepVal < 12) {
                 raceStepVal++;
                 updateRaceGame();
             }
@@ -913,7 +913,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (targetScoreDisplay) targetScoreDisplay.textContent = targetScoreVal + ' pts';
                 if (targetMultiplierDisplay) targetMultiplierDisplay.textContent = `x${(currentSidesN / 6).toFixed(1)} (n=${currentSidesN})`;
                 
-                targetFeedback.textContent = `¡Impacto! Tu conjetura de área ${shotVal.toFixed(4)} está dentro del rango seguro para n = ${currentSidesN}. ¡Ganaste ${pts} puntos! Aumentá los lados para achicar la zona y sumar más puntos.`;
+                targetFeedback.innerHTML = `¡Impacto! Tu conjetura <strong>${shotVal.toFixed(4)}</strong> está en la Zona Segura. ¡Ganaste ${pts} puntos! Aumentá los lados para achicar la zona y multiplicar tu puntaje.`;
                 targetFeedback.className = 'callout success';
                 if (aimShotValDisplay) {
                     aimShotValDisplay.style.color = 'var(--color-success)';
@@ -923,7 +923,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (targetScoreDisplay) targetScoreDisplay.textContent = '0 pts';
                 if (targetMultiplierDisplay) targetMultiplierDisplay.textContent = `x0.0 (n=${currentSidesN})`;
                 
-                targetFeedback.textContent = `¡Fallaste! Tu conjetura de área ${shotVal.toFixed(4)} cayó fuera del sándwich [${currentLowerPI.toFixed(4)} , ${currentUpperPI.toFixed(4)}]. Ajustá el control o reducila para acertar.`;
+                if (shotVal < currentLowerPI) {
+                    targetFeedback.innerHTML = `<strong>¡Imposible!</strong> Tu disparo (${shotVal.toFixed(4)}) es menor que el polígono inscrito (${currentLowerPI.toFixed(4)}). ¡El círculo que lo rodea tiene que ser más grande!`;
+                } else {
+                    targetFeedback.innerHTML = `<strong>¡Te pasaste!</strong> Tu disparo (${shotVal.toFixed(4)}) es mayor que el polígono circunscrito (${currentUpperPI.toFixed(4)}). ¡El círculo está adentro, debe ser menor!`;
+                }
                 targetFeedback.className = 'callout warning';
                 if (aimShotValDisplay) {
                     aimShotValDisplay.style.color = 'var(--color-danger)';
@@ -1079,13 +1083,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (epsilonFeedback) {
             if (N < minN) {
-                epsilonFeedback.textContent = `¡Cuidado! El punto ${labelChar}${N} (y posiblemente otros) quedan fuera de la zona verde. Elegí un paso N más grande.`;
+                let actualError = seqType === 'monotonic' ? (1 / Math.pow(2, N)) : (1 / N);
+                epsilonFeedback.innerHTML = `<strong>¡Refutación!</strong> Elegiste N = ${N}, pero el error en ese paso es <strong>${actualError.toFixed(3)}</strong>, lo que rompe tu tolerancia (&epsilon; = ${eps.toFixed(2)}). ¡Avanzá más pasos!`;
                 epsilonFeedback.className = 'callout warning';
             } else if (N === minN) {
-                epsilonFeedback.textContent = `¡Excelente sintonía! N = ${N} es el paso mínimo ideal. Todos los puntos desde ${labelChar}${N} en adelante están a salvo dentro de la tolerancia ε = ${eps.toFixed(2)}.`;
+                epsilonFeedback.innerHTML = `<strong>¡Demostrado!</strong> N = ${N} es el paso crítico. A partir de aquí, todos los puntos caen matemáticamente dentro de tu margen de error.`;
                 epsilonFeedback.className = 'callout success';
             } else {
-                epsilonFeedback.textContent = `¡Correcto! Todos los puntos a partir de N = ${N} están adentro. Pero podés afinar más la sintonía eligiendo un N menor. ¡Inténtalo!`;
+                epsilonFeedback.innerHTML = `<strong>Válido, pero ineficiente.</strong> Es cierto que desde N = ${N} los puntos están dentro, pero debés encontrar el <strong>menor paso posible</strong>. ¡Ajustá N hacia abajo!`;
                 epsilonFeedback.className = 'callout warning';
             }
         }
@@ -1108,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateEpsilonTuner();
 
     /* ==========================================================================
-       5. COMPONENTE TÉCNICO COMPLEMENTARIO: FAB CHATBOT WIDGET
+       5. COMPONENTE TÉCNICO COMPLEMENTARIO: FAB CHATBOT WIDGET (AI INTEGRATION)
        ========================================================================== */
     const chatbotFab = document.getElementById('chatbot-fab');
     const chatbotWindow = document.getElementById('chatbot-window');
@@ -1116,6 +1121,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatbotForm = document.getElementById('chatbot-input-form');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotChips = document.querySelectorAll('.chatbot-quick-chips .chip-btn');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+
+    // El backend se encuentra en la ruta /api/chat y oculta la clave
+    let chatHistory = [];
 
     function openChatbot() {
         if (chatbotWindow) chatbotWindow.classList.add('active');
@@ -1143,12 +1152,106 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function addMessageToDOM(text, sender) {
+        const row = document.createElement('div');
+        row.className = `chat-msg-row ${sender}`;
+        
+        if (sender === 'assistant') {
+            const avatar = document.createElement('div');
+            avatar.className = 'chat-avatar';
+            avatar.textContent = '🏛️';
+            row.appendChild(avatar);
+        }
+
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-msg-bubble';
+        
+        // Parsear markdown simple (negritas y cursivas)
+        let htmlText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        htmlText = htmlText.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        bubble.innerHTML = htmlText;
+        row.appendChild(bubble);
+
+        if (chatbotMessages) {
+            chatbotMessages.appendChild(row);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+    }
+
+    function addLoadingIndicator() {
+        const row = document.createElement('div');
+        row.className = `chat-msg-row assistant loading-msg`;
+        row.innerHTML = `
+            <div class="chat-avatar">🏛️</div>
+            <div class="chat-msg-bubble" style="opacity: 0.7; font-style: italic;">Arquímedes está pensando...</div>
+        `;
+        if (chatbotMessages) {
+            chatbotMessages.appendChild(row);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+        return row;
+    }
+
+    async function sendMessageToGemini(userMessage) {
+        addMessageToDOM(userMessage, 'user');
+        
+        chatHistory.push({
+            role: "user",
+            content: userMessage
+        });
+
+        const loadingIndicator = addLoadingIndicator();
+        if (chatbotInput) chatbotInput.disabled = true;
+
+        try {
+            const response = await fetch('/api/chat', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chatHistory: chatHistory
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Error en la conexión con el oráculo.");
+            }
+
+            const data = await response.json();
+            loadingIndicator.remove();
+            
+            if (data.text) {
+                const assistantReply = data.text;
+                addMessageToDOM(assistantReply, 'assistant');
+                
+                chatHistory.push({
+                    role: "model",
+                    content: assistantReply
+                });
+            }
+
+        } catch (error) {
+            console.error(error);
+            loadingIndicator.remove();
+            addMessageToDOM("¡Por Zeus! Ha habido una tormenta en las líneas de comunicación. Inténtalo más tarde.", "assistant");
+        } finally {
+            if (chatbotInput) {
+                chatbotInput.disabled = false;
+                chatbotInput.focus();
+            }
+        }
+    }
+
     if (chatbotForm) {
         chatbotForm.addEventListener('submit', (e) => {
             e.preventDefault();
             if (chatbotInput) {
-                // As this is a mock chatbot UI, we just clear the input to complete the interaction
-                chatbotInput.value = '';
+                const text = chatbotInput.value.trim();
+                if (text) {
+                    chatbotInput.value = '';
+                    sendMessageToGemini(text);
+                }
             }
         });
     }
@@ -1157,9 +1260,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chip.addEventListener('click', (e) => {
             e.stopPropagation();
             const question = chip.getAttribute('data-question');
-            if (chatbotInput) {
-                chatbotInput.value = question;
-                chatbotInput.focus();
+            if (question) {
+                sendMessageToGemini(question);
+                if (chatbotWindow && !chatbotWindow.classList.contains('active')) {
+                    openChatbot();
+                }
             }
         });
     });
