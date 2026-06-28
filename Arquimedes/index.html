@@ -236,7 +236,7 @@
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
                                 <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p>Zenón propuso estas paradojas para probar que el movimiento no existía. Pero fíjate en esto: al sumar fracciones cada vez más pequeñas (\(\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \dots\)), la suma total se acerca tanto como desees a una sola unidad entera sin superarla jamás. ¡El límite atrapa la infinitud!</p>
+                                <p>Zenón propuso estas <span class="tooltip-term" data-tooltip="Una idea que parece lógica pero que lleva a un resultado imposible o contradictorio.">paradojas</span> para probar que el movimiento no existía. Pero fíjate en esto: al sumar fracciones cada vez más pequeñas (\(\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \dots\)), la suma total se acerca tanto como desees a una sola unidad entera sin superarla jamás. ¡El límite atrapa la infinitud!</p>
                             </div>
                         </div>
                     </div>
@@ -402,7 +402,7 @@
                         </div>
                         
                         <!-- Sister Panels Layout -->
-                        <div class="sister-panels-layout" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="sister-panels-layout" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
                             <!-- Panel A: Full Circle Simulator -->
                             <div class="sister-panel" id="panel-full-circle" style="display: flex; flex-direction: column; align-items: center;">
                                 <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; text-align: center; color: var(--color-primary);">El Círculo Unitario y los Polígonos</h4>
@@ -471,7 +471,7 @@
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                Deslizá el control de número de lados (\(n\)) o hacé clic en los accesos rápidos. Observá cómo al aumentar \(n\), el círculo unitario en el panel izquierdo queda encerrado por polígonos cada vez más ajustados. Al mismo tiempo, en la Lupa de Sector a la derecha, verás cómo el ángulo disminuye y el segmento recto del Seno (azul) y la Tangente (verde) estrangulan al arco circular (naranja), reduciendo el error a cero.
+                                Deslizá el control de número de lados (\(n\)) o hacé clic en los accesos rápidos. Observá cómo al aumentar \(n\), el círculo unitario en el panel izquierdo queda encerrado por polígonos cada vez más ajustados. Al mismo tiempo, en la Lupa de Sector a la derecha, verás cómo el ángulo disminuye y el segmento recto del <span class="tooltip-term" data-tooltip="Relación trigonométrica que indica la proporción entre el cateto opuesto y la hipotenusa. Geométricamente, representa la altura vertical en el círculo unitario (la cuerda recta).">Seno</span> (azul) y la <span class="tooltip-term" data-tooltip="Relación entre el seno y el coseno. Geométricamente es la recta que roza al círculo en un solo punto exterior.">Tangente</span> (verde) estrangulan al arco circular (naranja), reduciendo el error a cero.
                             </p>
                         </div>
                         
@@ -480,7 +480,7 @@
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
                                 <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p>Al aumentar los lados \(n\), los polígonos inscrito y circunscrito acorralan al círculo. En la lupa del sector verás claramente el sándwich de límites: la recta del Seno es menor al arco, y este menor a la Tangente. A medida que \(n\) tiende a infinito, ¡la curva es atrapada por las rectas!</p>
+                                <p>Al aumentar los lados \(n\), los polígonos <span class="tooltip-term" data-tooltip="Dibujado por dentro. Sus vértices tocan la frontera, pero no se sale de ella.">inscrito</span> y <span class="tooltip-term" data-tooltip="Dibujado por fuera. Sus lados rozan la figura interna, encerrándola por completo.">circunscrito</span> acorralan al círculo. En la lupa del sector verás claramente el sándwich de límites: la recta del <span class="tooltip-term" data-tooltip="Relación trigonométrica que indica la proporción entre el cateto opuesto y la hipotenusa. Geométricamente, representa la altura vertical en el círculo unitario (la cuerda recta).">Seno</span> es menor al arco, y este menor a la <span class="tooltip-term" data-tooltip="Relación entre el seno y el coseno. Geométricamente es la recta que roza al círculo en un solo punto exterior.">Tangente</span>. A medida que \(n\) tiende a infinito, ¡la curva es atrapada por las rectas!</p>
                             </div>
                         </div>
                     </div>
@@ -494,7 +494,7 @@
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                Poné a prueba tu puntería matemática. Mueve el control de **"Tu Disparo"** para lanzar una conjetura sobre el valor del área (Pi). Tu objetivo es disparar dentro del rango de la <strong>"Zona Verde"</strong> acotado por los polígonos. ¡A mayor cantidad de lados, la zona verde será más estrecha y recibirás un multiplicador de puntaje mucho mayor!
+                                Poné a prueba tu puntería matemática. Mueve el control de **"Tu Disparo"** para lanzar una <span class="tooltip-term" data-tooltip="Una suposición educada basada en pistas, que aún debe ser demostrada matemáticamente.">conjetura</span> sobre el valor del área (Pi). Tu objetivo es disparar dentro del rango de la <strong>"Zona Verde"</strong> acotado por los polígonos. ¡A mayor cantidad de lados, la zona verde será más estrecha y recibirás un multiplicador de puntaje mucho mayor!
                             </p>
                         </div>
                         
@@ -676,7 +676,7 @@
                 <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <h2>El Legado de Arquímedes</h2>
-                        <p>El filósofo de Siracusa y los primeros pasos hacia el cálculo infinitesimal</p>
+                        <p>El filósofo de Siracusa y los primeros pasos hacia el cálculo <span class="tooltip-term" data-tooltip="Que es infinitamente pequeño, casi invisible, pero mayor que cero.">infinitesimal</span></p>
                     </div>
                     <i class="fa-solid fa-landmark" style="font-size: 2.5rem; color: var(--color-primary); opacity: 0.8;"></i>
                 </div>
@@ -686,19 +686,19 @@
                     <div class="card story-panel">
                         <h3>🏛️ La Geometría contra el Infinito</h3>
                         <p>
-                            En la antigua Grecia, los matemáticos sentían pánico ante el concepto del "infinito actual" (el <em>Apeiron</em>). Argumentos como los de Zenón sugerían que sumar infinitos pasos llevaría a absurdos insolubles.
+                            En la antigua Grecia, los matemáticos sentían pánico ante el concepto del "infinito actual" (el <em><span class="tooltip-term" data-tooltip="Término griego para referirse a lo infinito o sin límites. ¡Les daba mucho miedo!">Apeiron</span></em>). Argumentos como los de Zenón sugerían que sumar infinitos pasos llevaría a absurdos insolubles.
                         </p>
                         <p>
-                            Para resolver esto sin invocar el infinito de manera directa, <strong>Arquímedes</strong> perfeccionó el <strong>Método de Exhausción</strong>. En lugar de decir "sumamos infinitos triángulos", dijo: <em>"Podemos rellenar una forma curva con triángulos de modo que la diferencia (el error restante) se vuelva tan pequeña como queramos."</em>
+                            Para resolver esto sin invocar el infinito de manera directa, <strong>Arquímedes</strong> perfeccionó el <strong>Método de <span class="tooltip-term" data-tooltip="Técnica de 'agotar' o rellenar un espacio curvo usando figuras rectas conocidas.">Exhausción</span></strong>. En lugar de decir "sumamos infinitos triángulos", dijo: <em>"Podemos rellenar una forma curva con triángulos de modo que la diferencia (el error restante) se vuelva tan pequeña como queramos."</em>
                         </p>
                         <p>
-                            Esto es exactamente el concepto moderno de <strong>límite e infinitésimo</strong>: ¡hacer que el error tienda a cero!
+                            Esto es exactamente el concepto moderno de <strong>límite e <span class="tooltip-term" data-tooltip="Cantidad infinitamente pequeña. Acercarse a cero sin tocarlo.">infinitésimo</span></strong>: ¡hacer que el error tienda a cero!
                         </p>
                         
                         <div class="callout warning" style="margin-top: 1rem;">
                             <h4>Descubrimientos Clave de Arquímedes:</h4>
                             <ul>
-                                <li><strong>Cuadratura de la Parábola:</strong> Demostró que el área encerrada por una parábola es exactamente \(\frac{4}{3}\) del área del triángulo inscrito.</li>
+                                <li><strong><span class="tooltip-term" data-tooltip="Encontrar un cuadrado u otra figura recta que tenga exactamente la misma área que una figura curva.">Cuadratura</span> de la Parábola:</strong> Demostró que el área encerrada por una parábola es exactamente \(\frac{4}{3}\) del área del triángulo <span class="tooltip-term" data-tooltip="Dibujado por dentro. Sus vértices tocan la frontera, pero no se sale de ella.">inscrito</span>.</li>
                                 <li><strong>Aproximación de Pi:</strong> Encerró el círculo entre polígonos de hasta 96 lados.</li>
                                 <li><strong>Área de la Espiral:</strong> Realizó una de las primeras integraciones de la historia para medir espirales.</li>
                             </ul>
