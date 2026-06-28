@@ -1,18 +1,28 @@
-export default async function handler(req, res) {
+export default async (req, context) => {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
+        return new Response(JSON.stringify({ error: 'Method Not Allowed' }), {
+            status: 405,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     try {
-        const { chatHistory } = req.body;
+        const body = await req.json();
+        const { chatHistory } = body;
         
         if (!chatHistory || !Array.isArray(chatHistory)) {
-            return res.status(400).json({ error: 'Invalid chatHistory' });
+            return new Response(JSON.stringify({ error: 'Invalid chatHistory' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+        const GEMINI_API_KEY = process.env.GEMINI_API_KEY || Netlify.env.get('GEMINI_API_KEY');
         if (!GEMINI_API_KEY) {
-            return res.status(500).json({ error: 'API key not configured on server.' });
+            return new Response(JSON.stringify({ error: 'API key not configured on server.' }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
         const SYSTEM_PROMPT = `
@@ -54,16 +64,27 @@ Pedagogía y Restricciones:
         const data = await response.json();
 
         if (data.candidates && data.candidates[0].content.parts[0].text) {
-            return res.status(200).json({
-                text: data.candidates[0].content.parts[0].text
+            return new Response(JSON.stringify({ text: data.candidates[0].content.parts[0].text }), {
+                status: 200,
+                headers: { 'Content-Type': 'application/json' }
             });
         } else {
             console.error('Gemini API Error:', data);
-            return res.status(500).json({ error: 'Failed to generate response from Gemini API' });
+            return new Response(JSON.stringify({ error: 'Failed to generate response from Gemini API' }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
     } catch (error) {
         console.error('Server error:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+        return new Response(JSON.stringify({ error: 'Internal server error' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
-}
+};
+
+export const config = {
+    path: "/api/chat"
+};
