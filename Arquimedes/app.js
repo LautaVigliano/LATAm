@@ -1366,7 +1366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Update Dialogue Bubble text
-        if (historyDialogueText) {
+        if (semicircleDialogueText) {
             historyDialogueText.textContent = historyDialogues[circleStepK];
         }
 
@@ -2069,7 +2069,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const semicircleAreaSum = document.getElementById('semicircle-area-sum');
     const btnSemicircleAdd = document.getElementById('btn-semicircle-add');
     const btnSemicircleReset = document.getElementById('btn-semicircle-reset');
-    const historyDialogueText = document.getElementById('history-dialogue-text');
+    const semicircleDialogueText = document.getElementById('history-dialogue-text');
 
     let currentSemicircleStep = 0;
 
@@ -2150,20 +2150,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Update Archimedes speech bubble text dynamically
-        if (historyDialogueText) {
+        if (semicircleDialogueText) {
             if (step === 0) {
-                historyDialogueText.innerHTML = `He trazado el triángulo inscrito principal de área <strong>1.0000</strong>. Fíjate cómo queda una gran brecha de <strong>0.5708</strong> unidades sin cubrir. ¿Podemos rellenarla agregando más triángulos?`;
+                semicircleDialogueText.innerHTML = `He trazado el triángulo inscrito principal de área <strong>1.0000</strong>. Fíjate cómo queda una gran brecha de <strong>0.5708</strong> unidades sin cubrir. ¿Podemos rellenarla agregando más triángulos?`;
             } else if (step === 1) {
-                historyDialogueText.innerHTML = `¡Muy bien! Agregamos 2 triángulos más en las esquinas. Ahora el área total es de <strong>1.4142</strong> y la brecha se redujo a <strong>0.1566</strong>. ¡La curva empieza a ser acorralada!`;
+                semicircleDialogueText.innerHTML = `¡Muy bien! Agregamos 2 triángulos más en las esquinas. Ahora el área total es de <strong>1.4142</strong> y la brecha se redujo a <strong>0.1566</strong>. ¡La curva empieza a ser acorralada!`;
             } else if (step === 2) {
-                historyDialogueText.innerHTML = `Agregamos 4 triángulos más pequeños. El área subió a <strong>1.5307</strong> y la brecha es de solo <strong>0.0401</strong>. ¡Casi no queda espacio vacío!`;
+                semicircleDialogueText.innerHTML = `Agregamos 4 triángulos más pequeños. El área subió a <strong>1.5307</strong> y la brecha es de solo <strong>0.0401</strong>. ¡Casi no queda espacio vacío!`;
             } else if (step === 3) {
-                historyDialogueText.innerHTML = `Añadimos 8 triángulos diminutos. El área acumulada es <strong>1.5607</strong>. La diferencia con el semicírculo real (\( \\frac{\\pi}{2} \\approx 1.5708 \)) es de apenas <strong>0.0101</strong>.`;
+                semicircleDialogueText.innerHTML = `Añadimos 8 triángulos diminutos. El área acumulada es <strong>1.5607</strong>. La diferencia con el semicírculo real (\( \\frac{\\pi}{2} \\approx 1.5708 \)) es de apenas <strong>0.0101</strong>.`;
             } else {
-                historyDialogueText.innerHTML = `¡Espectacular! Con 16 triángulos la brecha es de apenas <strong>0.0025</strong>. En el límite infinito, la suma de las áreas de los triángulos será exactamente igual al área del semicírculo: <strong>\( \\frac{\\pi}{2} \\)</strong>. ¡El infinito ha sido domado!`;
+                semicircleDialogueText.innerHTML = `¡Espectacular! Con 16 triángulos la brecha es de apenas <strong>0.0025</strong>. En el límite infinito, la suma de las áreas de los triángulos será exactamente igual al área del semicírculo: <strong>\( \\frac{\\pi}{2} \\)</strong>. ¡El infinito ha sido domado!`;
             }
             if (window.MathJax && window.MathJax.typesetPromise) {
-                window.MathJax.typesetPromise([historyDialogueText]).catch((err) => console.log(err));
+                window.MathJax.typesetPromise([semicircleDialogueText]).catch((err) => console.log(err));
             }
         }
     }
