@@ -1004,39 +1004,44 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Fetch current sequence type
         const seqTypeRadio = document.querySelector('input[name="sequence-type"]:checked');
-        const seqType = seqTypeRadio ? seqTypeRadio.value : 'monotonic';
-        const labelChar = seqType === 'monotonic' ? 'a' : 'b';
+        const seqType = seqTypeRadio ? seqTypeRadio.value : 'ladder';
+        
+        let labelChar = 'a';
+        if (seqType === 'ball') labelChar = 'b';
+        else if (seqType === 'pendulum') labelChar = 'c';
         
         // 1. Draw Epsilon Band
-        // Target L = 1.0 is at y=70 (value scale: y = 170 - (v / 1.2) * 120 -> R = 120 pixels)
-        const bandY = 70 - 100 * eps;
-        const bandHeight = 200 * eps;
+        // Target L = 1.0 is at y=100 (range 0 to 2.0 -> y = 170 - val * 70)
+        const bandY = 100 - 70 * eps;
+        const bandHeight = 140 * eps;
         if (epsilonBand) {
             epsilonBand.setAttribute('y', bandY.toFixed(2));
             epsilonBand.setAttribute('height', bandHeight.toFixed(2));
         }
         
         // 2. Draw Guessed Step N Line
-        const lineX = 50 + (N - 1) * 44;
+        const lineX = 45 + (N - 1) * 23;
         if (indicatorNLine) {
             indicatorNLine.setAttribute('x1', lineX);
             indicatorNLine.setAttribute('x2', lineX);
         }
         
-        // 3. Render Points
+        // 3. Render 15 Points
         if (epsilonPointsGroup) {
             epsilonPointsGroup.innerHTML = '';
             
-            for (let n = 1; n <= 8; n++) {
+            for (let n = 1; n <= 15; n++) {
                 let val;
-                if (seqType === 'monotonic') {
-                    val = 1 - 1 / Math.pow(2, n);
+                if (seqType === 'ladder') {
+                    val = 1.0 - 1.0 / n;
+                } else if (seqType === 'ball') {
+                    val = 1.0 + 1.0 / n;
                 } else {
-                    val = 1 + Math.pow(-1, n) / n;
+                    val = 1.0 + Math.pow(-1, n) / n;
                 }
                 
-                const x = 50 + (n - 1) * 44;
-                const y = 170 - (val / 1.2) * 120;
+                const x = 45 + (n - 1) * 23;
+                const y = 170 - val * 70;
                 
                 const diff = Math.abs(1.0 - val);
                 const isInside = diff <= eps;
@@ -1045,7 +1050,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                 circle.setAttribute('cx', x.toFixed(2));
                 circle.setAttribute('cy', y.toFixed(2));
-                circle.setAttribute('r', '5');
+                circle.setAttribute('r', '4');
                 
                 let ptClass = 'epsilon-point';
                 if (isInside) {
@@ -1059,53 +1064,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 circle.setAttribute('class', ptClass);
                 epsilonPointsGroup.appendChild(circle);
                 
-                // Draw tick label under points
+                // Draw tick label above points
                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', x.toFixed(2));
-                text.setAttribute('y', (y - 10).toFixed(2));
+                text.setAttribute('y', (y - 8).toFixed(2));
                 text.setAttribute('class', 'epsilon-point-label');
                 text.textContent = `${labelChar}${n}`;
                 epsilonPointsGroup.appendChild(text);
                 
-                // Draw X ticks
-                const tick = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                tick.setAttribute('x', x.toFixed(2));
-                tick.setAttribute('y', '185');
-                tick.setAttribute('class', 'graph-tick-text');
-                tick.setAttribute('text-anchor', 'middle');
-                tick.textContent = n;
-                epsilonPointsGroup.appendChild(tick);
+                // Draw X ticks (every 2 steps to avoid clutter, but showing 1 and 15 always)
+                if (n === 1 || n === 15 || n % 2 === 0) {
+                    const tick = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    tick.setAttribute('x', x.toFixed(2));
+                    tick.setAttribute('y', '185');
+                    tick.setAttribute('class', 'graph-tick-text');
+                    tick.setAttribute('text-anchor', 'middle');
+                    tick.textContent = n;
+                    epsilonPointsGroup.appendChild(tick);
+                }
             }
         }
         
         // 4. Verify game state / feedback
+        // All three sequences have error magnitude equal to 1/n.
+        // Therefore, the critical step minN is the first step where 1/minN <= eps.
         let minN = 1;
-        if (seqType === 'monotonic') {
-            while (minN <= 8 && (1 / Math.pow(2, minN)) > eps) {
-                minN++;
-            }
-        } else {
-            while (minN <= 8 && (1 / minN) > eps) {
-                minN++;
-            }
+        while (minN <= 15 && (1.0 / minN) > eps) {
+            minN++;
         }
         
         if (epsilonFeedback) {
+            let metaphorName = "la Escalera";
+            if (seqType === 'ball') metaphorName = "la Pelota";
+            else if (seqType === 'pendulum') metaphorName = "el Péndulo";
+
             if (N < minN) {
-                let actualError = seqType === 'monotonic' ? (1 / Math.pow(2, N)) : (1 / N);
-                epsilonFeedback.innerHTML = `<strong>¡Refutación!</strong> Elegiste N = ${N}, pero la diferencia en ese paso es <strong>${actualError.toFixed(3)}</strong>, lo que rompe tu tolerancia (&epsilon; = ${eps.toFixed(2)}). ¡Avanzá más pasos!`;
+                let actualError = 1.0 / N;
+                epsilonFeedback.innerHTML = `<strong>¡Refutación!</strong> Elegiste N = ${N}, pero en ese paso de <strong>${metaphorName}</strong> la diferencia restante con el límite (error = ${actualError.toFixed(3)}) supera el tamaño de tu grano de arena (tol. = ${eps.toFixed(2)}). ¡Tenés que dar más pasos!`;
                 epsilonFeedback.className = 'callout danger';
             } else if (N === minN) {
-                epsilonFeedback.innerHTML = `<strong>¡Demostrado!</strong> N = ${N} es el paso crítico. A partir de aquí, todos los puntos caen matemáticamente dentro de tu margen aceptable.`;
+                epsilonFeedback.innerHTML = `<strong>¡Sintonía Perfecta!</strong> N = ${N} es el paso crítico donde <strong>${metaphorName}</strong> se estabiliza. De aquí en adelante, la diferencia es menor que un grano de arena y entra siempre dentro de la franja verde.`;
                 epsilonFeedback.className = 'callout success';
             } else {
-                epsilonFeedback.innerHTML = `<strong>Válido, pero ineficiente.</strong> Es cierto que desde N = ${N} los puntos están dentro, pero debés encontrar el <strong>menor paso posible</strong>. ¡Ajustá N hacia abajo!`;
+                epsilonFeedback.innerHTML = `<strong>Válido, pero ineficiente.</strong> Es cierto que desde N = ${N} los puntos entran en la franja, pero podés sintonizarlo con un paso más chico. ¡Ajustá N hacia la izquierda para buscar el paso crítico!`;
                 epsilonFeedback.className = 'callout warning';
             }
         }
-    }
- 
-    if (epsilonSlider) {
+    }\n\n    if (epsilonSlider) {
         epsilonSlider.addEventListener('input', updateEpsilonTuner);
     }
     
