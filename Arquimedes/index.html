@@ -395,29 +395,43 @@
                         </div>
                     </div>
                     
+                    
                     <!-- SUB-CONTENT: PARADOX -->
-                    <div id="sub-paradox" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-card-bg); border-radius: var(--border-radius-md); border: 1px solid var(--color-svg-border); box-shadow: var(--shadow-sm);">
-                        <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Mundo Físico vs El Modelo Matemático</h3>
-                        <div class="interactive-activity" style="margin-bottom: 1.5rem; background: rgba(17, 24, 39, 0.03); border: 1px solid var(--color-svg-border); padding: 1rem; border-radius: var(--border-radius-sm);">
-                            <h4 style="margin-top: 0;">🔬 Microscopio Cuántico</h4>
-                            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <label>Nivel de Zoom: <strong id="quantum-zoom-label" style="color: var(--color-accent);">Macroscópico (1x)</strong></label>
-                                </div>
-                                <input type="range" id="quantum-zoom-slider" min="1" max="100" value="1" style="width: 100%;">
-                                
-                                <div style="background: #1e293b; border-radius: 8px; position: relative; height: 120px; overflow: hidden; display: flex; align-items: center;">
-                                    <canvas id="quantum-canvas" width="800" height="120" style="width: 100%; height: 100%;"></canvas>
-                                    <div id="quantum-warning" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #ffeb3b; font-weight: bold; background: rgba(0,0,0,0.8); padding: 0.5rem 1rem; border-radius: 4px; display: none; text-align: center; border: 1px solid #ffeb3b;">
-                                        ¡Límite de Planck alcanzado!<br><span style="font-size: 0.8rem; font-weight: normal;">El espacio ya no es divisible. Aquiles avanza de un bloque al siguiente.</span>
+                    <div id="sub-paradox" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
+                        <h3 style="margin-bottom: 1rem; padding-bottom: 0.5rem;">El Límite Geométrico: Llenando el Cuadrado</h3>
+                        
+                        <p>Para resolver matemáticamente la paradoja, tenemos que entender cómo se comporta una <strong>serie infinita</strong>. Si Aquiles recorre mitades de mitades (1/2, luego 1/4, luego 1/8...), ¿la suma de todo ese tiempo es infinita? Veámoslo visualmente.</p>
+                        
+                        <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+                            <h4 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center;">
+                                <span>📐 Suma Geométrica de Infinitos Términos</span>
+                                <button id="btn-series-step" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;">Sumar la mitad restante</button>
+                            </h4>
+                            
+                            <div class="grid-layout cols-2" style="gap: 1.5rem; margin-top: 1rem;">
+                                <!-- Cuadrado de visualización -->
+                                <div style="display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+                                    <div id="series-square-container" style="position: relative; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.2);">
+                                        <!-- Aquí se inyectarán las fracciones (divs) -->
                                     </div>
+                                </div>
+                                
+                                <!-- Fórmula -->
+                                <div style="display: flex; flex-direction: column; justify-content: center;">
+                                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #94a3b8;">Fórmula de la Suma (S):</p>
+                                    <div style="font-size: 1.2rem; font-family: monospace; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; color: #a5b4fc; border: 1px solid rgba(129, 140, 248, 0.2); height: 120px; overflow-y: auto;">
+                                        <span id="series-formula">S = </span>
+                                    </div>
+                                    <p id="series-conclusion" style="font-size: 0.85rem; margin-top: 1rem; color: #4ade80; display: none;">
+                                        <strong>¡Eureka!</strong> Aunque la suma tiene <em>infinitos</em> términos, el área nunca superará el tamaño exacto de 1 cuadrado. El tiempo finito (1) engloba infinitas subdivisiones.
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <p>Matemáticamente, la serie de subdivisiones es infinita. Sin embargo, físicamente, el espacio y el tiempo no se pueden dividir para siempre. En la realidad microscópica, entramos en el dominio de la física cuántica, donde existe una longitud mínima (Longitud de Planck) y un tiempo mínimo.</p>
-                        <p>Pero incluso manteniendo la regla matemática: una suma de infinitos términos que se hacen cada vez más pequeños (1/2 + 1/4 + 1/8 + ...) resulta en un número <strong>finito</strong> (1). Así, Aquiles recorre las infinitas divisiones en un tiempo finito, atrapando a la tortuga sin problemas.</p>
-                        <button class="btn-primary" style="margin-top: 1rem;" onclick="toggleSubSection('sub-paradox')">Ocultar Profundización</button>
+                        
+                        <button class="btn-primary" style="margin-top: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white;" onclick="toggleSubSection('sub-paradox')">Ocultar Profundización</button>
                     </div>
+
 
 </section>
 
@@ -563,10 +577,10 @@
                     </div>
 
                     <!-- SUB-CONTENT: EXHAUSTION -->
-                    <div id="sub-exhaustion" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-card-bg); border-radius: var(--border-radius-md); border: 1px solid var(--color-svg-border); box-shadow: var(--shadow-sm);">
+                    <div id="sub-exhaustion" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
                         <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Orgullo de Arquímedes: 3D</h3>
 
-                        <div class="interactive-activity" style="margin-bottom: 1.5rem; background: rgba(17, 24, 39, 0.03); border: 1px solid var(--color-svg-border); padding: 1rem; border-radius: var(--border-radius-sm);">
+                        <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
                             <h4 style="margin-top: 0;">🧊 La Rebanadora 3D (Sección transversal)</h4>
                             <div class="grid-layout cols-2" style="gap: 1.5rem; align-items: center;">
                                 <div>
@@ -705,9 +719,9 @@
                     </div>
                     
                     <!-- SUB-CONTENT: LIMIT -->
-                    <div id="sub-limit" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-card-bg); border-radius: var(--border-radius-md); border: 1px solid var(--color-svg-border); box-shadow: var(--shadow-sm);">
+                    <div id="sub-limit" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
                         <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Mito del Polígono Infinito</h3>
-                        <div class="interactive-activity" style="margin-bottom: 1.5rem; background: rgba(17, 24, 39, 0.03); border: 1px solid var(--color-svg-border); padding: 1rem; border-radius: var(--border-radius-sm);">
+                        <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
                             <h4 style="margin-top: 0;">🔍 La Lupa Reveladora de Bordes</h4>
                             <div class="grid-layout cols-2" style="gap: 1.5rem;">
                                 <div style="display: flex; flex-direction: column; justify-content: space-between;">
@@ -865,25 +879,25 @@
                     </div>
 
                     <!-- SUB-CONTENT: HISTORY -->
-                    <div id="sub-history" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-card-bg); border-radius: var(--border-radius-md); border: 1px solid var(--color-svg-border); box-shadow: var(--shadow-sm);">
+                    <div id="sub-history" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
                         <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Horror al Infinito</h3>
 
-                        <div class="interactive-activity" style="margin-bottom: 1.5rem; background: rgba(17, 24, 39, 0.03); border: 1px solid var(--color-svg-border); padding: 1rem; border-radius: var(--border-radius-sm);">
+                        <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
                             <h4 style="margin-top: 0;">📜 El Desafío de la Notación (Batalla de Épocas)</h4>
                             <p style="font-size: 0.85rem; margin-bottom: 1rem;">Intenta "demostrar" el área bajo la curva. Compara el esfuerzo requerido en la Grecia Antigua versus el siglo XVII.</p>
                             <div class="grid-layout cols-2" style="gap: 1rem;">
                                 <!-- Método Griego -->
-                                <div style="background: white; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
                                     <h5 style="color: #b45309; margin-bottom: 0.5rem;">🏛️ Método Griego (Doble Contradicción)</h5>
-                                    <div id="greek-steps" style="font-size: 0.8rem; height: 100px; overflow-y: auto; background: #fdf6e3; padding: 0.5rem; border: 1px inset #ccc; margin-bottom: 0.5rem; font-family: 'Times New Roman', serif;">
+                                    <div id="greek-steps" style="font-size: 0.8rem; height: 100px; overflow-y: auto; background: rgba(255,255,255,0.05); color: #cbd5e1; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 0.5rem; font-family: 'Times New Roman', serif;">
                                         <em>Esperando tu demostración geométrica...</em>
                                     </div>
                                     <button id="btn-greek-step" class="btn-primary" style="background: #b45309; border: none; font-size: 0.8rem; width: 100%;">Redactar siguiente pergamino lógico</button>
                                 </div>
                                 <!-- Método Moderno -->
-                                <div style="background: white; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
                                     <h5 style="color: #0369a1; margin-bottom: 0.5rem;">🍎 Método Moderno (Cálculo de Newton/Leibniz)</h5>
-                                    <div id="modern-steps" style="font-size: 0.9rem; height: 100px; display: flex; align-items: center; justify-content: center; background: #f0f9ff; border: 1px inset #ccc; margin-bottom: 0.5rem; font-family: monospace;">
+                                    <div id="modern-steps" style="font-size: 0.9rem; height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 0.5rem; font-family: monospace;">
                                         <em>Esperando la notación algebraica...</em>
                                     </div>
                                     <button id="btn-modern-step" class="btn-primary" style="background: #0369a1; border: none; font-size: 0.8rem; width: 100%;">Escribir Símbolo de Integral</button>

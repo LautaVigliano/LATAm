@@ -1858,85 +1858,82 @@ document.addEventListener('DOMContentLoaded', () => {
        SUB-SECTION GAMES LOGIC
        ========================================================================== */
     
-    // 1. EL MICROSCOPIO CUANTICO
-    const quantumSlider = document.getElementById('quantum-zoom-slider');
-    const quantumLabel = document.getElementById('quantum-zoom-label');
-    const quantumCanvas = document.getElementById('quantum-canvas');
-    const quantumWarning = document.getElementById('quantum-warning');
     
-    if (quantumSlider && quantumCanvas) {
-        const qctx = quantumCanvas.getContext('2d');
-        
-        function drawQuantumWorld() {
-            const zoom = parseInt(quantumSlider.value);
-            const w = quantumCanvas.width;
-            const h = quantumCanvas.height;
-            qctx.clearRect(0, 0, w, h);
+    // 1. EL LIMITE GEOMETRICO: LLENANDO EL CUADRADO
+    const btnSeries = document.getElementById('btn-series-step');
+    const squareContainer = document.getElementById('series-square-container');
+    const formulaContainer = document.getElementById('series-formula');
+    const conclusion = document.getElementById('series-conclusion');
+    
+    let seriesStep = 1; // 1 means half, 2 means quarter...
+    let isVerticalSplit = true;
+    
+    if (btnSeries && squareContainer) {
+        btnSeries.addEventListener('click', () => {
+            const fraction = Math.pow(2, seriesStep);
             
-            if (zoom < 80) {
-                quantumLabel.innerText = `Macroscópico (${zoom}x)`;
-                quantumLabel.style.color = "var(--color-accent)";
-                quantumWarning.style.display = 'none';
-                
-                // Draw smooth track
-                qctx.fillStyle = '#334155';
-                qctx.fillRect(0, h/2 - 20, w, 40);
-                
-                // Draw Achilles (smooth)
-                qctx.fillStyle = '#fbbf24';
-                qctx.beginPath();
-                qctx.arc(w/4 + zoom, h/2, 10 + zoom/10, 0, Math.PI*2);
-                qctx.fill();
-                
-                // Draw Turtle (smooth)
-                qctx.fillStyle = '#4ade80';
-                qctx.beginPath();
-                qctx.arc(w/2 + zoom/2, h/2, 8 + zoom/15, 0, Math.PI*2);
-                qctx.fill();
-                
-            } else {
-                quantumLabel.innerText = `Nivel Cuántico (${zoom}x)`;
-                quantumLabel.style.color = "#ffeb3b";
-                if (zoom >= 95) {
-                    quantumWarning.style.display = 'block';
-                } else {
-                    quantumWarning.style.display = 'none';
-                }
-                
-                // Draw Grid (Planck length)
-                const gridSize = 40;
-                qctx.strokeStyle = '#334155';
-                qctx.lineWidth = 2;
-                for (let x = 0; x < w; x += gridSize) {
-                    qctx.beginPath();
-                    qctx.moveTo(x, 0);
-                    qctx.lineTo(x, h);
-                    qctx.stroke();
-                }
-                for (let y = 0; y < h; y += gridSize) {
-                    qctx.beginPath();
-                    qctx.moveTo(0, y);
-                    qctx.lineTo(w, y);
-                    qctx.stroke();
-                }
-                
-                // Snap Achilles to grid
-                const ax = Math.floor((w/4 + zoom) / gridSize) * gridSize;
-                qctx.fillStyle = '#fbbf24';
-                qctx.fillRect(ax + 4, h/2 - 16, gridSize - 8, 32);
-                
-                // Snap Turtle to grid
-                const tx = Math.floor((w/2 + zoom/2) / gridSize) * gridSize;
-                qctx.fillStyle = '#4ade80';
-                qctx.fillRect(tx + 4, h/2 - 16, gridSize - 8, 32);
+            // Create a new fraction block
+            const block = document.createElement('div');
+            block.classList.add('fraction-box');
+            block.innerText = `1/${fraction}`;
+            
+            // Calculate positioning to fill the remaining space
+            // Assuming container is 200x200
+            if (seriesStep === 1) { // 1/2
+                block.style.top = '0';
+                block.style.left = '0';
+                block.style.width = '100px';
+                block.style.height = '200px';
+                formulaContainer.innerHTML = 'S = 1/2';
+            } else if (seriesStep === 2) { // 1/4
+                block.style.top = '0';
+                block.style.left = '100px';
+                block.style.width = '100px';
+                block.style.height = '100px';
+                formulaContainer.innerHTML += ' + 1/4';
+            } else if (seriesStep === 3) { // 1/8
+                block.style.top = '100px';
+                block.style.left = '100px';
+                block.style.width = '50px';
+                block.style.height = '100px';
+                formulaContainer.innerHTML += ' + 1/8';
+            } else if (seriesStep === 4) { // 1/16
+                block.style.top = '100px';
+                block.style.left = '150px';
+                block.style.width = '50px';
+                block.style.height = '50px';
+                formulaContainer.innerHTML += ' + 1/16';
+            } else if (seriesStep === 5) { // 1/32
+                block.style.top = '150px';
+                block.style.left = '150px';
+                block.style.width = '25px';
+                block.style.height = '50px';
+                formulaContainer.innerHTML += ' + 1/32';
+            } else if (seriesStep === 6) { // 1/64
+                block.style.top = '150px';
+                block.style.left = '175px';
+                block.style.width = '25px';
+                block.style.height = '25px';
+                formulaContainer.innerHTML += ' + ...';
+            } else if (seriesStep > 6) {
+                // Too small to draw text
+                btnSeries.disabled = true;
+                btnSeries.innerText = "Suma Infinita Completada";
+                conclusion.style.display = 'block';
+                formulaContainer.innerHTML = 'S = &sum; (1/2^n) = 1';
+                return;
             }
-        }
-        
-        quantumSlider.addEventListener('input', drawQuantumWorld);
-        // Initial draw
-        requestAnimationFrame(drawQuantumWorld);
+            
+            squareContainer.appendChild(block);
+            
+            // Trigger reflow for animation
+            void block.offsetWidth;
+            block.classList.add('active');
+            
+            seriesStep++;
+        });
     }
-    
+
     // 2. LA REBANADORA 3D
     const slicesSlider = document.getElementById('slices-slider');
     const slicesLabel = document.getElementById('slices-label');
