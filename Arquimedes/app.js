@@ -57,6 +57,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
     const appSidebar = document.getElementById('app-sidebar');
 
+    window.toggleSubSection = toggleSubSection;
+    function toggleSubSection(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            if (el.style.display === 'none' || el.style.display === '') {
+                el.style.display = 'block';
+                // Scroll slightly so the user sees the newly opened content
+                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                el.style.display = 'none';
+            }
+        }
+    }
+
     window.switchSection = switchSection;
     function switchSection(targetSectionId) {
         // Hide all sections and remove active classes
@@ -1839,4 +1853,370 @@ document.addEventListener('DOMContentLoaded', () => {
         secantSlider.addEventListener('input', updateSecant);
         updateSecant();
     }
+
+    /* ==========================================================================
+       SUB-SECTION GAMES LOGIC
+       ========================================================================== */
+    
+    
+    // 1. EL LIMITE GEOMETRICO: LLENANDO EL CUADRADO
+    const btnSeries = document.getElementById('btn-series-step');
+    const squareContainer = document.getElementById('series-square-container');
+    const formulaContainer = document.getElementById('series-formula');
+    const conclusion = document.getElementById('series-conclusion');
+    
+    let seriesStep = 1; // 1 means half, 2 means quarter...
+    let isVerticalSplit = true;
+    
+    if (btnSeries && squareContainer) {
+        btnSeries.addEventListener('click', () => {
+            const fraction = Math.pow(2, seriesStep);
+            
+            // Create a new fraction block
+            const block = document.createElement('div');
+            block.classList.add('fraction-box');
+            block.innerText = `1/${fraction}`;
+            
+            // Calculate positioning to fill the remaining space
+            // Assuming container is 200x200
+            if (seriesStep === 1) { // 1/2
+                block.style.top = '0';
+                block.style.left = '0';
+                block.style.width = '100px';
+                block.style.height = '200px';
+                formulaContainer.innerHTML = 'S = 1/2';
+            } else if (seriesStep === 2) { // 1/4
+                block.style.top = '0';
+                block.style.left = '100px';
+                block.style.width = '100px';
+                block.style.height = '100px';
+                formulaContainer.innerHTML += ' + 1/4';
+            } else if (seriesStep === 3) { // 1/8
+                block.style.top = '100px';
+                block.style.left = '100px';
+                block.style.width = '50px';
+                block.style.height = '100px';
+                formulaContainer.innerHTML += ' + 1/8';
+            } else if (seriesStep === 4) { // 1/16
+                block.style.top = '100px';
+                block.style.left = '150px';
+                block.style.width = '50px';
+                block.style.height = '50px';
+                formulaContainer.innerHTML += ' + 1/16';
+            } else if (seriesStep === 5) { // 1/32
+                block.style.top = '150px';
+                block.style.left = '150px';
+                block.style.width = '25px';
+                block.style.height = '50px';
+                formulaContainer.innerHTML += ' + 1/32';
+            } else if (seriesStep === 6) { // 1/64
+                block.style.top = '150px';
+                block.style.left = '175px';
+                block.style.width = '25px';
+                block.style.height = '25px';
+                formulaContainer.innerHTML += ' + ...';
+            } else if (seriesStep > 6) {
+                // Too small to draw text
+                btnSeries.disabled = true;
+                btnSeries.innerText = "Suma Infinita Completada";
+                conclusion.style.display = 'block';
+                formulaContainer.innerHTML = 'S = &sum; (1/2^n) = 1';
+                return;
+            }
+            
+            squareContainer.appendChild(block);
+            
+            // Trigger reflow for animation
+            void block.offsetWidth;
+            block.classList.add('active');
+            
+            seriesStep++;
+        });
+    }
+
+    // 2. LA REBANADORA 3D
+    const slicesSlider = document.getElementById('slices-slider');
+    const slicesLabel = document.getElementById('slices-label');
+    const slicesVolLabel = document.getElementById('slices-volume-label');
+    const slicesRatioLabel = document.getElementById('slices-ratio-label');
+    const slicerCanvas = document.getElementById('slicer-canvas');
+    
+    if (slicesSlider && slicerCanvas) {
+        const sctx = slicerCanvas.getContext('2d');
+        
+        function drawSlicer() {
+            const n = parseInt(slicesSlider.value);
+            slicesLabel.innerText = n;
+            
+            const w = slicerCanvas.width;
+            const h = slicerCanvas.height;
+            const cx = w/2;
+            const cy = h/2;
+            const r = w/2 - 10;
+            
+            sctx.clearRect(0, 0, w, h);
+            
+            // Draw Sphere outline
+            sctx.strokeStyle = 'var(--color-primary)';
+            sctx.lineWidth = 2;
+            sctx.beginPath();
+            sctx.arc(cx, cy, r, 0, Math.PI*2);
+            sctx.stroke();
+            
+            // Draw rectangles (representing cylinder slices of sphere)
+            sctx.fillStyle = 'rgba(251, 191, 36, 0.6)';
+            sctx.strokeStyle = '#d97706';
+            sctx.lineWidth = 1;
+            
+            let totalSliceVol = 0;
+            const sliceHeight = (2 * r) / n;
+            const cylinderVol = Math.PI * (r*r) * (2*r); // Volume of bounding cylinder
+            
+            for (let i = 0; i < n; i++) {
+                // y center of this slice relative to circle center
+                const y = -r + (i + 0.5) * sliceHeight;
+                // slice width via Pythagoras: x^2 + y^2 = r^2
+                const x = Math.sqrt(Math.max(0, r*r - y*y));
+                
+                sctx.fillRect(cx - x, cy + y - sliceHeight/2, x*2, sliceHeight);
+                sctx.strokeRect(cx - x, cy + y - sliceHeight/2, x*2, sliceHeight);
+                
+                // Volume of this disk: pi * radius^2 * height
+                totalSliceVol += Math.PI * (x*x) * sliceHeight;
+            }
+            
+            const ratio = totalSliceVol / cylinderVol;
+            const percentage = (ratio * 100).toFixed(1);
+            
+            slicesVolLabel.innerText = percentage + '%';
+            slicesRatioLabel.innerText = ratio.toFixed(4) + ' (→ 0.6666)';
+        }
+        
+        slicesSlider.addEventListener('input', drawSlicer);
+        requestAnimationFrame(drawSlicer);
+    }
+    
+    // 3. LA LUPA DE BORDES
+    const btnReveal = document.getElementById('btn-reveal-edges');
+    const zoomCanvas = document.getElementById('zoom-canvas');
+    const zoomOverlay = document.getElementById('zoom-overlay');
+    const revealText = document.getElementById('reveal-text');
+    let isZoomed = false;
+    
+    if (btnReveal && zoomCanvas) {
+        const zctx = zoomCanvas.getContext('2d');
+        const w = zoomCanvas.width;
+        const h = zoomCanvas.height;
+        
+        function drawZoomState() {
+            zctx.clearRect(0, 0, w, h);
+            if (!isZoomed) {
+                zoomOverlay.style.display = 'flex';
+                revealText.style.display = 'none';
+                btnReveal.innerText = 'Aplicar Zoom Extremo';
+                btnReveal.classList.remove('btn-danger');
+            } else {
+                zoomOverlay.style.display = 'none';
+                revealText.style.display = 'block';
+                btnReveal.innerText = 'Volver a Vista Normal';
+                btnReveal.classList.add('btn-danger');
+                
+                // Draw curve (circle)
+                zctx.strokeStyle = 'var(--color-primary)';
+                zctx.lineWidth = 3;
+                zctx.beginPath();
+                zctx.moveTo(20, h - 20);
+                zctx.quadraticCurveTo(w/2, 20, w - 20, h - 20);
+                zctx.stroke();
+                
+                zctx.fillStyle = 'var(--color-primary)';
+                zctx.fillText("Curva del Círculo", 50, 40);
+                
+                // Draw polygon straight edge
+                zctx.strokeStyle = 'var(--color-accent)';
+                zctx.lineWidth = 3;
+                zctx.setLineDash([5, 5]);
+                zctx.beginPath();
+                zctx.moveTo(10, h - 10);
+                zctx.lineTo(w/2, 40);
+                zctx.lineTo(w - 10, h - 10);
+                zctx.stroke();
+                zctx.setLineDash([]);
+                
+                // Vertex
+                zctx.fillStyle = 'var(--color-accent)';
+                zctx.beginPath();
+                zctx.arc(w/2, 40, 5, 0, Math.PI*2);
+                zctx.fill();
+                
+                zctx.fillText("Vértice del Polígono", w/2 - 40, 60);
+            }
+        }
+        
+        btnReveal.addEventListener('click', () => {
+            isZoomed = !isZoomed;
+            drawZoomState();
+        });
+        requestAnimationFrame(drawZoomState);
+    }
+    
+    // 4. EL DESAFIO DE LA NOTACION
+    const btnGreek = document.getElementById('btn-greek-step');
+    const greekSteps = document.getElementById('greek-steps');
+    const canvas = document.getElementById('greek-visual-canvas');
+    const caption = document.getElementById('greek-visual-caption');
+    
+    function drawGreekVisual(step) {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const cx = 100, cy = 55, r = 40;
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Base curve (The true area)
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        if (step === 0 || step === 1 || step === 2) {
+            caption.innerText = step === 2 ? "Buscamos el área pero sin usar infinitos." : "Área curva exacta (Desconocida)";
+        }
+        else if (step === 3) {
+            // Assume Area is LARGER
+            ctx.beginPath();
+            ctx.arc(cx, cy, r + 10, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ef4444'; // red
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            caption.innerHTML = "Suposición falsa:<br><span style='color:#ef4444'>Área > Real</span>";
+        }
+        else if (step === 4) {
+            // Assume Area is LARGER + Inscribed polygon
+            ctx.beginPath();
+            ctx.arc(cx, cy, r + 10, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ef4444';
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Inscribed hexagon
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                let angle = i * Math.PI / 3;
+                let px = cx + r * Math.cos(angle);
+                let py = cy + r * Math.sin(angle);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.4)'; // blue
+            ctx.fill();
+            ctx.strokeStyle = '#3b82f6';
+            ctx.stroke();
+            caption.innerHTML = "Un polígono inscrito <span style='color:#3b82f6'>choca</span> con la suposición.";
+        }
+        else if (step === 5) {
+            // Assume Area is SMALLER
+            ctx.beginPath();
+            ctx.arc(cx, cy, r - 10, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ef4444';
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            caption.innerHTML = "Suposición falsa:<br><span style='color:#ef4444'>Área < Real</span>";
+        }
+        else if (step === 6) {
+            // Assume Area is SMALLER + Circumscribed polygon
+            ctx.beginPath();
+            ctx.arc(cx, cy, r - 10, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ef4444';
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Circumscribed hexagon
+            let r_out = r / Math.cos(Math.PI / 6);
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                let angle = i * Math.PI / 3 + Math.PI / 6;
+                let px = cx + r_out * Math.cos(angle);
+                let py = cy + r_out * Math.sin(angle);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(34, 197, 94, 0.4)'; // green
+            ctx.fill();
+            ctx.strokeStyle = '#22c55e';
+            ctx.stroke();
+            caption.innerHTML = "Un polígono externo <span style='color:#22c55e'>choca</span> con la suposición.";
+        }
+        else if (step >= 7) {
+            // Exact
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+            ctx.fillStyle = 'rgba(234, 179, 8, 0.6)'; // yellow/gold
+            ctx.fill();
+            caption.innerHTML = "<strong>Área Exacta Confirmada</strong>";
+        }
+    }
+    
+    // Initial draw
+    setTimeout(() => { if(typeof drawGreekVisual === 'function') drawGreekVisual(0); }, 100);
+    
+    let greekStepCount = 0;
+    const greekTexts = [
+        "Paso 1: Queremos medir un área curva exacta, pero solo confiamos en áreas de líneas rectas (polígonos).",
+        "Paso 2: Como le tememos al infinito, no podemos simplemente decir 'usemos un polígono de infinitos lados'.",
+        "Paso 3: Entonces, 'rodeamos' el problema. Primero, imaginemos por un momento que el área curva fuera MÁS GRANDE de lo calculado.",
+        "Paso 4: Si fuera más grande, podríamos meter un polígono adentro que demuestra que eso es lógicamente imposible.",
+        "Paso 5: Ahora, imaginemos que el área curva fuera MÁS CHICA de lo calculado.",
+        "Paso 6: Si fuera más chica, podríamos meter otro polígono que también demuestra que es imposible.",
+        "Paso 7: ¡Ajá! Si no puede ser ni más grande ni más chica... ¡Debe ser exactamente igual! (Extremadamente largo, ¿verdad?)"
+    ];
+    
+    const btnGreekReset = document.getElementById('btn-greek-reset');
+    
+    if (btnGreek) {
+        btnGreek.addEventListener('click', () => {
+            if (greekStepCount === 0) greekSteps.innerHTML = '';
+            if (greekStepCount < greekTexts.length) {
+                const p = document.createElement('p');
+                p.style.marginBottom = '0.75rem';
+                p.innerText = greekTexts[greekStepCount];
+                greekSteps.appendChild(p);
+                greekSteps.scrollTop = greekSteps.scrollHeight;
+                
+                greekStepCount++;
+                if (typeof drawGreekVisual === 'function') {
+                    drawGreekVisual(greekStepCount);
+                }
+                
+                if (greekStepCount === greekTexts.length) {
+                    btnGreek.innerText = "¡Demostración Completa!";
+                    btnGreek.disabled = true;
+                    btnGreek.style.opacity = '0.5';
+                    btnGreek.style.cursor = 'not-allowed';
+                }
+            }
+        });
+    }
+    
+    if (btnGreekReset) {
+        btnGreekReset.addEventListener('click', () => {
+            greekStepCount = 0;
+            greekSteps.innerHTML = '<div style="color: #94a3b8; font-family: sans-serif; font-style: normal; text-align: center; margin-top: 1rem;">Esperando el razonamiento...</div>';
+            btnGreek.innerText = "📜 Razonar paso lógico";
+            btnGreek.disabled = false;
+            btnGreek.style.opacity = '1';
+            btnGreek.style.cursor = 'pointer';
+            if (typeof drawGreekVisual === 'function') {
+                drawGreekVisual(0);
+            }
+        });
+    }
+
 });

@@ -385,7 +385,55 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            
+                    <!-- REFLEXIONES DE PROFUNDIZACIÓN -->
+                    <div style="grid-column: 1 / -1; margin-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--color-primary); border-bottom: 2px solid var(--color-svg-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Reflexiones de Profundización</h3>
+                        <div class="expansion-banner" onclick="toggleSubSection('sub-paradox')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
+                            <h4 style="margin-bottom: 0.25rem; font-size: 0.95rem; color: var(--color-primary);">¿Qué pasaría si...?</h4>
+                            <p style="margin-bottom: 0; font-size: 0.85rem;">¿Realmente nunca alcanza Aquiles a la tortuga en el mundo físico real?</p>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- SUB-CONTENT: PARADOX -->
+                    <div id="sub-paradox" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
+                        <h3 style="margin-bottom: 1rem; padding-bottom: 0.5rem;">El Límite Geométrico: Llenando el Cuadrado</h3>
+                        
+                        <p>Para resolver matemáticamente la paradoja, tenemos que entender cómo se comporta una <strong>serie infinita</strong>. Si Aquiles recorre mitades de mitades (1/2, luego 1/4, luego 1/8...), ¿la suma de todo ese tiempo es infinita? Veámoslo visualmente.</p>
+                        
+                        <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+                            <h4 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center;">
+                                <span>📐 Suma Geométrica de Infinitos Términos</span>
+                                <button id="btn-series-step" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;">Sumar la mitad restante</button>
+                            </h4>
+                            
+                            <div class="grid-layout cols-2" style="gap: 1.5rem; margin-top: 1rem;">
+                                <!-- Cuadrado de visualización -->
+                                <div style="display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+                                    <div id="series-square-container" style="position: relative; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.2);">
+                                        <!-- Aquí se inyectarán las fracciones (divs) -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Fórmula -->
+                                <div style="display: flex; flex-direction: column; justify-content: center;">
+                                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #94a3b8;">Fórmula de la Suma (S):</p>
+                                    <div style="font-size: 1.2rem; font-family: monospace; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; color: #a5b4fc; border: 1px solid rgba(129, 140, 248, 0.2); height: 120px; overflow-y: auto;">
+                                        <span id="series-formula">S = </span>
+                                    </div>
+                                    <p id="series-conclusion" style="font-size: 0.85rem; margin-top: 1rem; color: #4ade80; display: none;">
+                                        <strong>¡Eureka!</strong> Aunque la suma tiene <em>infinitos</em> términos, el área nunca superará el tamaño exacto de 1 cuadrado. El tiempo finito (1) engloba infinitas subdivisiones.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-secondary" style="margin-top: 1rem; width: 100%; background: transparent; border: 1px solid rgba(165, 180, 252, 0.3); color: #a5b4fc; padding: 0.5rem; border-radius: var(--border-radius-sm); cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 500;" onmouseover="this.style.background='rgba(165, 180, 252, 0.1)'" onmouseout="this.style.background='transparent'" onclick="toggleSubSection('sub-paradox')">⬆ Ocultar Profundización</button>
+                    </div>
+
+
+</section>
 
             <!-- SECTION 2: LABORATORIO DE EXHAUSCIÓN (ACTIVIDADES INDEPENDIENTES) -->
             <section id="section-lab" class="content-section">
@@ -522,11 +570,50 @@
                     <!-- REFLEXIONES DE PROFUNDIZACIÓN -->
                     <div style="grid-column: 1 / -1; margin-top: 1.5rem;">
                         <h3 style="font-size: 1.1rem; color: var(--color-primary); border-bottom: 2px solid var(--color-svg-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Reflexiones de Profundización</h3>
-                        <div class="expansion-banner" onclick="switchSection('sub-exhaustion')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
+                        <div class="expansion-banner" onclick="toggleSubSection('sub-exhaustion')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
                             <h4 style="margin-bottom: 0.25rem; font-size: 0.95rem; color: var(--color-primary);">¿Qué pasaría si...?</h4>
                             <p style="margin-bottom: 0; font-size: 0.85rem;">¿Intentamos usar este mismo método de "rodajas rectas" para medir volúmenes curvos en 3D (como la esfera)?</p>
                         </div>
                     </div>
+
+                    <!-- SUB-CONTENT: EXHAUSTION -->
+                    <div id="sub-exhaustion" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
+                        <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Orgullo de Arquímedes: 3D</h3>
+
+                        <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+                            <h4 style="margin-top: 0;">🧊 La Rebanadora 3D (Sección transversal)</h4>
+                            <div class="grid-layout cols-2" style="gap: 1.5rem; align-items: center;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem;">Cantidad de Rodajas: <strong id="slices-label" style="color: var(--color-accent);">4</strong></label>
+                                    <input type="range" id="slices-slider" min="2" max="50" value="4" style="width: 100%; margin-bottom: 1rem;">
+                                    
+                                    <div class="metrics-panel" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid rgba(255,255,255,0.1);">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                            <span>Vol. Cilindro Contenedor:</span>
+                                            <strong>100%</strong>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--color-accent);">
+                                            <span>Vol. Suma de Rodajas:</span>
+                                            <strong id="slices-volume-label">...</strong>
+                                        </div>
+                                        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 0.5rem 0;">
+                                        <div style="display: flex; justify-content: space-between; font-weight: bold; color: var(--color-primary);">
+                                            <span>Relación (Límite 2/3):</span>
+                                            <strong id="slices-ratio-label">...</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: center;">
+                                    <canvas id="slicer-canvas" width="200" height="200" style="background: rgba(0,0,0,0.3); border-radius: 50%; border: 2px dashed rgba(255,255,255,0.2);"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p>Así como usamos polígonos rectos para aproximarnos al círculo 2D, Arquímedes usó "rodajas" cilíndricas rectas para aproximarse al volumen de una esfera 3D.</p>
+                        <p>Al aplicar este método de exhausción tridimensional, logró una de sus mayores hazañas matemáticas: demostrar que el volumen de una esfera es exactamente dos tercios (2/3) del volumen del cilindro que la circunscribe. Estaba tan orgulloso de este descubrimiento que pidió que se grabara una esfera dentro de un cilindro en su tumba.</p>
+                        <button class="btn-secondary" style="margin-top: 1rem; width: 100%; background: transparent; border: 1px solid rgba(165, 180, 252, 0.3); color: #a5b4fc; padding: 0.5rem; border-radius: var(--border-radius-sm); cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 500;" onmouseover="this.style.background='rgba(165, 180, 252, 0.1)'" onmouseout="this.style.background='transparent'" onclick="toggleSubSection('sub-exhaustion')">⬆ Ocultar Profundización</button>
+                    </div>
+
 
                     
                 </div>
@@ -621,7 +708,45 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            
+                    <!-- REFLEXIONES DE PROFUNDIZACIÓN -->
+                    <div style="grid-column: 1 / -1; margin-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--color-primary); border-bottom: 2px solid var(--color-svg-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Reflexiones de Profundización</h3>
+                        <div class="expansion-banner" onclick="toggleSubSection('sub-limit')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
+                            <h4 style="margin-bottom: 0.25rem; font-size: 0.95rem; color: var(--color-primary);">¿Cómo es posible que...?</h4>
+                            <p style="margin-bottom: 0; font-size: 0.85rem;">¿El círculo es simplemente un polígono con infinitos lados?</p>
+                        </div>
+                    </div>
+                    
+                    <!-- SUB-CONTENT: LIMIT -->
+                    <div id="sub-limit" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
+                        <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Mito del Polígono Infinito</h3>
+                        <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+                            <h4 style="margin-top: 0;">🔍 La Lupa Reveladora de Bordes</h4>
+                            <div class="grid-layout cols-2" style="gap: 1.5rem;">
+                                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <p style="font-size: 0.9rem; margin-bottom: 1rem;">Incluso con 1000 lados, a simple vista parece un círculo perfecto. Pero si aplicamos un <strong>Zoom de 10,000x</strong> en un borde, descubriremos la verdad.</p>
+                                        <button id="btn-reveal-edges" class="btn-primary" style="width: 100%;">Aplicar Zoom Extremo</button>
+                                    </div>
+                                    <div id="reveal-text" style="font-size: 0.85rem; padding: 0.75rem; background: rgba(255, 193, 7, 0.1); border-left: 4px solid #ffc107; border-radius: 4px; color: #fdf6e3; display: none; margin-top: 1rem;">
+                                        <strong>Conclusión:</strong> El polígono siempre está compuesto de tramos rectos. Su <em>área</em> tiende al círculo, pero su <em>naturaleza geométrica</em> (lados rectos vs curva continua) nunca cambia.
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: center; position: relative;">
+                                    <canvas id="zoom-canvas" width="200" height="200" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--border-radius-sm);"></canvas>
+                                    <div id="zoom-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.85); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #f8fafc;">
+                                        Vista Normal (1x)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Es muy común escuchar esta afirmación, pero es <strong>falsa</strong>. Un polígono, por definición, siempre tendrá lados rectos. Un círculo tiene una curvatura continua sin lados rectos.</p>
+                        <p>El límite (la exhausción) nos dice que el <em>valor del área</em> del polígono se acerca infinitesimalmente al <em>valor del área</em> del círculo. Pero la figura poligonal no se "transforma" mágicamente en un círculo. Esta es la diferencia fundamental entre un cambio cuantitativo (valor numérico del área) y uno cualitativo (la esencia de la forma geométrica).</p>
+                        <button class="btn-secondary" style="margin-top: 1rem; width: 100%; background: transparent; border: 1px solid rgba(165, 180, 252, 0.3); color: #a5b4fc; padding: 0.5rem; border-radius: var(--border-radius-sm); cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 500;" onmouseover="this.style.background='rgba(165, 180, 252, 0.1)'" onmouseout="this.style.background='transparent'" onclick="toggleSubSection('sub-limit')">⬆ Ocultar Profundización</button>
+                    </div>
+
+</section>
 
             <!-- SECTION 4: HISTORICAL LEGACY (ARCHIMEDES) -->
             <section id="section-history" class="content-section">
@@ -747,84 +872,50 @@
                     <!-- REFLEXIONES DE PROFUNDIZACIÓN -->
                     <div style="grid-column: 1 / -1; margin-top: 1.5rem;">
                         <h3 style="font-size: 1.1rem; color: var(--color-primary); border-bottom: 2px solid var(--color-svg-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Reflexiones de Profundización</h3>
-                        <div class="expansion-banner" onclick="switchSection('sub-history')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
+                        <div class="expansion-banner" onclick="toggleSubSection('sub-history')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
                             <h4 style="margin-bottom: 0.25rem; font-size: 0.95rem; color: var(--color-primary);">¿Cómo es posible que...?</h4>
                             <p style="margin-bottom: 0; font-size: 0.85rem;">Si Arquímedes estuvo tan cerca, ¿por qué la humanidad tardó casi 2000 años más en inventar el Cálculo?</p>
                         </div>
                     </div>
-                </div>
-            </section>
-        
-            <!-- ================= SUB-SECTIONS ================= -->
-            
-            <!-- SUB-PARADOX -->
-            <section id="sub-paradox" class="content-section">
-                <div class="section-header">
-                    <h2>El Mundo Físico vs El Modelo Matemático</h2>
-                    <p>Resolviendo la paradoja de Zenón en la realidad</p>
-                </div>
-                <div class="grid-layout">
-                    <div class="card" style="grid-column: 1 / -1;">
-                        <h3>¿Realmente nunca alcanza Aquiles a la tortuga?</h3>
-                        <p>Matemáticamente, la serie de subdivisiones es infinita. Sin embargo, físicamente, el espacio y el tiempo no se pueden dividir para siempre. En la realidad microscópica, entramos en el dominio de la física cuántica, donde existe una longitud mínima (Longitud de Planck) y un tiempo mínimo.</p>
-                        <p>Pero incluso manteniendo la regla matemática: una suma de infinitos términos que se hacen cada vez más pequeños (1/2 + 1/4 + 1/8 + ...) resulta en un número <strong>finito</strong> (1). Así, Aquiles recorre las infinitas divisiones en un tiempo finito, atrapando a la tortuga sin problemas.</p>
-                        <button class="btn-primary" style="margin-top: 1rem;" onclick="switchSection('section-paradox')">Volver a Paradojas</button>
-                    </div>
-                </div>
-            </section>
 
-            <!-- SUB-EXHAUSTION -->
-            <section id="sub-exhaustion" class="content-section">
-                <div class="section-header">
-                    <h2>El Orgullo de Arquímedes: 3D</h2>
-                    <p>Midiendo un volumen curvo con rodajas rectas</p>
-                </div>
-                <div class="grid-layout">
-                    <div class="card" style="grid-column: 1 / -1;">
-                        <h3>La Esfera y el Cilindro</h3>
-                        <p>Así como usamos polígonos rectos para aproximarnos al círculo 2D, Arquímedes usó "rodajas" cilíndricas rectas para aproximarse al volumen de una esfera 3D.</p>
-                        <p>Al aplicar este método de exhausción tridimensional, logró una de sus mayores hazañas matemáticas: demostrar que el volumen de una esfera es exactamente dos tercios (2/3) del volumen del cilindro que la circunscribe. Estaba tan orgulloso de este descubrimiento que pidió que se grabara una esfera dentro de un cilindro en su tumba.</p>
-                        <button class="btn-primary" style="margin-top: 1rem;" onclick="switchSection('section-lab')">Volver al Laboratorio</button>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- SUB-LIMIT -->
-            <section id="sub-limit" class="content-section">
-                <div class="section-header">
-                    <h2>El Mito del Polígono Infinito</h2>
-                    <p>Diferenciando el modelo de la figura geométrica</p>
-                </div>
-                <div class="grid-layout">
-                    <div class="card" style="grid-column: 1 / -1;">
-                        <h3>¿El círculo es un polígono de infinitos lados?</h3>
-                        <p>Es muy común escuchar esta afirmación, pero es <strong>falsa</strong>. Un polígono, por definición, siempre tendrá lados rectos. Un círculo tiene una curvatura continua sin lados rectos.</p>
-                        <p>El límite (la exhausción) nos dice que el <em>valor del área</em> del polígono se acerca infinitesimalmente al <em>valor del área</em> del círculo. Pero la figura poligonal no se "transforma" mágicamente en un círculo. Esta es la diferencia fundamental entre un cambio cuantitativo (valor numérico del área) y uno cualitativo (la esencia de la forma geométrica).</p>
-                        <button class="btn-primary" style="margin-top: 1rem;" onclick="switchSection('section-limit')">Volver al Sintonizador</button>
-                    </div>
-                </div>
-            </section>
+                    <!-- SUB-CONTENT: HISTORY -->
+                    <div id="sub-history" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
+                        <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Horror al Infinito</h3>
 
-            <!-- SUB-HISTORY -->
-            <section id="sub-history" class="content-section">
-                <div class="section-header">
-                    <h2>El Horror al Infinito</h2>
-                    <p>¿Por qué tardamos 1800 años en inventar el cálculo?</p>
-                </div>
-                <div class="grid-layout">
-                    <div class="card" style="grid-column: 1 / -1;">
-                        <h3>¿Por qué Arquímedes no inventó el cálculo moderno?</h3>
+                        <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+                            <h4 style="margin-top: 0;">📜 El Desafío de la Notación (Batalla de Épocas)</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 1rem;">Resolvamos el área de una figura curva. Compara el largo y agotador camino lógico de los griegos contra el atajo moderno del siglo XVII.</p>
+                            <div class="grid-layout cols-2" style="gap: 1rem;">
+                                <!-- Método Griego -->
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+                                    <h5 style="color: #b45309; margin-bottom: 0.5rem;">🏛️ Método de Arquímedes (Rodeando el problema)</h5>
+                                    <div id="greek-steps" style="font-size: 0.9rem; line-height: 1.5; height: 120px; overflow-y: auto; background: rgba(0, 0, 0, 0.4); color: #fde68a; padding: 0.75rem; border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 6px; margin-bottom: 0.75rem; font-family: 'Georgia', serif; font-style: italic; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);">
+                                        <div style="color: #94a3b8; font-family: sans-serif; font-style: normal; text-align: center; margin-top: 1rem;">Esperando el razonamiento...</div>
+                                    </div>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <button id="btn-greek-step" class="btn-primary" style="flex: 1; background: linear-gradient(135deg, #d97706, #b45309); border: none; font-size: 0.85rem; font-weight: bold; box-shadow: 0 4px 6px rgba(180, 83, 9, 0.3); transition: all 0.2s; border-radius: 4px;">📜 Razonar paso lógico</button>
+                                        <button id="btn-greek-reset" class="btn-secondary" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; padding: 0.5rem 0.75rem; color: #cbd5e1; transition: all 0.2s; border-radius: 4px; cursor: pointer;" title="Reiniciar demostración">🔄</button>
+                                    </div>
+                                </div>
+                                <!-- Representación Visual -->
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; display: flex; flex-direction: column; align-items: center;">
+                                    <h5 style="color: #4ade80; margin-bottom: 0.5rem;">👁️ Representación Visual</h5>
+                                    <canvas id="greek-visual-canvas" width="200" height="110" style="background: rgba(0,0,0,0.3); border-radius: 4px; width: 100%; max-width: 200px; border: 1px solid rgba(255,255,255,0.1);"></canvas>
+                                    <p id="greek-visual-caption" style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem; text-align: center; height: 2.5em;">Esperando razonamiento...</p>
+                                </div>
+                            </div>
+                        </div>
+
                         <p>Arquímedes tenía la intuición del cálculo integral, pero carecía de dos herramientas fundamentales que Newton y Leibniz tendrían casi dos milenios después:</p>
                         <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--color-text-dark);">
                             <li><strong>Un sistema de notación eficiente:</strong> Los griegos usaban letras para los números (sin un sistema decimal o cero) y carecían de álgebra simbólica. Toda demostración debía ser narrada geométricamente.</li>
                             <li><strong>El horror al infinito:</strong> La filosofía griega desconfiaba del "infinito en acto" (un infinito completado). Por eso Arquímedes recurría a la exhausción y a la prueba por doble contradicción en lugar de operar directamente con el infinito matemático.</li>
                         </ul>
-                        <button class="btn-primary" style="margin-top: 1rem;" onclick="switchSection('section-history')">Volver a Historia</button>
+                        <button class="btn-secondary" style="margin-top: 1rem; width: 100%; background: transparent; border: 1px solid rgba(165, 180, 252, 0.3); color: #a5b4fc; padding: 0.5rem; border-radius: var(--border-radius-sm); cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 500;" onmouseover="this.style.background='rgba(165, 180, 252, 0.1)'" onmouseout="this.style.background='transparent'" onclick="toggleSubSection('sub-history')">⬆ Ocultar Profundización</button>
                     </div>
-                </div>
             </section>
-
-        </main>
+        
+            </main>
         
         <!-- FOOTER FOR MOBILE / DOCK -->
         <footer class="app-footer-mobile">
@@ -922,7 +1013,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- Modern App Logic -->
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>
 
