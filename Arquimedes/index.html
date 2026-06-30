@@ -347,10 +347,12 @@
                         <div class="activity-simulation-area">
                             <!-- Visual Square Area (SVG) -->
                             <div class="square-grid-container" style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
-                                <svg id="square-grid-svg" viewBox="0 0 220 220" width="220px" height="220px" style="background-color: var(--color-svg-bg); border: 2px solid var(--color-svg-border); border-radius: 8px;">
+                                <svg id="square-grid-svg" viewBox="0 0 220 240" width="220px" height="240px" style="background-color: var(--color-svg-bg); border: 2px solid var(--color-svg-border); border-radius: 8px;">
                                     <rect x="10" y="10" width="200" height="200" fill="none" stroke="var(--color-svg-border)" stroke-width="1"/>
                                     <g id="square-blocks-group"></g>
                                     <rect id="square-white-block" x="10" y="10" width="200" height="200" fill="none" stroke="var(--color-danger)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                    <!-- Area label -->
+                                    <text x="110" y="225" text-anchor="middle" fill="var(--color-text-muted)" font-size="11px" font-weight="700" font-family="monospace">Área total del cuadrado = 1</text>
                                 </svg>
                             </div>
                             
@@ -387,7 +389,7 @@
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
                                 <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p>¡Geometría pura en acción! Al colorear la mitad del espacio restante en cada paso, estás construyendo la serie geométrica \(\sum_{i=1}^{\infty} \frac{1}{2^i}\). Físicamente, ves cómo las fracciones llenan el cuadrado de área 1 por completo, demostrando de forma innegable que la suma infinita converge a 1.</p>
+                                <p>El cuadrado que ves tiene <strong>área 1</strong>, y eso es exactamente tu punto de llegada. Cada vez que agregás una fracción, coloreás la <strong>mitad</strong> del espacio blanco que todavía queda libre: primero \(\frac{1}{2}\) del cuadrado, luego \(\frac{1}{4}\), luego \(\frac{1}{8}\)... El área blanca se achica a la mitad en cada paso, pero nunca desaparece del todo. Sin embargo, fijate en lo que pasa con lo que ya pintaste: se va acercando cada vez más a 1. Cuando el cuadrado queda completamente coloreado, la suma de todas esas fracciones <em>alcanzó exactamente</em> el área total: <strong>1</strong>. Ese es el límite: el valor al que la suma se aproxima sin parar hasta tocarlo.</p>
                             </div>
                         </div>
                     </div>
@@ -403,36 +405,63 @@
                     </div>
                     
                     
-                    <!-- SUB-CONTENT: PARADOX -->
+                    <!-- SUB-CONTENT: PARADOX (STAIRCASE PARADOX 2 = sqrt(2)) -->
                     <div id="sub-paradox" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
-                        <h3 style="margin-bottom: 1rem; padding-bottom: 0.5rem;">El Límite Geométrico: Llenando el Cuadrado</h3>
+                        <h3 style="margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-svg-border); color: var(--color-primary);">La Paradoja de la Escalera Fantasma (\(2 = \sqrt{2}\))</h3>
                         
-                        <p>Para resolver matemáticamente la paradoja, tenemos que entender cómo se comporta una <strong>serie infinita</strong>. Si Aquiles recorre mitades de mitades (1/2, luego 1/4, luego 1/8...), ¿la suma de todo ese tiempo es infinita? Veámoslo visualmente.</p>
+                        <p>Cuando aproximamos figuras, nuestra intuición puede jugarnos malas pasadas. Imagina una rampa diagonal perfecta que mide exactamente <strong>\(\sqrt{2} \approx 1.4142\)</strong> metros de largo. ¿Qué pasa si intentamos construirla usando una escalera de escalones rectos cada vez más pequeños?</p>
                         
                         <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-                            <h4 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center;">
-                                <span>📐 Suma Geométrica de Infinitos Términos</span>
-                                <button id="btn-series-step" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;">Sumar la mitad restante</button>
+                            <h4 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                                <span>🪜 La Escalera Infinita contra la Diagonal</span>
+                                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                    <button id="btn-staircase-prev" class="btn-preset" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">◀ Menos</button>
+                                    <button id="btn-staircase-next" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Más Escalones ▶</button>
+                                </div>
                             </h4>
                             
-                            <div class="grid-layout cols-2" style="gap: 1.5rem; margin-top: 1rem;">
-                                <!-- Cuadrado de visualización -->
+                            <div class="grid-layout cols-2" style="gap: 1.5rem; margin-top: 1rem; align-items: center;">
+                                <!-- SVG de la Escalera -->
                                 <div style="display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
-                                    <div id="series-square-container" style="position: relative; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.2);">
-                                        <!-- Aquí se inyectarán las fracciones (divs) -->
-                                    </div>
+                                    <svg id="staircase-svg" viewBox="0 0 200 200" width="200px" height="200px" style="background-color: var(--color-svg-bg); border: 2px solid var(--color-svg-border); border-radius: 8px;">
+                                        <!-- Diagonal principal (gris) -->
+                                        <line x1="20" y1="180" x2="180" y2="20" stroke="#4b5563" stroke-width="2" stroke-dasharray="3,3"/>
+                                        
+                                        <!-- Escalera (dibujada dinámicamente) -->
+                                        <path id="staircase-path" d="" fill="none" stroke="var(--color-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        
+                                        <!-- Etiquetas -->
+                                        <text x="15" y="195" fill="var(--color-text-muted)" font-size="0.65rem">Inicio</text>
+                                        <text x="175" y="15" fill="var(--color-text-muted)" font-size="0.65rem">Fin</text>
+                                    </svg>
                                 </div>
                                 
-                                <!-- Fórmula -->
-                                <div style="display: flex; flex-direction: column; justify-content: center;">
-                                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #94a3b8;">Fórmula de la Suma (S):</p>
-                                    <div style="font-size: 1.2rem; font-family: monospace; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; color: #a5b4fc; border: 1px solid rgba(129, 140, 248, 0.2); height: 120px; overflow-y: auto;">
-                                        <span id="series-formula">S = </span>
+                                <!-- Información matemática y paradoja -->
+                                <div style="display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
+                                    <div class="math-item" style="margin: 0; padding: 0.5rem 0.75rem;">
+                                        <span class="math-label">Número de Escalones (\(N\)):</span>
+                                        <span class="math-formula" id="staircase-count" style="font-size: 1.15rem; color: var(--color-primary); font-weight: bold;">1</span>
                                     </div>
-                                    <p id="series-conclusion" style="font-size: 0.85rem; margin-top: 1rem; color: #4ade80; display: none;">
-                                        <strong>¡Eureka!</strong> Aunque la suma tiene <em>infinitos</em> términos, el área nunca superará el tamaño exacto de 1 cuadrado. El tiempo finito (1) engloba infinitas subdivisiones.
-                                    </p>
+                                    <div class="math-item" style="margin: 0; padding: 0.5rem 0.75rem; border-left-color: var(--color-accent);">
+                                        <span class="math-label">Longitud de la Escalera:</span>
+                                        <span class="math-formula" id="staircase-length" style="font-size: 1.15rem; color: var(--color-accent); font-weight: bold;">2.0000</span>
+                                    </div>
+                                    <div class="math-item" style="margin: 0; padding: 0.5rem 0.75rem; border-left-color: var(--color-success);">
+                                        <span class="math-label">Longitud Real de la Diagonal:</span>
+                                        <span class="math-formula" style="font-size: 1.15rem; color: var(--color-success); font-weight: bold;">\(\sqrt{2} \approx 1.4142\)</span>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Dialogue of explanation -->
+                        <div class="archimedes-dialogue" style="margin-top: 1rem;">
+                            <div class="archimedes-avatar">🏛️</div>
+                            <div class="archimedes-speech">
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p id="staircase-explanation">
+                                    Con <strong>1 escalón</strong>, caminás 1 metro horizontal y 1 metro vertical (Total = 2m). Aunque aumentes los escalones y la escalera parezca pegarse a la diagonal, ¡siempre caminarás exactamente la misma distancia horizontal (1m) y vertical (1m)!
+                                </p>
                             </div>
                         </div>
                         
@@ -842,61 +871,70 @@
                         <div class="callout warning" style="margin-top: 1rem;">
                             <h4>Descubrimientos Clave de Arquímedes:</h4>
                             <ul>
-                                <li><strong><span class="tooltip-term" data-tooltip="Encontrar un cuadrado u otra figura recta que tenga exactamente la misma área que una figura curva.">Cuadratura</span> de la Parábola:</strong> Demostró que el área encerrada por una parábola es exactamente \(\frac{4}{3}\) del área del triángulo <span class="tooltip-term" data-tooltip="Dibujado por dentro. Sus vértices tocan la frontera, pero no se sale de ella.">inscrito</span>.</li>
+                                <li><strong><span class="tooltip-term" data-tooltip="Encontrar un cuadrado u otra figura recta que tenga exactamente la misma área que una figura curva.">Exhausción</span> del Círculo:</strong> Demostró cómo calcular y acorralar el área inscribiendo triángulos sucesivos para aproximarse a la curva perfecta.</li>
                                 <li><strong>Aproximación de Pi:</strong> Encerró el círculo entre polígonos de hasta 96 lados.</li>
                                 <li><strong>Área de la Espiral:</strong> Realizó una de las primeras integraciones de la historia para medir espirales.</li>
                             </ul>
                         </div>
                     </div>
 
-                    <!-- TARJETA 4.1: LA CUADRATURA DE LA PARÁBOLA -->
-                    <div class="card interactive-activity" id="parabola-activity-card">
+                    <!-- TARJETA 4.1: EL SEMICÍRCULO DE ARQUÍMEDES -->
+                    <div class="card interactive-activity" id="semicircle-activity-card">
                         <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3>La Cuadratura de la Parábola</h3>
-                            <span class="badge" id="parabola-challenge-badge">Misión Parábola</span>
+                            <h3>El Semicírculo de Arquímedes</h3>
+                            <span class="badge" id="semicircle-challenge-badge" style="background-color: var(--color-accent); color: var(--color-text-light);">Misión Semicírculo</span>
                         </div>
                         
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                Añadí pequeños triángulos en los huecos sobrantes. Observá cómo la suma de las áreas de estos triángulos agota la curva de la parábola.
+                                Rellená el área del semicírculo agregando sucesivos triángulos en los huecos sobrantes. Observá cómo la suma de las áreas se acerca al área de la curva sin sobrepasarla jamás.
                             </p>
                         </div>
                         
                         <div class="activity-simulation-area">
-                            <!-- Parabola SVG visualizer -->
-                            <div class="parabola-container" style="margin-bottom: 1.25rem;">
-                                <svg id="parabola-svg" viewBox="0 0 400 200" width="100%" height="200px" style="background-color: var(--color-svg-bg); border: 1px solid var(--color-svg-border); border-radius: 8px;">
-                                    <!-- Parabolic Segment background curve and chord -->
-                                    <path d="M 50 160 Q 200 -80 350 160 Z" fill="rgba(255,255,255,0.02)" stroke="none"/>
+                            <!-- Semicircle SVG visualizer -->
+                            <div class="parabola-container" style="margin-bottom: 1.25rem; display: flex; justify-content: center;">
+                                <svg id="semicircle-svg" viewBox="0 0 400 210" width="100%" height="210px" style="background-color: var(--color-svg-bg); border: 1px solid var(--color-svg-border); border-radius: 8px;">
+                                    <!-- Semicircle path boundary (filled with very translucent amber/white) -->
+                                    <path d="M 50 180 A 150 150 0 0 1 350 180 Z" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3,3"/>
                                     
-                                    <!-- Chord line AB -->
-                                    <line x1="50" y1="160" x2="350" y2="160" class="parabola-chord"/>
+                                    <!-- Dashed line representing radius (r = 1.0) -->
+                                    <line x1="200" y1="180" x2="200" y2="30" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.7"/>
                                     
-                                    <!-- Parabola Curve path -->
-                                    <path id="parabola-curve-path" d="M 50 160 Q 200 -80 350 160" class="parabola-curve"/>
+                                    <!-- Diameter baseline -->
+                                    <line x1="50" y1="180" x2="350" y2="180" stroke="var(--color-text-muted)" stroke-width="2"/>
                                     
-                                    <!-- Triangles groups populated dynamically via JS -->
-                                    <g id="parabola-triangles-group"></g>
+                                    <!-- Arc curve line -->
+                                    <path d="M 50 180 A 150 150 0 0 1 350 180" stroke="var(--color-accent)" stroke-width="3" fill="none"/>
                                     
-                                    <!-- Point Labels -->
-                                    <text x="35" y="165" class="graph-tick-text" fill="var(--color-primary)">A</text>
-                                    <text x="360" y="165" class="graph-tick-text" fill="var(--color-primary)">B</text>
-                                    <text x="200" y="30" class="graph-tick-text" fill="var(--color-primary)" text-anchor="middle">V</text>
+                                    <!-- Triangles group populated via JS -->
+                                    <g id="semicircle-triangles-group"></g>
+                                    
+                                    <!-- Radius label -->
+                                    <text x="210" y="105" fill="var(--color-primary)" font-size="0.75rem" font-weight="bold">Radio (r) = 1.0</text>
+                                    
+                                    <!-- Baseline label -->
+                                    <text x="200" y="198" fill="var(--color-text-muted)" font-size="0.65rem" text-anchor="middle" font-weight="500">Diámetro (d) = 2.0</text>
+                                    
+                                    <!-- Labels -->
+                                    <text x="35" y="185" class="graph-tick-text" fill="var(--color-primary)">A</text>
+                                    <text x="360" y="185" class="graph-tick-text" fill="var(--color-primary)">B</text>
+                                    <text x="200" y="22" class="graph-tick-text" fill="var(--color-primary)" text-anchor="middle">V</text>
                                 </svg>
                             </div>
 
-                            <!-- Parabola Game Controls -->
+                            <!-- Semicircle Game Controls -->
                             <div class="slider-group" style="margin-bottom: 1.25rem;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <label for="parabola-step-slider" style="font-weight: 700;">Paso de Exhausción (\(k\)): <span id="parabola-step-val" class="highlight-val">0</span></label>
+                                    <label for="semicircle-step-slider" style="font-weight: 700;">Paso de Exhausción (\(k\)): <span id="semicircle-step-val" class="highlight-val">0</span></label>
                                 </div>
-                                <input type="range" id="parabola-step-slider" min="0" max="4" step="1" value="0">
+                                <input type="range" id="semicircle-step-slider" min="0" max="4" step="1" value="0" style="width: 100%;">
                             </div>
 
                             <div class="preset-buttons" style="margin-top: 1rem; margin-bottom: 1.25rem; justify-content: center;">
-                                <button id="btn-parabola-add" class="btn-preset active" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">➕ Agregar Triángulos</button>
-                                <button id="btn-parabola-reset" class="btn-preset" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">🔄 Reiniciar</button>
+                                <button id="btn-semicircle-add" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.95rem; margin-right: 0.5rem;">➕ Agregar Triángulos</button>
+                                <button id="btn-semicircle-reset" class="btn-preset" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">🔄 Reiniciar</button>
                             </div>
 
                             <!-- Calculations Table -->
@@ -904,33 +942,47 @@
                                 <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left;">
                                     <thead>
                                         <tr style="border-bottom: 2px solid var(--color-svg-border); color: var(--color-primary); font-weight: bold;">
-                                            <th style="padding: 0.5rem 0.25rem;">Paso</th>
-                                            <th style="padding: 0.5rem 0.25rem;">Triángulos</th>
+                                            <th style="padding: 0.5rem 0.25rem;">Paso \(k\)</th>
+                                            <th style="padding: 0.5rem 0.25rem;">Nuevos Triángulos</th>
                                             <th style="padding: 0.5rem 0.25rem;">Área Agregada</th>
-                                            <th style="padding: 0.5rem 0.25rem;">Área Acumulada</th>
+                                            <th style="padding: 0.5rem 0.25rem;">Área Total</th>
+                                            <th style="padding: 0.5rem 0.25rem;">Brecha Restante</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="parabola-table-body" style="color: var(--color-text-dark);">
+                                    <tbody id="semicircle-table-body" style="color: var(--color-text-dark);">
                                         <!-- Populated via JS -->
                                     </tbody>
                                 </table>
                             </div>
 
-                            <!-- Convergence Target inequality -->
-                            <div class="bounds-container" style="padding: 0.75rem; margin-bottom: 1.25rem; border: 1px solid var(--color-svg-border); background-color: var(--color-bg-primary);">
-                                <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0.25rem;">Límite del Área Acumulada:</div>
-                                <div style="font-size: 1.4rem; font-weight: 800;">
-                                    <span id="parabola-area-sum" class="highlight-val">1.0000</span> / <span style="color: var(--color-success);">1.3333 (\(\frac{4}{3}\))</span>
+                            <!-- Interactive Discovery Box -->
+                            <div class="bounds-container" style="padding: 0.85rem; margin-bottom: 1.25rem; border: 1px solid var(--color-svg-border); background-color: var(--color-bg-primary); border-radius: 6px; display: flex; flex-direction: column; gap: 0.5rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 0.8rem; color: var(--color-text-muted); font-weight: 500;">Área acumulada de los triángulos:</span>
+                                    <span id="semicircle-area-sum" class="highlight-val" style="font-size: 1.25rem; font-weight: 800;">1.0000</span>
+                                </div>
+                                <div id="discovery-interaction-block" style="border-top: 1px solid var(--color-svg-border); padding-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div style="font-size: 0.8rem; font-weight: bold; color: var(--color-primary);"><i class="fa-solid fa-lightbulb"></i> Desafío de Descubrimiento:</div>
+                                    <p style="font-size: 0.75rem; margin: 0; line-height: 1.4; color: var(--color-text-dark);">
+                                        Sabiendo que el radio es <strong>\(r = 1.0\)</strong>, ¿a qué valor exacto debería tender el área de los triángulos cuando rellenan todo el semicírculo? ¡Planteá tu hipótesis e investigalo antes de revelar!
+                                    </p>
+                                    <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+                                        <button id="btn-reveal-target" class="btn-preset" style="padding: 0.5rem 0.8rem; font-size: 0.75rem; flex: 1; font-weight: bold; color: var(--color-primary); border-color: var(--color-primary);">💡 Revelar Límite Teórico</button>
+                                    </div>
+                                    <div id="revealed-target-area" style="display: none; font-size: 0.85rem; color: var(--color-text-dark); border-left: 3px solid var(--color-accent); padding-left: 0.75rem; margin-top: 0.25rem; line-height: 1.4;">
+                                        <div style="font-weight: 700; color: var(--color-accent); font-size: 0.95rem; margin-bottom: 0.15rem;">Límite Real: \( \frac{\pi \cdot r^2}{2} = \frac{\pi}{2} \approx 1.5708 \)</div>
+                                        El área real del semicírculo es exactamente la mitad de un círculo de radio \(r=1\). ¡Observá cómo la exhausción por triángulos acorrala este número infinito en cada paso!
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Archimedes Dialogue Bubble -->
-                        <div class="archimedes-dialogue" id="archimedes-history-dialogue">
+                        <div class="archimedes-dialogue" id="archimedes-history-dialogue" style="margin-top: 1rem;">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
                                 <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p id="history-dialogue-text">He trazado el triángulo principal en color ocre. Su área es de exactamente 1.0000 unidad relativa. ¿Cuánto crees que mide todo el segmento curvo? ¡Prueba agregar triángulos para descubrirlo!</p>
+                                <p id="history-dialogue-text">He trazado el triángulo principal en color ocre. Su área es de exactamente \( 1.0000 \) unidad relativa. ¿Cuánto crees que mide todo el semicírculo? ¡Prueba agregar triángulos para descubrirlo!</p>
                             </div>
                         </div>
                     </div>
@@ -1080,7 +1132,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- Modern App Logic -->
-    <script src="app.js?v=10"></script>
+    <script src="app.js?v=12"></script>
 </body>
 </html>
 
