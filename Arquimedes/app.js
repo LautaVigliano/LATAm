@@ -57,6 +57,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
     const appSidebar = document.getElementById('app-sidebar');
 
+    window.toggleSubSection = toggleSubSection;
+    function toggleSubSection(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            if (el.style.display === 'none' || el.style.display === '') {
+                el.style.display = 'block';
+                // Scroll slightly so the user sees the newly opened content
+                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                el.style.display = 'none';
+            }
+        }
+    }
+
     window.switchSection = switchSection;
     function switchSection(targetSectionId) {
         // Hide all sections and remove active classes
