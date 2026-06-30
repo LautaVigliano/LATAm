@@ -531,6 +531,36 @@
                     <!-- SUB-CONTENT: EXHAUSTION -->
                     <div id="sub-exhaustion" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-card-bg); border-radius: var(--border-radius-md); border: 1px solid var(--color-svg-border); box-shadow: var(--shadow-sm);">
                         <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Orgullo de Arquímedes: 3D</h3>
+
+                        <div class="interactive-activity" style="margin-bottom: 1.5rem; background: rgba(17, 24, 39, 0.03); border: 1px solid var(--color-svg-border); padding: 1rem; border-radius: var(--border-radius-sm);">
+                            <h4 style="margin-top: 0;">🧊 La Rebanadora 3D (Sección transversal)</h4>
+                            <div class="grid-layout cols-2" style="gap: 1.5rem; align-items: center;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem;">Cantidad de Rodajas: <strong id="slices-label" style="color: var(--color-accent);">4</strong></label>
+                                    <input type="range" id="slices-slider" min="2" max="50" value="4" style="width: 100%; margin-bottom: 1rem;">
+                                    
+                                    <div class="metrics-panel" style="background: white; padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--color-svg-border);">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                            <span>Vol. Cilindro Contenedor:</span>
+                                            <strong>100%</strong>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--color-accent);">
+                                            <span>Vol. Suma de Rodajas:</span>
+                                            <strong id="slices-volume-label">...</strong>
+                                        </div>
+                                        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 0.5rem 0;">
+                                        <div style="display: flex; justify-content: space-between; font-weight: bold; color: var(--color-primary);">
+                                            <span>Relación (Límite 2/3):</span>
+                                            <strong id="slices-ratio-label">...</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: center;">
+                                    <canvas id="slicer-canvas" width="200" height="200" style="background: white; border-radius: 50%; border: 2px dashed #cbd5e1;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
                         <p>Así como usamos polígonos rectos para aproximarnos al círculo 2D, Arquímedes usó "rodajas" cilíndricas rectas para aproximarse al volumen de una esfera 3D.</p>
                         <p>Al aplicar este método de exhausción tridimensional, logró una de sus mayores hazañas matemáticas: demostrar que el volumen de una esfera es exactamente dos tercios (2/3) del volumen del cilindro que la circunscribe. Estaba tan orgulloso de este descubrimiento que pidió que se grabara una esfera dentro de un cilindro en su tumba.</p>
                         <button class="btn-primary" style="margin-top: 1rem;" onclick="toggleSubSection('sub-exhaustion')">Ocultar Profundización</button>
@@ -765,6 +795,30 @@
                     <!-- SUB-CONTENT: HISTORY -->
                     <div id="sub-history" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-card-bg); border-radius: var(--border-radius-md); border: 1px solid var(--color-svg-border); box-shadow: var(--shadow-sm);">
                         <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Horror al Infinito</h3>
+
+                        <div class="interactive-activity" style="margin-bottom: 1.5rem; background: rgba(17, 24, 39, 0.03); border: 1px solid var(--color-svg-border); padding: 1rem; border-radius: var(--border-radius-sm);">
+                            <h4 style="margin-top: 0;">📜 El Desafío de la Notación (Batalla de Épocas)</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 1rem;">Intenta "demostrar" el área bajo la curva. Compara el esfuerzo requerido en la Grecia Antigua versus el siglo XVII.</p>
+                            <div class="grid-layout cols-2" style="gap: 1rem;">
+                                <!-- Método Griego -->
+                                <div style="background: white; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                                    <h5 style="color: #b45309; margin-bottom: 0.5rem;">🏛️ Método Griego (Doble Contradicción)</h5>
+                                    <div id="greek-steps" style="font-size: 0.8rem; height: 100px; overflow-y: auto; background: #fdf6e3; padding: 0.5rem; border: 1px inset #ccc; margin-bottom: 0.5rem; font-family: 'Times New Roman', serif;">
+                                        <em>Esperando tu demostración geométrica...</em>
+                                    </div>
+                                    <button id="btn-greek-step" class="btn-primary" style="background: #b45309; border: none; font-size: 0.8rem; width: 100%;">Redactar siguiente pergamino lógico</button>
+                                </div>
+                                <!-- Método Moderno -->
+                                <div style="background: white; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                                    <h5 style="color: #0369a1; margin-bottom: 0.5rem;">🍎 Método Moderno (Cálculo de Newton/Leibniz)</h5>
+                                    <div id="modern-steps" style="font-size: 0.9rem; height: 100px; display: flex; align-items: center; justify-content: center; background: #f0f9ff; border: 1px inset #ccc; margin-bottom: 0.5rem; font-family: monospace;">
+                                        <em>Esperando la notación algebraica...</em>
+                                    </div>
+                                    <button id="btn-modern-step" class="btn-primary" style="background: #0369a1; border: none; font-size: 0.8rem; width: 100%;">Escribir Símbolo de Integral</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <p>Arquímedes tenía la intuición del cálculo integral, pero carecía de dos herramientas fundamentales que Newton y Leibniz tendrían casi dos milenios después:</p>
                         <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--color-text-dark);">
                             <li><strong>Un sistema de notación eficiente:</strong> Los griegos usaban letras para los números (sin un sistema decimal o cero) y carecían de álgebra simbólica. Toda demostración debía ser narrada geométricamente.</li>

@@ -1853,4 +1853,257 @@ document.addEventListener('DOMContentLoaded', () => {
         secantSlider.addEventListener('input', updateSecant);
         updateSecant();
     }
+
+    /* ==========================================================================
+       SUB-SECTION GAMES LOGIC
+       ========================================================================== */
+    
+    // 1. EL MICROSCOPIO CUANTICO
+    const quantumSlider = document.getElementById('quantum-zoom-slider');
+    const quantumLabel = document.getElementById('quantum-zoom-label');
+    const quantumCanvas = document.getElementById('quantum-canvas');
+    const quantumWarning = document.getElementById('quantum-warning');
+    
+    if (quantumSlider && quantumCanvas) {
+        const qctx = quantumCanvas.getContext('2d');
+        
+        function drawQuantumWorld() {
+            const zoom = parseInt(quantumSlider.value);
+            const w = quantumCanvas.width;
+            const h = quantumCanvas.height;
+            qctx.clearRect(0, 0, w, h);
+            
+            if (zoom < 80) {
+                quantumLabel.innerText = `Macroscópico (${zoom}x)`;
+                quantumLabel.style.color = "var(--color-accent)";
+                quantumWarning.style.display = 'none';
+                
+                // Draw smooth track
+                qctx.fillStyle = '#334155';
+                qctx.fillRect(0, h/2 - 20, w, 40);
+                
+                // Draw Achilles (smooth)
+                qctx.fillStyle = '#fbbf24';
+                qctx.beginPath();
+                qctx.arc(w/4 + zoom, h/2, 10 + zoom/10, 0, Math.PI*2);
+                qctx.fill();
+                
+                // Draw Turtle (smooth)
+                qctx.fillStyle = '#4ade80';
+                qctx.beginPath();
+                qctx.arc(w/2 + zoom/2, h/2, 8 + zoom/15, 0, Math.PI*2);
+                qctx.fill();
+                
+            } else {
+                quantumLabel.innerText = `Nivel Cuántico (${zoom}x)`;
+                quantumLabel.style.color = "#ffeb3b";
+                if (zoom >= 95) {
+                    quantumWarning.style.display = 'block';
+                } else {
+                    quantumWarning.style.display = 'none';
+                }
+                
+                // Draw Grid (Planck length)
+                const gridSize = 40;
+                qctx.strokeStyle = '#334155';
+                qctx.lineWidth = 2;
+                for (let x = 0; x < w; x += gridSize) {
+                    qctx.beginPath();
+                    qctx.moveTo(x, 0);
+                    qctx.lineTo(x, h);
+                    qctx.stroke();
+                }
+                for (let y = 0; y < h; y += gridSize) {
+                    qctx.beginPath();
+                    qctx.moveTo(0, y);
+                    qctx.lineTo(w, y);
+                    qctx.stroke();
+                }
+                
+                // Snap Achilles to grid
+                const ax = Math.floor((w/4 + zoom) / gridSize) * gridSize;
+                qctx.fillStyle = '#fbbf24';
+                qctx.fillRect(ax + 4, h/2 - 16, gridSize - 8, 32);
+                
+                // Snap Turtle to grid
+                const tx = Math.floor((w/2 + zoom/2) / gridSize) * gridSize;
+                qctx.fillStyle = '#4ade80';
+                qctx.fillRect(tx + 4, h/2 - 16, gridSize - 8, 32);
+            }
+        }
+        
+        quantumSlider.addEventListener('input', drawQuantumWorld);
+        // Initial draw
+        requestAnimationFrame(drawQuantumWorld);
+    }
+    
+    // 2. LA REBANADORA 3D
+    const slicesSlider = document.getElementById('slices-slider');
+    const slicesLabel = document.getElementById('slices-label');
+    const slicesVolLabel = document.getElementById('slices-volume-label');
+    const slicesRatioLabel = document.getElementById('slices-ratio-label');
+    const slicerCanvas = document.getElementById('slicer-canvas');
+    
+    if (slicesSlider && slicerCanvas) {
+        const sctx = slicerCanvas.getContext('2d');
+        
+        function drawSlicer() {
+            const n = parseInt(slicesSlider.value);
+            slicesLabel.innerText = n;
+            
+            const w = slicerCanvas.width;
+            const h = slicerCanvas.height;
+            const cx = w/2;
+            const cy = h/2;
+            const r = w/2 - 10;
+            
+            sctx.clearRect(0, 0, w, h);
+            
+            // Draw Sphere outline
+            sctx.strokeStyle = 'var(--color-primary)';
+            sctx.lineWidth = 2;
+            sctx.beginPath();
+            sctx.arc(cx, cy, r, 0, Math.PI*2);
+            sctx.stroke();
+            
+            // Draw rectangles (representing cylinder slices of sphere)
+            sctx.fillStyle = 'rgba(251, 191, 36, 0.6)';
+            sctx.strokeStyle = '#d97706';
+            sctx.lineWidth = 1;
+            
+            let totalSliceVol = 0;
+            const sliceHeight = (2 * r) / n;
+            const cylinderVol = Math.PI * (r*r) * (2*r); // Volume of bounding cylinder
+            
+            for (let i = 0; i < n; i++) {
+                // y center of this slice relative to circle center
+                const y = -r + (i + 0.5) * sliceHeight;
+                // slice width via Pythagoras: x^2 + y^2 = r^2
+                const x = Math.sqrt(Math.max(0, r*r - y*y));
+                
+                sctx.fillRect(cx - x, cy + y - sliceHeight/2, x*2, sliceHeight);
+                sctx.strokeRect(cx - x, cy + y - sliceHeight/2, x*2, sliceHeight);
+                
+                // Volume of this disk: pi * radius^2 * height
+                totalSliceVol += Math.PI * (x*x) * sliceHeight;
+            }
+            
+            const ratio = totalSliceVol / cylinderVol;
+            const percentage = (ratio * 100).toFixed(1);
+            
+            slicesVolLabel.innerText = percentage + '%';
+            slicesRatioLabel.innerText = ratio.toFixed(4) + ' (→ 0.6666)';
+        }
+        
+        slicesSlider.addEventListener('input', drawSlicer);
+        requestAnimationFrame(drawSlicer);
+    }
+    
+    // 3. LA LUPA DE BORDES
+    const btnReveal = document.getElementById('btn-reveal-edges');
+    const zoomCanvas = document.getElementById('zoom-canvas');
+    const zoomOverlay = document.getElementById('zoom-overlay');
+    const revealText = document.getElementById('reveal-text');
+    let isZoomed = false;
+    
+    if (btnReveal && zoomCanvas) {
+        const zctx = zoomCanvas.getContext('2d');
+        const w = zoomCanvas.width;
+        const h = zoomCanvas.height;
+        
+        function drawZoomState() {
+            zctx.clearRect(0, 0, w, h);
+            if (!isZoomed) {
+                zoomOverlay.style.display = 'flex';
+                revealText.style.display = 'none';
+                btnReveal.innerText = 'Aplicar Zoom Extremo';
+                btnReveal.classList.remove('btn-danger');
+            } else {
+                zoomOverlay.style.display = 'none';
+                revealText.style.display = 'block';
+                btnReveal.innerText = 'Volver a Vista Normal';
+                btnReveal.classList.add('btn-danger');
+                
+                // Draw curve (circle)
+                zctx.strokeStyle = 'var(--color-primary)';
+                zctx.lineWidth = 3;
+                zctx.beginPath();
+                zctx.moveTo(20, h - 20);
+                zctx.quadraticCurveTo(w/2, 20, w - 20, h - 20);
+                zctx.stroke();
+                
+                zctx.fillStyle = 'var(--color-primary)';
+                zctx.fillText("Curva del Círculo", 50, 40);
+                
+                // Draw polygon straight edge
+                zctx.strokeStyle = 'var(--color-accent)';
+                zctx.lineWidth = 3;
+                zctx.setLineDash([5, 5]);
+                zctx.beginPath();
+                zctx.moveTo(10, h - 10);
+                zctx.lineTo(w/2, 40);
+                zctx.lineTo(w - 10, h - 10);
+                zctx.stroke();
+                zctx.setLineDash([]);
+                
+                // Vertex
+                zctx.fillStyle = 'var(--color-accent)';
+                zctx.beginPath();
+                zctx.arc(w/2, 40, 5, 0, Math.PI*2);
+                zctx.fill();
+                
+                zctx.fillText("Vértice del Polígono", w/2 - 40, 60);
+            }
+        }
+        
+        btnReveal.addEventListener('click', () => {
+            isZoomed = !isZoomed;
+            drawZoomState();
+        });
+        requestAnimationFrame(drawZoomState);
+    }
+    
+    // 4. EL DESAFIO DE LA NOTACION
+    const btnGreek = document.getElementById('btn-greek-step');
+    const btnModern = document.getElementById('btn-modern-step');
+    const greekSteps = document.getElementById('greek-steps');
+    const modernSteps = document.getElementById('modern-steps');
+    
+    let greekStepCount = 0;
+    const greekTexts = [
+        "Paso 1: Supongamos que el área A es mayor que K.",
+        "Paso 2: Por tanto, podemos inscribir un polígono P tal que K < P < A.",
+        "Paso 3: Pero el área del polígono inscrito siempre es estrictamente menor que el área de la figura.",
+        "Paso 4: Esto es una contradicción. Por lo tanto, A no puede ser mayor que K.",
+        "Paso 5: Supongamos ahora que A es menor que K...",
+        "Paso 6: Inscribimos otro polígono que contradice la suposición.",
+        "Paso 7: Al no ser ni mayor ni menor, A debe ser exactamente igual a K. Q.E.D."
+    ];
+    
+    if (btnGreek && btnModern) {
+        btnGreek.addEventListener('click', () => {
+            if (greekStepCount === 0) greekSteps.innerHTML = '';
+            if (greekStepCount < greekTexts.length) {
+                const p = document.createElement('p');
+                p.style.marginBottom = '0.5rem';
+                p.innerText = greekTexts[greekStepCount];
+                greekSteps.appendChild(p);
+                greekSteps.scrollTop = greekSteps.scrollHeight;
+                greekStepCount++;
+                if (greekStepCount === greekTexts.length) {
+                    btnGreek.innerText = "¡Demostración Completa!";
+                    btnGreek.disabled = true;
+                    btnGreek.style.opacity = '0.5';
+                }
+            }
+        });
+        
+        btnModern.addEventListener('click', () => {
+            modernSteps.innerHTML = '<span style="font-size: 1.5rem; font-weight: bold;">&#8747; f(x) dx = Área</span>';
+            btnModern.innerText = "¡Cálculo resuelto en 1 paso!";
+            btnModern.disabled = true;
+            btnModern.style.opacity = '0.5';
+        });
+    }
+
 });
