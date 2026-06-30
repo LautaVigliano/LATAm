@@ -1004,39 +1004,44 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Fetch current sequence type
         const seqTypeRadio = document.querySelector('input[name="sequence-type"]:checked');
-        const seqType = seqTypeRadio ? seqTypeRadio.value : 'monotonic';
-        const labelChar = seqType === 'monotonic' ? 'a' : 'b';
+        const seqType = seqTypeRadio ? seqTypeRadio.value : 'ladder';
+        
+        let labelChar = 'a';
+        if (seqType === 'ball') labelChar = 'b';
+        else if (seqType === 'pendulum') labelChar = 'c';
         
         // 1. Draw Epsilon Band
-        // Target L = 1.0 is at y=70 (value scale: y = 170 - (v / 1.2) * 120 -> R = 120 pixels)
-        const bandY = 70 - 100 * eps;
-        const bandHeight = 200 * eps;
+        // Target L = 1.0 is at y=100 (range 0 to 2.0 -> y = 170 - val * 70)
+        const bandY = 100 - 70 * eps;
+        const bandHeight = 140 * eps;
         if (epsilonBand) {
             epsilonBand.setAttribute('y', bandY.toFixed(2));
             epsilonBand.setAttribute('height', bandHeight.toFixed(2));
         }
         
         // 2. Draw Guessed Step N Line
-        const lineX = 50 + (N - 1) * 44;
+        const lineX = 45 + (N - 1) * 23;
         if (indicatorNLine) {
             indicatorNLine.setAttribute('x1', lineX);
             indicatorNLine.setAttribute('x2', lineX);
         }
         
-        // 3. Render Points
+        // 3. Render 15 Points
         if (epsilonPointsGroup) {
             epsilonPointsGroup.innerHTML = '';
             
-            for (let n = 1; n <= 8; n++) {
+            for (let n = 1; n <= 15; n++) {
                 let val;
-                if (seqType === 'monotonic') {
-                    val = 1 - 1 / Math.pow(2, n);
+                if (seqType === 'ladder') {
+                    val = 1.0 - 1.0 / n;
+                } else if (seqType === 'ball') {
+                    val = 1.0 + 1.0 / n;
                 } else {
-                    val = 1 + Math.pow(-1, n) / n;
+                    val = 1.0 + Math.pow(-1, n) / n;
                 }
                 
-                const x = 50 + (n - 1) * 44;
-                const y = 170 - (val / 1.2) * 120;
+                const x = 45 + (n - 1) * 23;
+                const y = 170 - val * 70;
                 
                 const diff = Math.abs(1.0 - val);
                 const isInside = diff <= eps;
@@ -1045,7 +1050,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                 circle.setAttribute('cx', x.toFixed(2));
                 circle.setAttribute('cy', y.toFixed(2));
-                circle.setAttribute('r', '5');
+                circle.setAttribute('r', '4');
                 
                 let ptClass = 'epsilon-point';
                 if (isInside) {
@@ -1059,52 +1064,54 @@ document.addEventListener('DOMContentLoaded', () => {
                 circle.setAttribute('class', ptClass);
                 epsilonPointsGroup.appendChild(circle);
                 
-                // Draw tick label under points
+                // Draw tick label above points
                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', x.toFixed(2));
-                text.setAttribute('y', (y - 10).toFixed(2));
+                text.setAttribute('y', (y - 8).toFixed(2));
                 text.setAttribute('class', 'epsilon-point-label');
                 text.textContent = `${labelChar}${n}`;
                 epsilonPointsGroup.appendChild(text);
                 
-                // Draw X ticks
-                const tick = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                tick.setAttribute('x', x.toFixed(2));
-                tick.setAttribute('y', '185');
-                tick.setAttribute('class', 'graph-tick-text');
-                tick.setAttribute('text-anchor', 'middle');
-                tick.textContent = n;
-                epsilonPointsGroup.appendChild(tick);
+                // Draw X ticks (every 2 steps to avoid clutter, but showing 1 and 15 always)
+                if (n === 1 || n === 15 || n % 2 === 0) {
+                    const tick = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    tick.setAttribute('x', x.toFixed(2));
+                    tick.setAttribute('y', '185');
+                    tick.setAttribute('class', 'graph-tick-text');
+                    tick.setAttribute('text-anchor', 'middle');
+                    tick.textContent = n;
+                    epsilonPointsGroup.appendChild(tick);
+                }
             }
         }
         
         // 4. Verify game state / feedback
+        // All three sequences have error magnitude equal to 1/n.
+        // Therefore, the critical step minN is the first step where 1/minN <= eps.
         let minN = 1;
-        if (seqType === 'monotonic') {
-            while (minN <= 8 && (1 / Math.pow(2, minN)) > eps) {
-                minN++;
-            }
-        } else {
-            while (minN <= 8 && (1 / minN) > eps) {
-                minN++;
-            }
+        while (minN <= 15 && (1.0 / minN) > eps) {
+            minN++;
         }
         
         if (epsilonFeedback) {
+            let metaphorName = "la Escalera";
+            if (seqType === 'ball') metaphorName = "la Pelota";
+            else if (seqType === 'pendulum') metaphorName = "el Péndulo";
+
             if (N < minN) {
-                let actualError = seqType === 'monotonic' ? (1 / Math.pow(2, N)) : (1 / N);
-                epsilonFeedback.innerHTML = `<strong>¡Refutación!</strong> Elegiste N = ${N}, pero la diferencia en ese paso es <strong>${actualError.toFixed(3)}</strong>, lo que rompe tu tolerancia (&epsilon; = ${eps.toFixed(2)}). ¡Avanzá más pasos!`;
+                let actualError = 1.0 / N;
+                epsilonFeedback.innerHTML = `<strong>¡Refutación!</strong> Elegiste N = ${N}, pero en ese paso de <strong>${metaphorName}</strong> la diferencia restante con el límite (error = ${actualError.toFixed(3)}) supera el tamaño de tu grano de arena (tol. = ${eps.toFixed(2)}). ¡Tenés que dar más pasos!`;
                 epsilonFeedback.className = 'callout danger';
             } else if (N === minN) {
-                epsilonFeedback.innerHTML = `<strong>¡Demostrado!</strong> N = ${N} es el paso crítico. A partir de aquí, todos los puntos caen matemáticamente dentro de tu margen aceptable.`;
+                epsilonFeedback.innerHTML = `<strong>¡Sintonía Perfecta!</strong> N = ${N} es el paso crítico donde <strong>${metaphorName}</strong> se estabiliza. De aquí en adelante, la diferencia es menor que un grano de arena y entra siempre dentro de la franja verde.`;
                 epsilonFeedback.className = 'callout success';
             } else {
-                epsilonFeedback.innerHTML = `<strong>Válido, pero ineficiente.</strong> Es cierto que desde N = ${N} los puntos están dentro, pero debés encontrar el <strong>menor paso posible</strong>. ¡Ajustá N hacia abajo!`;
+                epsilonFeedback.innerHTML = `<strong>Válido, pero ineficiente.</strong> Es cierto que desde N = ${N} los puntos entran en la franja, pero podés sintonizarlo con un paso más chico. ¡Ajustá N hacia la izquierda para buscar el paso crítico!`;
                 epsilonFeedback.className = 'callout warning';
             }
         }
     }
- 
+
     if (epsilonSlider) {
         epsilonSlider.addEventListener('input', updateEpsilonTuner);
     }
@@ -1288,143 +1295,130 @@ document.addEventListener('DOMContentLoaded', () => {
         closeChatbot();
     });
 
+    
     /* ==========================================================================
-       6. INSTANCE 4: HISTORICAL LEGACY - PARABOLA QUADRATURE SIMULATION
+       6. INSTANCE 4: HISTORICAL LEGACY - CIRCLE EXHAUSTION SIMULATION
        ========================================================================== */
-    const parabolaStepSlider = document.getElementById('parabola-step-slider');
-    const parabolaStepValDisplay = document.getElementById('parabola-step-val');
-    const btnParabolaAdd = document.getElementById('btn-parabola-add');
-    const btnParabolaReset = document.getElementById('btn-parabola-reset');
-    const parabolaTrianglesGroup = document.getElementById('parabola-triangles-group');
-    const parabolaTableBody = document.getElementById('parabola-table-body');
-    const parabolaAreaSum = document.getElementById('parabola-area-sum');
+    const circleStepSlider = document.getElementById('circle-step-slider');
+    const circleStepValDisplay = document.getElementById('circle-step-val');
+    const btnCircleAdd = document.getElementById('btn-circle-add');
+    const btnCircleReset = document.getElementById('btn-circle-reset');
+    const circlePolygonsGroup = document.getElementById('circle-polygons-group');
+    const circleTableBody = document.getElementById('circle-table-body');
+    const circleAreaSum = document.getElementById('circle-area-sum');
     const historyDialogueText = document.getElementById('history-dialogue-text');
 
-    let parabolaStepK = 0;
-
+    // Circle Simulation State (Refined story-driven dialogues)
+    let circleStepK = 0;
     const historyDialogues = [
-        "He trazado el triángulo principal en color ocre. Su área es de exactamente 1.0000 unidad relativa. ¿Cuánto crees que mide todo el segmento curvo? ¡Prueba agregar triángulos para descubrirlo!",
-        "¡Excelente! Hemos añadido 2 nuevos triángulos en las brechas laterales. Cada uno tiene un área de 0.1250, sumando 0.2500 en este paso. La diferencia con la curva se va reduciendo.",
-        "Añadimos 4 triángulos más pequeños. Su área sumada en este paso es de 0.0625, acumulando 1.3125. Observa cómo los nuevos triángulos se van adaptando a la forma curva de la parábola.",
-        "Paso k=3: sumamos 8 triángulos diminutos (área de 0.0156). Ya acumulamos 1.3281. La diferencia curvo-rectilínea es casi imperceptible a la vista.",
-        "¡Sublime! Llegamos al paso k=4 con 16 triángulos agregados en este paso. El área total acumulada es de 1.3320. Demostré matemáticamente que la suma converge exactamente a 4/3 (1.3333). ¡Hemos atrapado la parábola!"
+        "Tomé mi rama de olivo y tracé este semicírculo en la arena de Siracusa. Aún no he inscrito ningún polígono. ¡Multiplica los lados para ver el misterio!",
+        "Aquí tenemos la primera aproximación con varas rectas bajo la curva (2 lados rectos, como un triángulo). El área cubierta en la arena es de apenas 63.66%. Aún queda mucha bahía sin medir.",
+        "He duplicado los lados: ahora es medio octógono (4 varas de medir). Mira cómo el polígono recto se estira hacia la curva, cubriendo el 90.03% del área.",
+        "Añadimos más varas rectas. Con 8 lados, la aproximación comienza a verse casi tan redonda como el agua de la bahía circular. Cubrimos el 97.45%.",
+        "¡Sublime! Con 16 lados, cubrimos el 99.36% del semicírculo. Al continuar este proceso infinitamente en tu mente, la diferencia física se extingue y el cálculo es exacto."
     ];
 
-    function getParabolaY(x) {
-        const dx = (x - 200) / 150;
-        return 160 - 120 * (1 - dx * dx);
-    }
-
-    function generateParabolaTriangles(xStart, xEnd, depth, maxDepth, result) {
-        const xMid = (xStart + xEnd) / 2;
-        const yStart = getParabolaY(xStart);
-        const yEnd = getParabolaY(xEnd);
-        const yMid = getParabolaY(xMid);
-        
-        if (depth === maxDepth) {
-            result.push([xStart, yStart, xEnd, yEnd, xMid, yMid]);
-            return;
-        }
-        
-        generateParabolaTriangles(xStart, xMid, depth + 1, maxDepth, result);
-        generateParabolaTriangles(xMid, xEnd, depth + 1, maxDepth, result);
-    }
-
-    function updateParabolaSimulation() {
-        if (!parabolaStepSlider) return;
+    function updateCircleSimulation() {
+        if (!circleStepSlider) return;
 
         // Sync display and slider
-        if (parabolaStepValDisplay) parabolaStepValDisplay.textContent = parabolaStepK;
-        parabolaStepSlider.value = parabolaStepK;
+        if (circleStepValDisplay) circleStepValDisplay.textContent = circleStepK;
+        circleStepSlider.value = circleStepK;
 
-        // Clear existing SVG triangles
-        if (parabolaTrianglesGroup) {
-            parabolaTrianglesGroup.innerHTML = '';
+        // Clear existing SVG
+        if (circlePolygonsGroup) {
+            circlePolygonsGroup.innerHTML = '';
         }
 
-        // Draw triangles dynamically for each level up to parabolaStepK
-        for (let i = 0; i <= parabolaStepK; i++) {
-            const levelTriangles = [];
-            generateParabolaTriangles(50, 350, 0, i, levelTriangles);
+        const cx = 200, cy = 180, r = 150;
+        
+        let segments = 0;
+        if (circleStepK === 1) segments = 2; // Triangle
+        else if (circleStepK === 2) segments = 4; // Half Octagon
+        else if (circleStepK === 3) segments = 8;
+        else if (circleStepK === 4) segments = 16;
+        
+        let areaPercent = 0;
+
+        if (segments > 0) {
+            // Draw polygon inside semicircle
+            let pts = [];
+            for(let i=0; i<=segments; i++){
+                let angle = i * Math.PI / segments;
+                pts.push({
+                    x: cx - r * Math.cos(angle),
+                    y: cy - r * Math.sin(angle)
+                });
+            }
             
-            levelTriangles.forEach(t => {
-                const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-                polygon.setAttribute('points', `${t[0]},${t[1]} ${t[4]},${t[5]} ${t[2]},${t[3]}`);
-                
-                let className = 'parabola-triangle';
-                if (i === 1) className = 'parabola-triangle-step1';
-                else if (i === 2) className = 'parabola-triangle-step2';
-                else if (i >= 3) className = 'parabola-triangle-step3';
-                
-                polygon.setAttribute('class', className);
-                if (parabolaTrianglesGroup) {
-                    parabolaTrianglesGroup.appendChild(polygon);
-                }
-            });
+            const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            let pointsStr = "";
+            for(let p of pts) pointsStr += `${p.x},${p.y} `;
+            poly.setAttribute('points', pointsStr);
+            poly.setAttribute('fill', 'rgba(99, 102, 241, 0.4)');
+            poly.setAttribute('stroke', 'var(--color-primary)');
+            poly.setAttribute('stroke-width', '2');
+            if (circlePolygonsGroup) circlePolygonsGroup.appendChild(poly);
+            
+            // Area calculation
+            let areaRatio = (segments/2) * Math.sin(Math.PI/segments) / (Math.PI/2);
+            areaPercent = areaRatio * 100;
         }
 
         // Update Dialogue Bubble text
         if (historyDialogueText) {
-            historyDialogueText.textContent = historyDialogues[parabolaStepK];
+            historyDialogueText.textContent = historyDialogues[circleStepK];
         }
 
         // Update calculations table
-        let totalArea = 0;
         let tableHTML = '';
-        for (let j = 0; j <= parabolaStepK; j++) {
-            const count = Math.pow(2, j);
-            const added = 1 / Math.pow(4, j);
-            totalArea += added;
-
+        for (let j = 0; j <= circleStepK; j++) {
+            let segs = j === 0 ? 0 : Math.pow(2, j);
+            let pct = j === 0 ? 0 : ((segs/2) * Math.sin(Math.PI/segs) / (Math.PI/2) * 100);
+            
             tableHTML += `
                 <tr style="border-bottom: 1px solid var(--color-svg-border);">
                     <td style="padding: 0.5rem 0.25rem; font-weight:700;">k = ${j}</td>
-                    <td style="padding: 0.5rem 0.25rem;">${count}</td>
-                    <td style="padding: 0.5rem 0.25rem; font-family:monospace;">${added.toFixed(4)}</td>
-                    <td style="padding: 0.5rem 0.25rem; font-family:monospace; font-weight:700; color:var(--color-accent);">${totalArea.toFixed(4)}</td>
+                    <td style="padding: 0.5rem 0.25rem;">${segs}</td>
+                    <td style="padding: 0.5rem 0.25rem; font-family:monospace; font-weight:700; color:var(--color-accent);">${pct.toFixed(2)}%</td>
                 </tr>
             `;
         }
 
-        if (parabolaTableBody) {
-            parabolaTableBody.innerHTML = tableHTML;
+        if (circleTableBody) {
+            circleTableBody.innerHTML = tableHTML;
         }
 
-        if (parabolaAreaSum) {
-            parabolaAreaSum.textContent = totalArea.toFixed(4);
-        }
-        
-        // Retrigger math formulas render
-        if (window.MathJax && window.MathJax.typesetPromise) {
-            window.MathJax.typesetPromise();
+        if (circleAreaSum) {
+            circleAreaSum.textContent = areaPercent.toFixed(2) + '%';
         }
     }
 
-    if (parabolaStepSlider) {
-        parabolaStepSlider.addEventListener('input', (e) => {
-            parabolaStepK = parseInt(e.target.value);
-            updateParabolaSimulation();
+    if (circleStepSlider) {
+        circleStepSlider.addEventListener('input', (e) => {
+            circleStepK = parseInt(e.target.value);
+            updateCircleSimulation();
         });
     }
 
-    if (btnParabolaAdd) {
-        btnParabolaAdd.addEventListener('click', () => {
-            if (parabolaStepK < 4) {
-                parabolaStepK++;
-                updateParabolaSimulation();
+    if (btnCircleAdd) {
+        btnCircleAdd.addEventListener('click', () => {
+            if (circleStepK < 4) {
+                circleStepK++;
+                updateCircleSimulation();
             }
         });
     }
 
-    if (btnParabolaReset) {
-        btnParabolaReset.addEventListener('click', () => {
-            parabolaStepK = 0;
-            updateParabolaSimulation();
+    if (btnCircleReset) {
+        btnCircleReset.addEventListener('click', () => {
+            circleStepK = 0;
+            updateCircleSimulation();
         });
     }
 
-    // Initialize Parabola Simulation
-    updateParabolaSimulation();
+    // Initialize state
+    setTimeout(() => { updateCircleSimulation(); }, 100);
 
     /* ==========================================================================
        4. INSTANCE 4: DESENROLLANDO EL CÍRCULO (SECCIÓN 2)
@@ -1996,68 +1990,73 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(drawSlicer);
     }
     
-    // 3. LA LUPA DE BORDES
-    const btnReveal = document.getElementById('btn-reveal-edges');
-    const zoomCanvas = document.getElementById('zoom-canvas');
-    const zoomOverlay = document.getElementById('zoom-overlay');
-    const revealText = document.getElementById('reveal-text');
-    let isZoomed = false;
-    
-    if (btnReveal && zoomCanvas) {
-        const zctx = zoomCanvas.getContext('2d');
-        const w = zoomCanvas.width;
-        const h = zoomCanvas.height;
-        
-        function drawZoomState() {
-            zctx.clearRect(0, 0, w, h);
-            if (!isZoomed) {
-                zoomOverlay.style.display = 'flex';
-                revealText.style.display = 'none';
-                btnReveal.innerText = 'Aplicar Zoom Extremo';
-                btnReveal.classList.remove('btn-danger');
-            } else {
-                zoomOverlay.style.display = 'none';
-                revealText.style.display = 'block';
-                btnReveal.innerText = 'Volver a Vista Normal';
-                btnReveal.classList.add('btn-danger');
-                
-                // Draw curve (circle)
-                zctx.strokeStyle = 'var(--color-primary)';
-                zctx.lineWidth = 3;
-                zctx.beginPath();
-                zctx.moveTo(20, h - 20);
-                zctx.quadraticCurveTo(w/2, 20, w - 20, h - 20);
-                zctx.stroke();
-                
-                zctx.fillStyle = 'var(--color-primary)';
-                zctx.fillText("Curva del Círculo", 50, 40);
-                
-                // Draw polygon straight edge
-                zctx.strokeStyle = 'var(--color-accent)';
-                zctx.lineWidth = 3;
-                zctx.setLineDash([5, 5]);
-                zctx.beginPath();
-                zctx.moveTo(10, h - 10);
-                zctx.lineTo(w/2, 40);
-                zctx.lineTo(w - 10, h - 10);
-                zctx.stroke();
-                zctx.setLineDash([]);
-                
-                // Vertex
-                zctx.fillStyle = 'var(--color-accent)';
-                zctx.beginPath();
-                zctx.arc(w/2, 40, 5, 0, Math.PI*2);
-                zctx.fill();
-                
-                zctx.fillText("Vértice del Polígono", w/2 - 40, 60);
-            }
-        }
-        
-        btnReveal.addEventListener('click', () => {
-            isZoomed = !isZoomed;
-            drawZoomState();
+    // 3. PROFUNDIZACIÓN LÍMITES: CALCULADORAS INTERACTIVAS
+    const btnCalcMicroscopic = document.getElementById('btn-calc-microscopic');
+    const epsilonScaleSelect = document.getElementById('epsilon-scale-select');
+    const microscopicResult = document.getElementById('microscopic-result');
+
+    const btnBarrierLaunch = document.getElementById('btn-barrier-launch');
+    const inputBarrierVal = document.getElementById('input-barrier-val');
+    const barrierResult = document.getElementById('barrier-result');
+
+    // Desafío A: Épsilon Atómico
+    if (btnCalcMicroscopic && epsilonScaleSelect && microscopicResult) {
+        btnCalcMicroscopic.addEventListener('click', () => {
+            const eps = parseFloat(epsilonScaleSelect.value);
+            const selectText = epsilonScaleSelect.options[epsilonScaleSelect.selectedIndex].text;
+            
+            // min N calculation: N = ceil(1/eps)
+            const N = Math.ceil(1.0 / eps);
+            
+            microscopicResult.style.display = 'block';
+            microscopicResult.innerHTML = `
+                <strong>¡Sintonía de escala lograda!</strong><br>
+                Para una tolerancia equivalente a <strong>${selectText}</strong> (error \\( \\varepsilon = ${eps.toFixed(10)} \\)), 
+                necesitás dar un mínimo de <strong>\\( N = ${N.toLocaleString('es-AR')} \\)</strong> pasos para asegurar que todos los puntos 
+                posteriores queden atrapados dentro de la franja verde.<br><br>
+                🏛️ <em>"Geómetra, mi mente concibe divisiones que superan a toda la materia física de Siracusa. El infinito no tiene fronteras rígidas".</em> — Arquímedes
+            `;
+            
+            setTimeout(() => {
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    window.MathJax.typesetPromise().catch((err) => console.log(err));
+                }
+            }, 50);
         });
-        requestAnimationFrame(drawZoomState);
+    }
+
+    // Desafío B: El Acorralamiento
+    if (btnBarrierLaunch && inputBarrierVal && barrierResult) {
+        btnBarrierLaunch.addEventListener('click', () => {
+            const val = parseFloat(inputBarrierVal.value);
+            
+            if (isNaN(val) || val <= 0.5 || val >= 1.0) {
+                barrierResult.style.display = 'block';
+                barrierResult.style.borderLeftColor = 'var(--color-danger)';
+                barrierResult.innerHTML = `<strong>Error:</strong> Por favor ingresá un número que esté entre 0.5 y 0.9999999 para que esté bien cerca de 1.0.`;
+                return;
+            }
+            
+            // For La Escalera (1 - 1/n), we want 1 - 1/n > val -> 1 - val > 1/n -> n > 1/(1-val)
+            const N = Math.ceil(1.0 / (1.0 - val));
+            const actualVal = 1.0 - 1.0 / N;
+            
+            barrierResult.style.display = 'block';
+            barrierResult.style.borderLeftColor = 'var(--color-accent)';
+            barrierResult.innerHTML = `
+                <strong>¡Barrera superada!</strong><br>
+                Definiste una barrera en \\( B = ${val} \\).<br>
+                La Escalera sobrepasa esa barrera en el paso <strong>\\( n = ${N.toLocaleString('es-AR')} \\)</strong>, 
+                alcanzando el valor de <strong>\\( a_n = ${actualVal.toFixed(8)} \\)</strong>.<br><br>
+                No importa qué número elijas antes del 1.0, la aproximación infinita siempre lo sobrepasará si camina suficientes pasos. Por eso el 1.0 es el único horizonte verdadero.
+            `;
+            
+            setTimeout(() => {
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    window.MathJax.typesetPromise().catch((err) => console.log(err));
+                }
+            }, 50);
+        });
     }
     
     // 4. EL DESAFIO DE LA NOTACION

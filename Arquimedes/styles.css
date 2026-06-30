@@ -2440,3 +2440,29 @@ body.light-mode .highlighted-question {
     opacity: 1;
     transform: scale(1);
 }
+
+/* Primary Button Styling */
+.btn-primary {
+    background-color: var(--color-accent);
+    color: #ffffff !important;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    transition: all var(--transition-fast);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
