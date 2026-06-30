@@ -1990,68 +1990,61 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(drawSlicer);
     }
     
-    // 3. LA LUPA DE BORDES
-    const btnReveal = document.getElementById('btn-reveal-edges');
-    const zoomCanvas = document.getElementById('zoom-canvas');
-    const zoomOverlay = document.getElementById('zoom-overlay');
-    const revealText = document.getElementById('reveal-text');
-    let isZoomed = false;
-    
-    if (btnReveal && zoomCanvas) {
-        const zctx = zoomCanvas.getContext('2d');
-        const w = zoomCanvas.width;
-        const h = zoomCanvas.height;
-        
-        function drawZoomState() {
-            zctx.clearRect(0, 0, w, h);
-            if (!isZoomed) {
-                zoomOverlay.style.display = 'flex';
-                revealText.style.display = 'none';
-                btnReveal.innerText = 'Aplicar Zoom Extremo';
-                btnReveal.classList.remove('btn-danger');
-            } else {
-                zoomOverlay.style.display = 'none';
-                revealText.style.display = 'block';
-                btnReveal.innerText = 'Volver a Vista Normal';
-                btnReveal.classList.add('btn-danger');
-                
-                // Draw curve (circle)
-                zctx.strokeStyle = 'var(--color-primary)';
-                zctx.lineWidth = 3;
-                zctx.beginPath();
-                zctx.moveTo(20, h - 20);
-                zctx.quadraticCurveTo(w/2, 20, w - 20, h - 20);
-                zctx.stroke();
-                
-                zctx.fillStyle = 'var(--color-primary)';
-                zctx.fillText("Curva del Círculo", 50, 40);
-                
-                // Draw polygon straight edge
-                zctx.strokeStyle = 'var(--color-accent)';
-                zctx.lineWidth = 3;
-                zctx.setLineDash([5, 5]);
-                zctx.beginPath();
-                zctx.moveTo(10, h - 10);
-                zctx.lineTo(w/2, 40);
-                zctx.lineTo(w - 10, h - 10);
-                zctx.stroke();
-                zctx.setLineDash([]);
-                
-                // Vertex
-                zctx.fillStyle = 'var(--color-accent)';
-                zctx.beginPath();
-                zctx.arc(w/2, 40, 5, 0, Math.PI*2);
-                zctx.fill();
-                
-                zctx.fillText("Vértice del Polígono", w/2 - 40, 60);
-            }
-        }
-        
-        btnReveal.addEventListener('click', () => {
-            isZoomed = !isZoomed;
-            drawZoomState();
+    // 3. PROFUNDIZACIÓN LÍMITES: CALCULADORAS INTERACTIVAS
+    const btnCalcMicroscopic = document.getElementById('btn-calc-microscopic');
+    const epsilonScaleSelect = document.getElementById('epsilon-scale-select');
+    const microscopicResult = document.getElementById('microscopic-result');
+
+    const btnBarrierLaunch = document.getElementById('btn-barrier-launch');
+    const inputBarrierVal = document.getElementById('input-barrier-val');
+    const barrierResult = document.getElementById('barrier-result');
+
+    // Desafío A: Épsilon Atómico
+    if (btnCalcMicroscopic && epsilonScaleSelect && microscopicResult) {
+        btnCalcMicroscopic.addEventListener('click', () => {
+            const eps = parseFloat(epsilonScaleSelect.value);
+            const selectText = epsilonScaleSelect.options[epsilonScaleSelect.selectedIndex].text;
+            
+            // min N calculation: N = ceil(1/eps)
+            const N = Math.ceil(1.0 / eps);
+            
+            microscopicResult.style.display = 'block';
+            microscopicResult.innerHTML = `
+                <strong>¡Sintonía de escala lograda!</strong><br>
+                Para una tolerancia equivalente a <strong>${selectText}</strong> (error = ${eps.toFixed(10)}), 
+                necesitás dar un mínimo de <strong>${N.toLocaleString()}</strong> pasos para asegurar que todos los puntos 
+                posteriores queden atrapados dentro de la franja verde.<br><br>
+                🏛️ <em>"Geómetra, mi mente concibe divisiones que superan a toda la materia física de Siracusa. El infinito no tiene fronteras rígidas".</em> — Arquímedes
+            `;
         });
-        requestAnimationFrame(drawZoomState);
+    }
+
+    // Desafío B: El Acorralamiento
+    if (btnBarrierLaunch && inputBarrierVal && barrierResult) {
+        btnBarrierLaunch.addEventListener('click', () => {
+            const val = parseFloat(inputBarrierVal.value);
+            
+            if (isNaN(val) || val <= 0.5 || val >= 1.0) {
+                barrierResult.style.display = 'block';
+                barrierResult.style.borderLeftColor = 'var(--color-danger)';
+                barrierResult.innerHTML = `<strong>Error:</strong> Por favor ingresá un número que esté entre 0.5 y 0.9999999 para que esté bien cerca de 1.0.`;
+                return;
+            }
+            
+            // For La Escalera (1 - 1/n), we want 1 - 1/n > val -> 1 - val > 1/n -> n > 1/(1-val)
+            const N = Math.ceil(1.0 / (1.0 - val));
+            const actualVal = 1.0 - 1.0 / N;
+            
+            barrierResult.style.display = 'block';
+            barrierResult.style.borderLeftColor = 'var(--color-accent)';
+            barrierResult.innerHTML = `
+                <strong>¡Barrera superada!</strong><br>
+                Definiste una barrera en <strong>${val}</strong>.<br>
+                La Escalera sobrepasa esa barrera en el paso <strong>n = ${N.toLocaleString()}</strong>, 
+                alcanzando el valor de <strong>${actualVal.toFixed(8)}</strong>.<br><br>
+                No importa qué número elijas antes del 1.0, la aproximación infinita siempre lo sobrepasará si camina suficientes pasos. Por eso el 1.0 es el único horizonte verdadero.
+            `;
+        });
     }
     
     // 4. EL DESAFIO DE LA NOTACION
