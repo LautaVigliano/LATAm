@@ -866,9 +866,12 @@
                         <div class="activity-simulation-area">
                             <!-- Semicircle SVG visualizer -->
                             <div class="parabola-container" style="margin-bottom: 1.25rem; display: flex; justify-content: center;">
-                                <svg id="semicircle-svg" viewBox="0 0 400 200" width="100%" height="200px" style="background-color: var(--color-svg-bg); border: 1px solid var(--color-svg-border); border-radius: 8px;">
+                                <svg id="semicircle-svg" viewBox="0 0 400 210" width="100%" height="210px" style="background-color: var(--color-svg-bg); border: 1px solid var(--color-svg-border); border-radius: 8px;">
                                     <!-- Semicircle path boundary (filled with very translucent amber/white) -->
                                     <path d="M 50 180 A 150 150 0 0 1 350 180 Z" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3,3"/>
+                                    
+                                    <!-- Dashed line representing radius (r = 1.0) -->
+                                    <line x1="200" y1="180" x2="200" y2="30" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.7"/>
                                     
                                     <!-- Diameter baseline -->
                                     <line x1="50" y1="180" x2="350" y2="180" stroke="var(--color-text-muted)" stroke-width="2"/>
@@ -878,6 +881,12 @@
                                     
                                     <!-- Triangles group populated via JS -->
                                     <g id="semicircle-triangles-group"></g>
+                                    
+                                    <!-- Radius label -->
+                                    <text x="210" y="105" fill="var(--color-primary)" font-size="0.75rem" font-weight="bold">Radio (r) = 1.0</text>
+                                    
+                                    <!-- Baseline label -->
+                                    <text x="200" y="198" fill="var(--color-text-muted)" font-size="0.65rem" text-anchor="middle" font-weight="500">Diámetro (d) = 2.0</text>
                                     
                                     <!-- Labels -->
                                     <text x="35" y="185" class="graph-tick-text" fill="var(--color-primary)">A</text>
@@ -917,11 +926,24 @@
                                 </table>
                             </div>
 
-                            <!-- Convergence Target inequality -->
-                            <div class="bounds-container" style="padding: 0.75rem; margin-bottom: 1.25rem; border: 1px solid var(--color-svg-border); background-color: var(--color-bg-primary); border-radius: 4px;">
-                                <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0.25rem;">Área acumulada frente al área del Semicírculo:</div>
-                                <div style="font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
-                                    <span id="semicircle-area-sum" class="highlight-val">1.0000</span> / <span style="color: var(--color-accent);">\( \frac{\pi}{2} \approx 1.5708 \)</span>
+                            <!-- Interactive Discovery Box -->
+                            <div class="bounds-container" style="padding: 0.85rem; margin-bottom: 1.25rem; border: 1px solid var(--color-svg-border); background-color: var(--color-bg-primary); border-radius: 6px; display: flex; flex-direction: column; gap: 0.5rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 0.8rem; color: var(--color-text-muted); font-weight: 500;">Área acumulada de los triángulos:</span>
+                                    <span id="semicircle-area-sum" class="highlight-val" style="font-size: 1.25rem; font-weight: 800;">1.0000</span>
+                                </div>
+                                <div id="discovery-interaction-block" style="border-top: 1px solid var(--color-svg-border); padding-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div style="font-size: 0.8rem; font-weight: bold; color: var(--color-primary);"><i class="fa-solid fa-lightbulb"></i> Desafío de Descubrimiento:</div>
+                                    <p style="font-size: 0.75rem; margin: 0; line-height: 1.4; color: var(--color-text-dark);">
+                                        Sabiendo que el radio es <strong>\(r = 1.0\)</strong>, ¿a qué valor exacto debería tender el área de los triángulos cuando rellenan todo el semicírculo? ¡Planteá tu hipótesis e investigalo antes de revelar!
+                                    </p>
+                                    <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+                                        <button id="btn-reveal-target" class="btn-preset" style="padding: 0.5rem 0.8rem; font-size: 0.75rem; flex: 1; font-weight: bold; color: var(--color-primary); border-color: var(--color-primary);">💡 Revelar Límite Teórico</button>
+                                    </div>
+                                    <div id="revealed-target-area" style="display: none; font-size: 0.85rem; color: var(--color-text-dark); border-left: 3px solid var(--color-accent); padding-left: 0.75rem; margin-top: 0.25rem; line-height: 1.4;">
+                                        <div style="font-weight: 700; color: var(--color-accent); font-size: 0.95rem; margin-bottom: 0.15rem;">Límite Real: \( \frac{\pi \cdot r^2}{2} = \frac{\pi}{2} \approx 1.5708 \)</div>
+                                        El área real del semicírculo es exactamente la mitad de un círculo de radio \(r=1\). ¡Observá cómo la exhausción por triángulos acorrala este número infinito en cada paso!
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -2182,9 +2182,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    const btnRevealTarget = document.getElementById('btn-reveal-target');
+    const revealedTargetArea = document.getElementById('revealed-target-area');
+
+    if (btnRevealTarget && revealedTargetArea) {
+        btnRevealTarget.addEventListener('click', () => {
+            revealedTargetArea.style.display = 'block';
+            btnRevealTarget.style.display = 'none';
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([revealedTargetArea]).catch((err) => console.log(err));
+            }
+        });
+    }
+
     if (btnSemicircleReset) {
         btnSemicircleReset.addEventListener('click', () => {
             updateSemicircleSimulation(0);
+            if (revealedTargetArea && btnRevealTarget) {
+                revealedTargetArea.style.display = 'none';
+                btnRevealTarget.style.display = 'block';
+            }
         });
     }
 
