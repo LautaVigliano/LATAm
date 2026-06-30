@@ -385,7 +385,41 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            
+                    <!-- REFLEXIONES DE PROFUNDIZACIÓN -->
+                    <div style="grid-column: 1 / -1; margin-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--color-primary); border-bottom: 2px solid var(--color-svg-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Reflexiones de Profundización</h3>
+                        <div class="expansion-banner" onclick="toggleSubSection('sub-paradox')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
+                            <h4 style="margin-bottom: 0.25rem; font-size: 0.95rem; color: var(--color-primary);">¿Qué pasaría si...?</h4>
+                            <p style="margin-bottom: 0; font-size: 0.85rem;">¿Realmente nunca alcanza Aquiles a la tortuga en el mundo físico real?</p>
+                        </div>
+                    </div>
+                    
+                    <!-- SUB-CONTENT: PARADOX -->
+                    <div id="sub-paradox" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-card-bg); border-radius: var(--border-radius-md); border: 1px solid var(--color-svg-border); box-shadow: var(--shadow-sm);">
+                        <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Mundo Físico vs El Modelo Matemático</h3>
+                        <div class="interactive-activity" style="margin-bottom: 1.5rem; background: rgba(17, 24, 39, 0.03); border: 1px solid var(--color-svg-border); padding: 1rem; border-radius: var(--border-radius-sm);">
+                            <h4 style="margin-top: 0;">🔬 Microscopio Cuántico</h4>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <label>Nivel de Zoom: <strong id="quantum-zoom-label" style="color: var(--color-accent);">Macroscópico (1x)</strong></label>
+                                </div>
+                                <input type="range" id="quantum-zoom-slider" min="1" max="100" value="1" style="width: 100%;">
+                                
+                                <div style="background: #1e293b; border-radius: 8px; position: relative; height: 120px; overflow: hidden; display: flex; align-items: center;">
+                                    <canvas id="quantum-canvas" width="800" height="120" style="width: 100%; height: 100%;"></canvas>
+                                    <div id="quantum-warning" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #ffeb3b; font-weight: bold; background: rgba(0,0,0,0.8); padding: 0.5rem 1rem; border-radius: 4px; display: none; text-align: center; border: 1px solid #ffeb3b;">
+                                        ¡Límite de Planck alcanzado!<br><span style="font-size: 0.8rem; font-weight: normal;">El espacio ya no es divisible. Aquiles avanza de un bloque al siguiente.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Matemáticamente, la serie de subdivisiones es infinita. Sin embargo, físicamente, el espacio y el tiempo no se pueden dividir para siempre. En la realidad microscópica, entramos en el dominio de la física cuántica, donde existe una longitud mínima (Longitud de Planck) y un tiempo mínimo.</p>
+                        <p>Pero incluso manteniendo la regla matemática: una suma de infinitos términos que se hacen cada vez más pequeños (1/2 + 1/4 + 1/8 + ...) resulta en un número <strong>finito</strong> (1). Así, Aquiles recorre las infinitas divisiones en un tiempo finito, atrapando a la tortuga sin problemas.</p>
+                        <button class="btn-primary" style="margin-top: 1rem;" onclick="toggleSubSection('sub-paradox')">Ocultar Profundización</button>
+                    </div>
+
+</section>
 
             <!-- SECTION 2: LABORATORIO DE EXHAUSCIÓN (ACTIVIDADES INDEPENDIENTES) -->
             <section id="section-lab" class="content-section">
@@ -660,7 +694,45 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            
+                    <!-- REFLEXIONES DE PROFUNDIZACIÓN -->
+                    <div style="grid-column: 1 / -1; margin-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--color-primary); border-bottom: 2px solid var(--color-svg-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Reflexiones de Profundización</h3>
+                        <div class="expansion-banner" onclick="toggleSubSection('sub-limit')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
+                            <h4 style="margin-bottom: 0.25rem; font-size: 0.95rem; color: var(--color-primary);">¿Cómo es posible que...?</h4>
+                            <p style="margin-bottom: 0; font-size: 0.85rem;">¿El círculo es simplemente un polígono con infinitos lados?</p>
+                        </div>
+                    </div>
+                    
+                    <!-- SUB-CONTENT: LIMIT -->
+                    <div id="sub-limit" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--color-card-bg); border-radius: var(--border-radius-md); border: 1px solid var(--color-svg-border); box-shadow: var(--shadow-sm);">
+                        <h3 style="color: var(--color-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--color-svg-border); padding-bottom: 0.5rem;">El Mito del Polígono Infinito</h3>
+                        <div class="interactive-activity" style="margin-bottom: 1.5rem; background: rgba(17, 24, 39, 0.03); border: 1px solid var(--color-svg-border); padding: 1rem; border-radius: var(--border-radius-sm);">
+                            <h4 style="margin-top: 0;">🔍 La Lupa Reveladora de Bordes</h4>
+                            <div class="grid-layout cols-2" style="gap: 1.5rem;">
+                                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <p style="font-size: 0.9rem; margin-bottom: 1rem;">Incluso con 1000 lados, a simple vista parece un círculo perfecto. Pero si aplicamos un <strong>Zoom de 10,000x</strong> en un borde, descubriremos la verdad.</p>
+                                        <button id="btn-reveal-edges" class="btn-primary" style="width: 100%;">Aplicar Zoom Extremo</button>
+                                    </div>
+                                    <div id="reveal-text" style="font-size: 0.85rem; padding: 0.75rem; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px; display: none; margin-top: 1rem;">
+                                        <strong>Conclusión:</strong> El polígono siempre está compuesto de tramos rectos. Su <em>área</em> tiende al círculo, pero su <em>naturaleza geométrica</em> (lados rectos vs curva continua) nunca cambia.
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: center; position: relative;">
+                                    <canvas id="zoom-canvas" width="200" height="200" style="background: white; border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm);"></canvas>
+                                    <div id="zoom-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--color-text-dark);">
+                                        Vista Normal (1x)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Es muy común escuchar esta afirmación, pero es <strong>falsa</strong>. Un polígono, por definición, siempre tendrá lados rectos. Un círculo tiene una curvatura continua sin lados rectos.</p>
+                        <p>El límite (la exhausción) nos dice que el <em>valor del área</em> del polígono se acerca infinitesimalmente al <em>valor del área</em> del círculo. Pero la figura poligonal no se "transforma" mágicamente en un círculo. Esta es la diferencia fundamental entre un cambio cuantitativo (valor numérico del área) y uno cualitativo (la esencia de la forma geométrica).</p>
+                        <button class="btn-primary" style="margin-top: 1rem;" onclick="toggleSubSection('sub-limit')">Ocultar Profundización</button>
+                    </div>
+
+</section>
 
             <!-- SECTION 4: HISTORICAL LEGACY (ARCHIMEDES) -->
             <section id="section-history" class="content-section">
