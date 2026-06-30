@@ -509,17 +509,20 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (gridFeedback) {
             if (gridStep === 0) {
-                gridFeedback.textContent = '¡Coloreá fracciones para rellenar la cuadrícula!';
+                gridFeedback.textContent = 'El cuadrado tiene área 1. ¡Empezá a colorear fracciones!';
                 gridFeedback.className = 'callout warning';
                 if (gridChallengeBadge) {
                     gridChallengeBadge.textContent = 'Misión Mosaico';
                     gridChallengeBadge.className = 'badge';
                 }
             } else if (gridStep < 6) {
-                gridFeedback.textContent = `Paso ${gridStep}: la suma es ${sumVal.toFixed(4)}. Queda un ${(remainingVal*100).toFixed(1)}% sin colorear.`;
+                gridFeedback.textContent = `Área coloreada: ${sumVal.toFixed(4)} de 1. Todavía queda sin colorear: ${remainingVal.toFixed(4)}.`;
                 gridFeedback.className = 'callout warning';
+            } else if (gridStep < 8) {
+                gridFeedback.textContent = `¡Casi lleno! Área coloreada = ${sumVal.toFixed(4)}. El espacio blanco restante (${remainingVal.toFixed(4)}) se achica cada vez más.`;
+                gridFeedback.className = 'callout info';
             } else {
-                gridFeedback.textContent = `¡Excelente! Rellenaste el ${(sumVal*100).toFixed(2)}% del cuadrado. El límite es claramente 1.`;
+                gridFeedback.textContent = `¡El cuadrado está completamente lleno! Área coloreada ≈ ${sumVal.toFixed(4)}. La suma alcanzó el límite exacto: 1, que es el área total del cuadrado.`;
                 gridFeedback.className = 'callout success';
                 if (gridChallengeBadge) {
                     gridChallengeBadge.textContent = '¡Completado!';
@@ -1775,13 +1778,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 archerDelta.setAttribute('fill', 'var(--archer-safe-bg)'); // Blue safe
                 archerDelta.setAttribute('stroke', 'var(--color-primary)');
                 archerFeedback.className = "callout success";
-                archerFeedback.innerHTML = "¡Perfecto! Has acotado la mira lo suficiente (\(\delta\)). Ahora es matemáticamente imposible que la curva se salga de la zona objetivo (\(\varepsilon\)).";
+                archerFeedback.innerHTML = "¡Perfecto! Has acotado la mira lo suficiente (\\(\\delta\\)). Ahora es matemáticamente imposible que la curva se salga de la zona objetivo (\\(\\varepsilon\\)).";
+            }
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([archerFeedback]).catch((err) => console.log(err));
             }
         }
 
         deltaSlider.addEventListener('input', updateArcher);
         updateArcher();
     }
+
 
     // --- Sub-section 4: Derivative (Instantaneous Velocity) ---
     const secantSlider = document.getElementById('secant-slider');
@@ -1853,80 +1860,98 @@ document.addEventListener('DOMContentLoaded', () => {
        ========================================================================== */
     
     
-    // 1. EL LIMITE GEOMETRICO: LLENANDO EL CUADRADO
-    const btnSeries = document.getElementById('btn-series-step');
-    const squareContainer = document.getElementById('series-square-container');
-    const formulaContainer = document.getElementById('series-formula');
-    const conclusion = document.getElementById('series-conclusion');
-    
-    let seriesStep = 1; // 1 means half, 2 means quarter...
-    let isVerticalSplit = true;
-    
-    if (btnSeries && squareContainer) {
-        btnSeries.addEventListener('click', () => {
-            const fraction = Math.pow(2, seriesStep);
+    // 1. LA PARADOJA DE LA ESCALERA (SECCIÓN 1 - PROFUNDIZACIÓN)
+    const btnStaircaseNext = document.getElementById('btn-staircase-next');
+    const btnStaircasePrev = document.getElementById('btn-staircase-prev');
+    const staircaseCountDisplay = document.getElementById('staircase-count');
+    const staircaseLengthDisplay = document.getElementById('staircase-length');
+    const staircasePath = document.getElementById('staircase-path');
+    const staircaseExplanation = document.getElementById('staircase-explanation');
+
+    let currentStairSteps = 1; // 1, 2, 4, 8, 16, 32, 64
+
+    function updateStaircaseSimulation() {
+        if (staircaseCountDisplay) staircaseCountDisplay.textContent = currentStairSteps;
+        
+        // Draw the staircase path in the SVG
+        // Coordinates range from (20, 180) to (180, 20) inside a 200x200 viewBox
+        if (staircasePath) {
+            const startX = 20;
+            const startY = 180;
+            const endX = 180;
+            const endY = 20;
             
-            // Create a new fraction block
-            const block = document.createElement('div');
-            block.classList.add('fraction-box');
-            block.innerText = `1/${fraction}`;
+            const totalW = endX - startX;
+            const totalH = startY - endY;
             
-            // Calculate positioning to fill the remaining space
-            // Assuming container is 200x200
-            if (seriesStep === 1) { // 1/2
-                block.style.top = '0';
-                block.style.left = '0';
-                block.style.width = '100px';
-                block.style.height = '200px';
-                formulaContainer.innerHTML = 'S = 1/2';
-            } else if (seriesStep === 2) { // 1/4
-                block.style.top = '0';
-                block.style.left = '100px';
-                block.style.width = '100px';
-                block.style.height = '100px';
-                formulaContainer.innerHTML += ' + 1/4';
-            } else if (seriesStep === 3) { // 1/8
-                block.style.top = '100px';
-                block.style.left = '100px';
-                block.style.width = '50px';
-                block.style.height = '100px';
-                formulaContainer.innerHTML += ' + 1/8';
-            } else if (seriesStep === 4) { // 1/16
-                block.style.top = '100px';
-                block.style.left = '150px';
-                block.style.width = '50px';
-                block.style.height = '50px';
-                formulaContainer.innerHTML += ' + 1/16';
-            } else if (seriesStep === 5) { // 1/32
-                block.style.top = '150px';
-                block.style.left = '150px';
-                block.style.width = '25px';
-                block.style.height = '50px';
-                formulaContainer.innerHTML += ' + 1/32';
-            } else if (seriesStep === 6) { // 1/64
-                block.style.top = '150px';
-                block.style.left = '175px';
-                block.style.width = '25px';
-                block.style.height = '25px';
-                formulaContainer.innerHTML += ' + ...';
-            } else if (seriesStep > 6) {
-                // Too small to draw text
-                btnSeries.disabled = true;
-                btnSeries.innerText = "Suma Infinita Completada";
-                conclusion.style.display = 'block';
-                formulaContainer.innerHTML = 'S = &sum; (1/2^n) = 1';
-                return;
+            const stepW = totalW / currentStairSteps;
+            const stepH = totalH / currentStairSteps;
+            
+            let pathD = `M ${startX} ${startY}`;
+            
+            for (let i = 0; i < currentStairSteps; i++) {
+                const currentX = startX + i * stepW;
+                const currentY = startY - i * stepH;
+                
+                // Go right, then go up
+                const nextX = currentX + stepW;
+                const nextY = currentY - stepH;
+                
+                pathD += ` H ${nextX} V ${nextY}`;
             }
             
-            squareContainer.appendChild(block);
+            staircasePath.setAttribute('d', pathD);
+        }
+        
+        // Update explanation dynamically
+        if (staircaseExplanation) {
+            if (currentStairSteps === 1) {
+                staircaseExplanation.innerHTML = `Con <strong>1 escalón</strong>, caminás 1.0m en horizontal y 1.0m en vertical. La longitud total es \\( 1.0 + 1.0 = 2.0 \\)m. Claramente está lejos de la diagonal.`;
+            } else if (currentStairSteps <= 4) {
+                staircaseExplanation.innerHTML = `Con <strong>${currentStairSteps} escalones</strong>, la longitud total sigue siendo exactamente \\( ${currentStairSteps} \\times (${(1.0/currentStairSteps).toFixed(2)} + ${(1.0/currentStairSteps).toFixed(2)}) = 2.0 \\)m. Los dientes se achican, pero la distancia no cambia.`;
+            } else if (currentStairSteps <= 16) {
+                staircaseExplanation.innerHTML = `¡Con <strong>${currentStairSteps} escalones</strong> se empieza a ver muy parecida a una línea diagonal! Pero si hacemos zoom microscópico, veremos millones de escalones ortogonales. La longitud sigue siendo <strong>2.0000m</strong>.`;
+            } else {
+                staircaseExplanation.innerHTML = `¡Espectacular! Con <strong>${currentStairSteps} escalones</strong> la escalera es indistinguible de la diagonal a simple vista. Esta paradoja (\\(2 = \\sqrt{2}\\)) demuestra que <strong>no todas las aproximaciones al límite son válidas</strong>. Para medir longitudes o curvas, las aproximaciones deben seguir también la dirección de la curva (tangente), que es la rigurosidad que inventó Arquímedes.`;
+            }
             
-            // Trigger reflow for animation
-            void block.offsetWidth;
-            block.classList.add('active');
-            
-            seriesStep++;
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([staircaseExplanation]).catch((err) => console.log(err));
+            }
+        }
+        
+        // Enable/disable buttons
+        if (btnStaircasePrev) {
+            btnStaircasePrev.disabled = (currentStairSteps === 1);
+            btnStaircasePrev.style.opacity = (currentStairSteps === 1) ? '0.5' : '1';
+        }
+        
+        if (btnStaircaseNext) {
+            btnStaircaseNext.disabled = (currentStairSteps === 64);
+            btnStaircaseNext.style.opacity = (currentStairSteps === 64) ? '0.5' : '1';
+        }
+    }
+
+    if (btnStaircaseNext) {
+        btnStaircaseNext.addEventListener('click', () => {
+            if (currentStairSteps < 64) {
+                currentStairSteps *= 2;
+                updateStaircaseSimulation();
+            }
         });
     }
+
+    if (btnStaircasePrev) {
+        btnStaircasePrev.addEventListener('click', () => {
+            if (currentStairSteps > 1) {
+                currentStairSteps /= 2;
+                updateStaircaseSimulation();
+            }
+        });
+    }
+
+    // Initialize simulation
+    updateStaircaseSimulation();
 
     // 2. LA REBANADORA 3D
     const slicesSlider = document.getElementById('slices-slider');
@@ -2158,9 +2183,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (step === 2) {
                 semicircleDialogueText.innerHTML = `Agregamos 4 triángulos más pequeños. El área subió a <strong>1.5307</strong> y la brecha es de solo <strong>0.0401</strong>. ¡Casi no queda espacio vacío!`;
             } else if (step === 3) {
-                semicircleDialogueText.innerHTML = `Añadimos 8 triángulos diminutos. El área acumulada es <strong>1.5607</strong>. La diferencia con el semicírculo real (\( \\frac{\\pi}{2} \\approx 1.5708 \)) es de apenas <strong>0.0101</strong>.`;
+                semicircleDialogueText.innerHTML = `Añadimos 8 triángulos diminutos. El área acumulada es <strong>1.5607</strong>. La diferencia con el semicírculo real (\\( \\frac{\\pi}{2} \\approx 1.5708 \\)) es de apenas <strong>0.0101</strong>.`;
             } else {
-                semicircleDialogueText.innerHTML = `¡Espectacular! Con 16 triángulos la brecha es de apenas <strong>0.0025</strong>. En el límite infinito, la suma de las áreas de los triángulos será exactamente igual al área del semicírculo: <strong>\( \\frac{\\pi}{2} \\)</strong>. ¡El infinito ha sido domado!`;
+                semicircleDialogueText.innerHTML = `¡Espectacular! Con 16 triángulos la brecha es de apenas <strong>0.0025</strong>. En el límite infinito, la suma de las áreas de los triángulos será exactamente igual al área del semicírculo: <strong>\\( \\frac{\\pi}{2} \\)</strong>. ¡El infinito ha sido domado!`;
             }
             if (window.MathJax && window.MathJax.typesetPromise) {
                 window.MathJax.typesetPromise([semicircleDialogueText]).catch((err) => console.log(err));

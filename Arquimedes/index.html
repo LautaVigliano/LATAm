@@ -347,10 +347,12 @@
                         <div class="activity-simulation-area">
                             <!-- Visual Square Area (SVG) -->
                             <div class="square-grid-container" style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
-                                <svg id="square-grid-svg" viewBox="0 0 220 220" width="220px" height="220px" style="background-color: var(--color-svg-bg); border: 2px solid var(--color-svg-border); border-radius: 8px;">
+                                <svg id="square-grid-svg" viewBox="0 0 220 240" width="220px" height="240px" style="background-color: var(--color-svg-bg); border: 2px solid var(--color-svg-border); border-radius: 8px;">
                                     <rect x="10" y="10" width="200" height="200" fill="none" stroke="var(--color-svg-border)" stroke-width="1"/>
                                     <g id="square-blocks-group"></g>
                                     <rect id="square-white-block" x="10" y="10" width="200" height="200" fill="none" stroke="var(--color-danger)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                    <!-- Area label -->
+                                    <text x="110" y="225" text-anchor="middle" fill="var(--color-text-muted)" font-size="11px" font-weight="700" font-family="monospace">Área total del cuadrado = 1</text>
                                 </svg>
                             </div>
                             
@@ -387,7 +389,7 @@
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
                                 <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p>¡Geometría pura en acción! Al colorear la mitad del espacio restante en cada paso, estás construyendo la serie geométrica \(\sum_{i=1}^{\infty} \frac{1}{2^i}\). Físicamente, ves cómo las fracciones llenan el cuadrado de área 1 por completo, demostrando de forma innegable que la suma infinita converge a 1.</p>
+                                <p>El cuadrado que ves tiene <strong>área 1</strong>, y eso es exactamente tu punto de llegada. Cada vez que agregás una fracción, coloreás la <strong>mitad</strong> del espacio blanco que todavía queda libre: primero \(\frac{1}{2}\) del cuadrado, luego \(\frac{1}{4}\), luego \(\frac{1}{8}\)... El área blanca se achica a la mitad en cada paso, pero nunca desaparece del todo. Sin embargo, fijate en lo que pasa con lo que ya pintaste: se va acercando cada vez más a 1. Cuando el cuadrado queda completamente coloreado, la suma de todas esas fracciones <em>alcanzó exactamente</em> el área total: <strong>1</strong>. Ese es el límite: el valor al que la suma se aproxima sin parar hasta tocarlo.</p>
                             </div>
                         </div>
                     </div>
@@ -403,36 +405,63 @@
                     </div>
                     
                     
-                    <!-- SUB-CONTENT: PARADOX -->
+                    <!-- SUB-CONTENT: PARADOX (STAIRCASE PARADOX 2 = sqrt(2)) -->
                     <div id="sub-paradox" class="sub-section-content" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--border-radius-md);">
-                        <h3 style="margin-bottom: 1rem; padding-bottom: 0.5rem;">El Límite Geométrico: Llenando el Cuadrado</h3>
+                        <h3 style="margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-svg-border); color: var(--color-primary);">La Paradoja de la Escalera Fantasma (\(2 = \sqrt{2}\))</h3>
                         
-                        <p>Para resolver matemáticamente la paradoja, tenemos que entender cómo se comporta una <strong>serie infinita</strong>. Si Aquiles recorre mitades de mitades (1/2, luego 1/4, luego 1/8...), ¿la suma de todo ese tiempo es infinita? Veámoslo visualmente.</p>
+                        <p>Cuando aproximamos figuras, nuestra intuición puede jugarnos malas pasadas. Imagina una rampa diagonal perfecta que mide exactamente <strong>\(\sqrt{2} \approx 1.4142\)</strong> metros de largo. ¿Qué pasa si intentamos construirla usando una escalera de escalones rectos cada vez más pequeños?</p>
                         
                         <div class="interactive-activity lab-premium-activity" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-                            <h4 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center;">
-                                <span>📐 Suma Geométrica de Infinitos Términos</span>
-                                <button id="btn-series-step" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;">Sumar la mitad restante</button>
+                            <h4 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                                <span>🪜 La Escalera Infinita contra la Diagonal</span>
+                                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                    <button id="btn-staircase-prev" class="btn-preset" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">◀ Menos</button>
+                                    <button id="btn-staircase-next" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Más Escalones ▶</button>
+                                </div>
                             </h4>
                             
-                            <div class="grid-layout cols-2" style="gap: 1.5rem; margin-top: 1rem;">
-                                <!-- Cuadrado de visualización -->
+                            <div class="grid-layout cols-2" style="gap: 1.5rem; margin-top: 1rem; align-items: center;">
+                                <!-- SVG de la Escalera -->
                                 <div style="display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
-                                    <div id="series-square-container" style="position: relative; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.2);">
-                                        <!-- Aquí se inyectarán las fracciones (divs) -->
-                                    </div>
+                                    <svg id="staircase-svg" viewBox="0 0 200 200" width="200px" height="200px" style="background-color: var(--color-svg-bg); border: 2px solid var(--color-svg-border); border-radius: 8px;">
+                                        <!-- Diagonal principal (gris) -->
+                                        <line x1="20" y1="180" x2="180" y2="20" stroke="#4b5563" stroke-width="2" stroke-dasharray="3,3"/>
+                                        
+                                        <!-- Escalera (dibujada dinámicamente) -->
+                                        <path id="staircase-path" d="" fill="none" stroke="var(--color-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        
+                                        <!-- Etiquetas -->
+                                        <text x="15" y="195" fill="var(--color-text-muted)" font-size="0.65rem">Inicio</text>
+                                        <text x="175" y="15" fill="var(--color-text-muted)" font-size="0.65rem">Fin</text>
+                                    </svg>
                                 </div>
                                 
-                                <!-- Fórmula -->
-                                <div style="display: flex; flex-direction: column; justify-content: center;">
-                                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #94a3b8;">Fórmula de la Suma (S):</p>
-                                    <div style="font-size: 1.2rem; font-family: monospace; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; color: #a5b4fc; border: 1px solid rgba(129, 140, 248, 0.2); height: 120px; overflow-y: auto;">
-                                        <span id="series-formula">S = </span>
+                                <!-- Información matemática y paradoja -->
+                                <div style="display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
+                                    <div class="math-item" style="margin: 0; padding: 0.5rem 0.75rem;">
+                                        <span class="math-label">Número de Escalones (\(N\)):</span>
+                                        <span class="math-formula" id="staircase-count" style="font-size: 1.15rem; color: var(--color-primary); font-weight: bold;">1</span>
                                     </div>
-                                    <p id="series-conclusion" style="font-size: 0.85rem; margin-top: 1rem; color: #4ade80; display: none;">
-                                        <strong>¡Eureka!</strong> Aunque la suma tiene <em>infinitos</em> términos, el área nunca superará el tamaño exacto de 1 cuadrado. El tiempo finito (1) engloba infinitas subdivisiones.
-                                    </p>
+                                    <div class="math-item" style="margin: 0; padding: 0.5rem 0.75rem; border-left-color: var(--color-accent);">
+                                        <span class="math-label">Longitud de la Escalera:</span>
+                                        <span class="math-formula" id="staircase-length" style="font-size: 1.15rem; color: var(--color-accent); font-weight: bold;">2.0000</span>
+                                    </div>
+                                    <div class="math-item" style="margin: 0; padding: 0.5rem 0.75rem; border-left-color: var(--color-success);">
+                                        <span class="math-label">Longitud Real de la Diagonal:</span>
+                                        <span class="math-formula" style="font-size: 1.15rem; color: var(--color-success); font-weight: bold;">\(\sqrt{2} \approx 1.4142\)</span>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Dialogue of explanation -->
+                        <div class="archimedes-dialogue" style="margin-top: 1rem;">
+                            <div class="archimedes-avatar">🏛️</div>
+                            <div class="archimedes-speech">
+                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <p id="staircase-explanation">
+                                    Con <strong>1 escalón</strong>, caminás 1 metro horizontal y 1 metro vertical (Total = 2m). Aunque aumentes los escalones y la escalera parezca pegarse a la diagonal, ¡siempre caminarás exactamente la misma distancia horizontal (1m) y vertical (1m)!
+                                </p>
                             </div>
                         </div>
                         
@@ -1103,7 +1132,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- Modern App Logic -->
-    <script src="app.js?v=11"></script>
+    <script src="app.js?v=12"></script>
 </body>
 </html>
 
