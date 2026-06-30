@@ -46,6 +46,13 @@
     --math-def-bg: rgba(255, 255, 255, 0.02);
     --math-def-border: rgba(255, 255, 255, 0.08);
     
+    /* Sub-sections Simulator Colors (Dark Mode) */
+    --archer-safe-bg: rgba(59, 130, 246, 0.15);
+    --archer-danger-bg: rgba(239, 68, 68, 0.15);
+    --archer-target-bg: rgba(56, 123, 91, 0.15);
+    --sphere-bg: rgba(245, 158, 11, 0.15);
+    --sphere-disk-bg: rgba(16, 185, 129, 0.4);
+    
     /* Semantic Status */
     --color-success: #10b981;       /* Emerald success green */
     --color-warning: #fbbf24;       /* Amber warning */
@@ -179,6 +186,13 @@ body.light-mode {
 
     --color-bound-blue: #1976d2;
     --color-bound-green: #2e7d32;
+
+    /* Sub-sections Simulator Colors (Light Mode) */
+    --archer-safe-bg: rgba(59, 130, 246, 0.08);
+    --archer-danger-bg: rgba(239, 68, 68, 0.08);
+    --archer-target-bg: rgba(56, 123, 91, 0.08);
+    --sphere-bg: rgba(245, 158, 11, 0.08);
+    --sphere-disk-bg: rgba(16, 185, 129, 0.2);
 }
 
 /* ==========================================================================
@@ -942,7 +956,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     border-radius: var(--border-radius-sm);
 }
 
-.error-display {
+.difference-display {
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.7);
 }
@@ -1922,8 +1936,8 @@ body.light-mode .btn-preset.active {
     color: #ffffff;
 }
 
-body.light-mode .error-display {
-    color: var(--color-text-muted);
+body.light-mode .difference-display {
+    color: var(--color-text-dark) !important;
 }
 
 .graph-grid-line {

@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
     const appSidebar = document.getElementById('app-sidebar');
 
+    window.switchSection = switchSection;
     function switchSection(targetSectionId) {
         // Hide all sections and remove active classes
         contentSections.forEach(section => {
@@ -536,24 +537,21 @@ document.addEventListener('DOMContentLoaded', () => {
        3. INSTANCE 2: GEOMETRIC LAB - EXHAUSTION METHOD SIMULATOR
        ========================================================================== */
     const sidesSlider = document.getElementById('polygon-sides-slider');
+    const sidesSlider2 = document.getElementById('polygon-sides-slider-2');
     const sidesValDisplay = document.getElementById('sides-val');
     const presetBtns = document.querySelectorAll('#presets-container .btn-preset');
     const presetsContainer = document.getElementById('presets-container');
 
-    // Tiro al Blanco elements and state declared early to avoid initialization ReferenceErrors
-    const aimShotSlider = document.getElementById('aim-shot-slider');
-    const aimShotValDisplay = document.getElementById('aim-shot-val');
-    const gaugeFillInscribed = document.getElementById('gauge-fill-inscribed');
-    const gaugeFillCircumscribed = document.getElementById('gauge-fill-circumscribed');
-    const gaugeValInscribed = document.getElementById('gauge-val-inscribed');
-    const gaugeValCircumscribed = document.getElementById('gauge-val-circumscribed');
+    // Area bounding elements
     const targetSafeZone = document.getElementById('target-safe-zone');
     const targetShotPin = document.getElementById('target-shot-pin');
-    const targetScoreDisplay = document.getElementById('target-score');
-    const targetMultiplierDisplay = document.getElementById('target-multiplier');
-    const targetFeedback = document.getElementById('target-feedback');
+    const labMissionDesc = document.getElementById('lab-mission-desc');
     
-    let targetScoreVal = 0;
+    // Estimation Slider
+    const estimationSlider = document.getElementById('estimation-slider');
+    const estimationValDisplay = document.getElementById('estimation-val');
+    const estimationFeedback = document.getElementById('estimation-feedback');
+    
     let currentLowerPI = 3.0000;
     let currentUpperPI = 3.4641;
     let currentSidesN = 6;
@@ -585,6 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const missionCota1 = document.getElementById('mission-cota-1');
     const missionCota2 = document.getElementById('mission-cota-2');
     const labFeedback = document.getElementById('lab-feedback');
+    const trigFeedback = document.getElementById('trig-feedback');
     
     const svgRadius = 80; // Radius of unit circle in SVG coords
     let isZoomActive = false;
@@ -714,8 +713,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Verify missions
         updateLabMissions(errorVal, n);
         
-        // Sync the Area Guessing Target game
-        syncAreaTargetGame(lowerPI, upperPI, n);
+        // Sync the Area Gauges
+        syncAreaGauges(lowerPI, upperPI, n);
     }
 
     function updateZoomView(angleDeg) {
@@ -774,22 +773,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const boundTarget = document.querySelector('.bound-target');
         if (boundTarget) boundTarget.textContent = `Arco (θ) = ${angleRad.toFixed(4)}`;
         
-        if (labFeedback) {
-            if (angleDeg <= 10) {
-                labFeedback.textContent = "¡Ángulo infinitesimal! Observa cómo a medida que θ tiende a 0, la cuerda (Seno), el arco (Ángulo) y la tangente se vuelven idénticos.";
-                labFeedback.className = "callout success";
-            } else {
-                labFeedback.textContent = "Disminuí el ángulo deslizando a la izquierda para ver cómo se acoplan las tres líneas.";
-                labFeedback.className = "callout warning";
-            }
-        }
+        // Verify trigonometric missions
+        updateTrigMissions(diff, angleDeg);
     }
 
     function updateLabMissions(error, n) {
-        if (!missionCota1 || !missionCota2) return;
+        if (!missionCota1) return;
         
         let m1 = false;
-        let m2 = false;
         
         if (error < 0.05) {
             if (window.completeMission) window.completeMission(3);
@@ -797,29 +788,42 @@ document.addEventListener('DOMContentLoaded', () => {
             missionCota1.className = 'badge success';
             m1 = true;
         } else {
-            missionCota1.textContent = 'Pendiente';
+            missionCota1.textContent = 'Misión Activa';
             missionCota1.className = 'badge secondary';
         }
         
-        if (error < 0.003) {
+        if (labFeedback && !isZoomActive) {
+            if (m1) {
+                labFeedback.textContent = `¡Excelente! Atrapaste a Pi con un Margen de Tolerancia de ${error.toFixed(4)} usando n = ${n}.`;
+                labFeedback.className = 'callout success';
+            } else {
+                labFeedback.textContent = `Diferencia actual: ${error.toFixed(4)}. ¡Añadí más varas rectas (lados) para acorralar la curva y reducir la diferencia a menos de 0.05!`;
+                labFeedback.className = 'callout warning';
+            }
+        }
+    }
+
+    function updateTrigMissions(diff, angleDeg) {
+        if (!missionCota2) return;
+        
+        let m2 = false;
+        
+        if (diff < 0.05) {
             missionCota2.textContent = '¡Completado!';
             missionCota2.className = 'badge success-pulse';
             m2 = true;
         } else {
-            missionCota2.textContent = 'Pendiente';
+            missionCota2.textContent = 'Misión Activa';
             missionCota2.className = 'badge secondary';
         }
         
-        if (labFeedback && !isZoomActive) {
-            if (m1 && m2) {
-                labFeedback.textContent = `¡Espectacular! Completaste ambas misiones. Trappaste a Pi con un error de ${error.toFixed(4)} usando n = ${n}.`;
-                labFeedback.className = 'callout success';
-            } else if (m1) {
-                labFeedback.textContent = `¡Misión 1 lograda! Ahora intenta aproximar con precisión de Arquímedes (error < 0.003, n = 96).`;
-                labFeedback.className = 'callout warning';
+        if (trigFeedback && isZoomActive) {
+            if (m2) {
+                trigFeedback.textContent = `¡Magnífico! A ${angleDeg.toFixed(1)}°, la diferencia entre la tangente y el seno es apenas ${diff.toFixed(4)}. Las tres líneas casi se fusionan.`;
+                trigFeedback.className = 'callout success';
             } else {
-                labFeedback.textContent = `Error actual: ${error.toFixed(4)}. Deslizá el control para sumar más lados.`;
-                labFeedback.className = 'callout warning';
+                trigFeedback.textContent = `Diferencia actual: ${diff.toFixed(4)}. Disminuí el ángulo deslizando a la izquierda para reducirla a menos de 0.05.`;
+                trigFeedback.className = 'callout warning';
             }
         }
     }
@@ -871,6 +875,12 @@ document.addEventListener('DOMContentLoaded', () => {
         sidesSlider.addEventListener('input', (e) => {
             const n = parseInt(e.target.value);
             updateSimulation(n);
+        });
+    }
+
+    if (sidesSlider2) {
+        sidesSlider2.addEventListener('input', (e) => {
+            const n = parseInt(e.target.value);
             updateZoomView(180 / n);
         });
     }
@@ -880,7 +890,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const n = parseInt(btn.getAttribute('data-val'));
             updateSimulation(n);
-            updateZoomView(180 / n);
         });
     });
 
@@ -888,55 +897,49 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sidesSlider) {
         const initialN = parseInt(sidesSlider.value);
         updateSimulation(initialN);
-        updateZoomView(180 / initialN);
+    }
+    if (sidesSlider2) {
+        updateZoomView(180 / parseInt(sidesSlider2.value));
     }
 
     /* ==========================================================================
-       3b. INSTANCE 2b: TIRO AL BLANCO DE AREAS
+       3b. INSTANCE 2b: SINCRONIZADOR DE MEDIDORES DE AREA
        ========================================================================== */
 
-    function validateShot() {
-        if (!aimShotSlider) return;
-        const shotVal = parseFloat(aimShotSlider.value);
-        if (aimShotValDisplay) aimShotValDisplay.textContent = shotVal.toFixed(4);
+    function validateEstimation() {
+        if (!estimationSlider) return;
+        const estVal = parseFloat(estimationSlider.value);
+        if (estimationValDisplay) estimationValDisplay.textContent = estVal.toFixed(4);
         
-        // Range mapping: 2.0000 to 4.0000 maps to 0% to 100%
-        const shotPercent = Math.max(0, Math.min(100, (shotVal - 2.0) / (4.0 - 2.0) * 100));
-        if (targetShotPin) targetShotPin.style.left = shotPercent + '%';
+        const minRange = 2.0;
+        const maxRange = 4.0;
+        const totalRange = maxRange - minRange;
+        const estPercent = Math.max(0, Math.min(100, (estVal - minRange) / totalRange * 100));
         
-        const isHit = shotVal >= currentLowerPI && shotVal <= currentUpperPI;
+        if (targetShotPin) {
+            targetShotPin.style.bottom = estPercent + '%';
+        }
         
-        if (targetFeedback) {
-            if (isHit) {
-                const pts = Math.round(currentSidesN * 10);
-                targetScoreVal = pts;
-                if (targetScoreDisplay) targetScoreDisplay.textContent = targetScoreVal + ' pts';
-                if (targetMultiplierDisplay) targetMultiplierDisplay.textContent = `x${(currentSidesN / 6).toFixed(1)} (n=${currentSidesN})`;
-                
-                targetFeedback.innerHTML = `¡Impacto! Tu conjetura <strong>${shotVal.toFixed(4)}</strong> está en la Zona Segura. ¡Ganaste ${pts} puntos! Aumentá los lados para achicar la zona y multiplicar tu puntaje.`;
-                targetFeedback.className = 'callout success';
-                if (aimShotValDisplay) {
-                    aimShotValDisplay.style.color = 'var(--color-success)';
-                }
+        const isInside = estVal > currentLowerPI && estVal < currentUpperPI;
+        
+        if (estimationFeedback) {
+            if (isInside) {
+                estimationFeedback.innerHTML = `¡Excelente! Tu estimación <strong>${estVal.toFixed(4)}</strong> está correctamente ubicada dentro de los polígonos.`;
+                estimationFeedback.className = 'callout success';
+                if (estimationValDisplay) estimationValDisplay.style.color = 'var(--color-success)';
             } else {
-                targetScoreVal = 0;
-                if (targetScoreDisplay) targetScoreDisplay.textContent = '0 pts';
-                if (targetMultiplierDisplay) targetMultiplierDisplay.textContent = `x0.0 (n=${currentSidesN})`;
-                
-                if (shotVal < currentLowerPI) {
-                    targetFeedback.innerHTML = `<strong>¡Imposible!</strong> Tu disparo (${shotVal.toFixed(4)}) es menor que el polígono inscrito (${currentLowerPI.toFixed(4)}). ¡El círculo que lo rodea tiene que ser más grande!`;
+                if (estVal <= currentLowerPI) {
+                    estimationFeedback.innerHTML = `Tu estimación (${estVal.toFixed(4)}) es menor o igual al polígono inscrito (${currentLowerPI.toFixed(4)}). ¡Debe ser mayor!`;
                 } else {
-                    targetFeedback.innerHTML = `<strong>¡Te pasaste!</strong> Tu disparo (${shotVal.toFixed(4)}) es mayor que el polígono circunscrito (${currentUpperPI.toFixed(4)}). ¡El círculo está adentro, debe ser menor!`;
+                    estimationFeedback.innerHTML = `Tu estimación (${estVal.toFixed(4)}) es mayor o igual al polígono circunscrito (${currentUpperPI.toFixed(4)}). ¡Debe ser menor!`;
                 }
-                targetFeedback.className = 'callout warning';
-                if (aimShotValDisplay) {
-                    aimShotValDisplay.style.color = 'var(--color-danger)';
-                }
+                estimationFeedback.className = 'callout warning';
+                if (estimationValDisplay) estimationValDisplay.style.color = 'var(--color-danger)';
             }
         }
     }
 
-    function syncAreaTargetGame(lowerPI, upperPI, n) {
+    function syncAreaGauges(lowerPI, upperPI, n) {
         currentLowerPI = lowerPI;
         currentUpperPI = upperPI;
         currentSidesN = n;
@@ -945,28 +948,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const maxRange = 4.0;
         const totalRange = maxRange - minRange;
         
-        const inscribedPercent = Math.max(0, Math.min(100, (lowerPI - minRange) / totalRange * 100));
-        const circumscribedPercent = Math.max(0, Math.min(100, (upperPI - minRange) / totalRange * 100));
-        
-        if (gaugeFillInscribed) gaugeFillInscribed.style.width = inscribedPercent + '%';
-        if (gaugeFillCircumscribed) gaugeFillCircumscribed.style.width = circumscribedPercent + '%';
-        
-        if (gaugeValInscribed) gaugeValInscribed.textContent = lowerPI.toFixed(4);
-        if (gaugeValCircumscribed) gaugeValCircumscribed.textContent = upperPI.toFixed(4);
-        
-        const leftPercent = Math.max(0, Math.min(100, (lowerPI - minRange) / totalRange * 100));
-        const widthPercent = Math.max(0, Math.min(100, (upperPI - lowerPI) / totalRange * 100));
+        const bottomPercent = Math.max(0, Math.min(100, (lowerPI - minRange) / totalRange * 100));
+        const topPercent = Math.max(0, Math.min(100, (upperPI - minRange) / totalRange * 100));
+        const heightPercent = topPercent - bottomPercent;
         
         if (targetSafeZone) {
-            targetSafeZone.style.left = leftPercent + '%';
-            targetSafeZone.style.width = widthPercent + '%';
+            targetSafeZone.style.bottom = bottomPercent + '%';
+            targetSafeZone.style.height = heightPercent + '%';
         }
         
-        validateShot();
+        validateEstimation();
     }
 
-    if (aimShotSlider) {
-        aimShotSlider.addEventListener('input', validateShot);
+    if (estimationSlider) {
+        estimationSlider.addEventListener('input', validateEstimation);
     }
 
     // Initialize Simulation
@@ -1084,10 +1079,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (epsilonFeedback) {
             if (N < minN) {
                 let actualError = seqType === 'monotonic' ? (1 / Math.pow(2, N)) : (1 / N);
-                epsilonFeedback.innerHTML = `<strong>¡Refutación!</strong> Elegiste N = ${N}, pero el error en ese paso es <strong>${actualError.toFixed(3)}</strong>, lo que rompe tu tolerancia (&epsilon; = ${eps.toFixed(2)}). ¡Avanzá más pasos!`;
-                epsilonFeedback.className = 'callout warning';
+                epsilonFeedback.innerHTML = `<strong>¡Refutación!</strong> Elegiste N = ${N}, pero la diferencia en ese paso es <strong>${actualError.toFixed(3)}</strong>, lo que rompe tu tolerancia (&epsilon; = ${eps.toFixed(2)}). ¡Avanzá más pasos!`;
+                epsilonFeedback.className = 'callout danger';
             } else if (N === minN) {
-                epsilonFeedback.innerHTML = `<strong>¡Demostrado!</strong> N = ${N} es el paso crítico. A partir de aquí, todos los puntos caen matemáticamente dentro de tu margen de error.`;
+                epsilonFeedback.innerHTML = `<strong>¡Demostrado!</strong> N = ${N} es el paso crítico. A partir de aquí, todos los puntos caen matemáticamente dentro de tu margen aceptable.`;
                 epsilonFeedback.className = 'callout success';
             } else {
                 epsilonFeedback.innerHTML = `<strong>Válido, pero ineficiente.</strong> Es cierto que desde N = ${N} los puntos están dentro, pero debés encontrar el <strong>menor paso posible</strong>. ¡Ajustá N hacia abajo!`;
@@ -1539,12 +1534,309 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-
     if (balanceSlider) {
         balanceSlider.addEventListener('input', (e) => {
             updateBalanceGame(parseInt(e.target.value));
         });
         // Initial setup
         updateBalanceGame(1);
+    }
+
+    /* ==========================================================================
+       6. LOGIC FOR ADVANCED SUB-SECTIONS
+       ========================================================================== */
+
+    // --- Sub-section 1: Bouncing Ball ---
+    let ballAnimId;
+    const btnBallDrop = document.getElementById('btn-ball-drop');
+    const btnBallReset = document.getElementById('btn-ball-reset');
+    const ballSvg = document.getElementById('bouncing-ball-svg');
+    const ballEl = document.getElementById('bouncing-ball');
+    const ballPath = document.getElementById('ball-path');
+    const ballBounces = document.getElementById('ball-bounces');
+    const ballTimeEl = document.getElementById('ball-time');
+
+    if (btnBallDrop) {
+        let isBouncing = false;
+        
+        function resetBall() {
+            cancelAnimationFrame(ballAnimId);
+            isBouncing = false;
+            ballEl.setAttribute('cx', 20);
+            ballEl.setAttribute('cy', 20); // dropped from y=20 (height=140)
+            ballPath.setAttribute('d', '');
+            ballBounces.textContent = '0';
+            ballTimeEl.textContent = '0.00s';
+            btnBallDrop.classList.add('active');
+            btnBallReset.classList.remove('active');
+        }
+
+        function animateBall() {
+            if (isBouncing) return;
+            isBouncing = true;
+            btnBallDrop.classList.remove('active');
+            btnBallReset.classList.add('active');
+
+            let startY = 20;
+            const floorY = 160;
+            let currentX = 20;
+            
+            let initialHeight = floorY - startY;
+            let currentHeight = initialHeight;
+            let timeAccumulated = 0;
+            let bounceCount = 0;
+            let pathD = `M 20 20`;
+            
+            // Physical simulation parameters (abstracted for effect)
+            // Time for fall proportional to sqrt(height)
+            let fallTimeMs = 800; // time for first full fall
+            let startTime = performance.now();
+            let state = 'falling'; // falling or rising
+            let jumpStartY = startY;
+            let jumpStartTime = startTime;
+            
+            function step(timestamp) {
+                if (!isBouncing) return;
+                
+                let elapsed = timestamp - jumpStartTime;
+                let progress = Math.min(elapsed / fallTimeMs, 1);
+                
+                let y;
+                if (state === 'falling') {
+                    // easing in (accelerating)
+                    y = jumpStartY + currentHeight * (progress * progress);
+                    currentX += 0.5; // moving right
+                } else {
+                    // easing out (decelerating)
+                    y = floorY - currentHeight * (progress * (2 - progress));
+                    currentX += 0.5;
+                }
+                
+                ballEl.setAttribute('cx', currentX);
+                ballEl.setAttribute('cy', y);
+                
+                // Add to path occasionally to avoid massive strings
+                if (Math.random() > 0.5) pathD += ` L ${currentX} ${y}`;
+                ballPath.setAttribute('d', pathD);
+                
+                // Real-time updating display
+                let currentSimTime = timeAccumulated + (progress * fallTimeMs) / 1000;
+                ballTimeEl.textContent = currentSimTime.toFixed(2) + 's';
+                
+                if (progress === 1) {
+                    jumpStartTime = timestamp;
+                    if (state === 'falling') {
+                        state = 'rising';
+                        bounceCount++;
+                        ballBounces.textContent = bounceCount;
+                        timeAccumulated += fallTimeMs / 1000;
+                        
+                        // Next height is half
+                        currentHeight = currentHeight / 2;
+                        jumpStartY = floorY;
+                        
+                        // New time to rise (sqrt of 0.5 is approx 0.707)
+                        fallTimeMs = fallTimeMs * 0.707;
+                        
+                        if (currentHeight < 0.5) {
+                            // Stop simulation, it's virtually flat
+                            ballTimeEl.textContent = (timeAccumulated).toFixed(2) + 's (Límite Final)';
+                            ballTimeEl.style.color = "var(--color-success)";
+                            isBouncing = false;
+                            return;
+                        }
+                    } else {
+                        state = 'falling';
+                        timeAccumulated += fallTimeMs / 1000;
+                        jumpStartY = floorY - currentHeight;
+                    }
+                }
+                
+                ballAnimId = requestAnimationFrame(step);
+            }
+            ballAnimId = requestAnimationFrame(step);
+        }
+
+        btnBallDrop.addEventListener('click', animateBall);
+        btnBallReset.addEventListener('click', () => {
+            ballTimeEl.style.color = "var(--color-text-dark)";
+            resetBall();
+        });
+        resetBall();
+    }
+
+    // --- Sub-section 2: Exhaustion Sphere vs Cylinder ---
+    const diskSlider = document.getElementById('disk-slider');
+    const diskVal = document.getElementById('disk-val');
+    const diskGroup = document.getElementById('sphere-disks-group');
+    const diskVolEl = document.getElementById('disk-vol');
+
+    if (diskSlider && diskGroup) {
+        function drawDisks() {
+            diskGroup.innerHTML = '';
+            const n = parseInt(diskSlider.value);
+            diskVal.textContent = n;
+            
+            // Sphere radius in SVG coordinates
+            const R = 100;
+            const cx = 200;
+            const cy = 200; // floor of hemisphere
+            
+            const sliceThickness = R / n;
+            let sumVol = 0;
+            
+            for (let i = 0; i < n; i++) {
+                // y from 0 to R
+                let yBottom = i * sliceThickness;
+                let yTop = (i + 1) * sliceThickness;
+                
+                // x radius of sphere at y (using circle equation x^2 + y^2 = R^2)
+                let rDisk = Math.sqrt(R*R - yBottom*yBottom);
+                
+                // Volume of this disk (cylindrical slice) proportional to pi * r^2 * h
+                // Since cylinder volume is pi * R^2 * R, fraction is (rDisk/R)^2 * (sliceThickness/R)
+                let normVol = Math.pow(rDisk / R, 2) * (1 / n);
+                sumVol += normVol;
+                
+                // Draw disk as rectangle
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', cx - rDisk);
+                rect.setAttribute('y', cy - yTop);
+                rect.setAttribute('width', rDisk * 2);
+                rect.setAttribute('height', sliceThickness);
+                rect.setAttribute('fill', 'var(--sphere-disk-bg)');
+                rect.setAttribute('stroke', 'var(--color-success)');
+                rect.setAttribute('stroke-width', n > 25 ? '0.5' : '1');
+                
+                diskGroup.appendChild(rect);
+            }
+            
+            diskVolEl.textContent = sumVol.toFixed(4);
+            if (n >= 50) {
+                diskVolEl.style.color = "var(--color-success)";
+                diskVolEl.textContent += " (≈ 2/3)";
+            } else {
+                diskVolEl.style.color = "var(--color-text-dark)";
+            }
+        }
+        
+        diskSlider.addEventListener('input', drawDisks);
+        drawDisks();
+    }
+
+    // --- Sub-section 3: Archer's Aim (Continuous Limit) ---
+    const deltaSlider = document.getElementById('delta-slider');
+    const deltaValEl = document.getElementById('delta-val');
+    const archerDelta = document.getElementById('archer-delta');
+    const archerCurve = document.getElementById('archer-curve');
+    const archerFeedback = document.getElementById('archer-feedback');
+
+    if (deltaSlider && archerCurve) {
+        // Draw cubic curve crossing (200, 100)
+        let curveD = `M 0 200 C 100 200, 150 150, 200 100 C 250 50, 300 0, 400 0`;
+        archerCurve.setAttribute('d', curveD);
+        
+        let pathStr = "M ";
+        for(let x=0; x<=400; x+=5) {
+            let y = 100 - Math.pow(x-200, 3) / 10000;
+            if (y > 250) y = 250;
+            if (y < -50) y = -50;
+            pathStr += `${x} ${y} L `;
+        }
+        pathStr = pathStr.slice(0, -3);
+        archerCurve.setAttribute('d', pathStr);
+
+        function updateArcher() {
+            let width = parseInt(deltaSlider.value); // max 150
+            archerDelta.setAttribute('width', width);
+            archerDelta.setAttribute('x', 200 - width/2);
+            
+            let halfWidth = width / 2;
+            let maxYDiff = Math.pow(halfWidth, 3) / 10000;
+            
+            if (width >= 100) deltaValEl.textContent = "Ancha";
+            else if (width >= 60) deltaValEl.textContent = "Media";
+            else deltaValEl.textContent = "Estrecha";
+
+            if (maxYDiff > 30) {
+                archerDelta.setAttribute('fill', 'var(--archer-danger-bg)'); // Red warning
+                archerDelta.setAttribute('stroke', 'var(--color-danger)');
+                archerFeedback.className = "callout danger";
+                archerFeedback.innerHTML = "¡Cuidado! Tu mirilla es muy ancha. La trayectoria podría salirse de la zona verde y fallar el objetivo.";
+            } else {
+                archerDelta.setAttribute('fill', 'var(--archer-safe-bg)'); // Blue safe
+                archerDelta.setAttribute('stroke', 'var(--color-primary)');
+                archerFeedback.className = "callout success";
+                archerFeedback.innerHTML = "¡Perfecto! Has acotado la mira lo suficiente (\(\delta\)). Ahora es matemáticamente imposible que la curva se salga de la zona objetivo (\(\varepsilon\)).";
+            }
+        }
+
+        deltaSlider.addEventListener('input', updateArcher);
+        updateArcher();
+    }
+
+    // --- Sub-section 4: Derivative (Instantaneous Velocity) ---
+    const secantSlider = document.getElementById('secant-slider');
+    const secantVal = document.getElementById('secant-val');
+    const secantLine = document.getElementById('secant-line');
+    const tangentLine = document.getElementById('tangent-line');
+    const pointA = document.getElementById('point-a');
+    const pointB = document.getElementById('point-b');
+
+    if (secantSlider) {
+        function getPointOnCurve(t) {
+            let x = Math.pow(1-t, 2)*50 + 2*(1-t)*t*200 + t*t*350;
+            let y = Math.pow(1-t, 2)*180 + 2*(1-t)*t*180 + t*t*40;
+            return {x, y};
+        }
+
+        const pA = getPointOnCurve(0.6);
+        pointA.setAttribute('cx', pA.x);
+        pointA.setAttribute('cy', pA.y);
+
+        function updateSecant() {
+            let dist = parseInt(secantSlider.value);
+            
+            if (dist === 0) {
+                secantVal.textContent = "¡Cero! (Instante exacto)";
+                secantVal.style.color = "var(--color-success)";
+                
+                pointB.style.opacity = "0";
+                secantLine.style.opacity = "0";
+                tangentLine.style.opacity = "1";
+                
+                let dx = 2*(1-0.6)*(200-50) + 2*0.6*(350-200);
+                let dy = 2*(1-0.6)*(180-180) + 2*0.6*(40-180);
+                
+                tangentLine.setAttribute('x1', pA.x - dx*0.5);
+                tangentLine.setAttribute('y1', pA.y - dy*0.5);
+                tangentLine.setAttribute('x2', pA.x + dx*0.5);
+                tangentLine.setAttribute('y2', pA.y + dy*0.5);
+                
+            } else {
+                secantVal.textContent = dist + " unidades";
+                secantVal.style.color = "var(--color-text-dark)";
+                
+                pointB.style.opacity = "1";
+                secantLine.style.opacity = "1";
+                tangentLine.style.opacity = "0";
+                
+                let tB = 0.6 + (dist / 200) * 0.35;
+                const pB = getPointOnCurve(tB);
+                
+                pointB.setAttribute('cx', pB.x);
+                pointB.setAttribute('cy', pB.y);
+                
+                let dx = pB.x - pA.x;
+                let dy = pB.y - pA.y;
+                secantLine.setAttribute('x1', pA.x - dx*0.2);
+                secantLine.setAttribute('y1', pA.y - dy*0.2);
+                secantLine.setAttribute('x2', pB.x + dx*0.5);
+                secantLine.setAttribute('y2', pB.y + dy*0.5);
+            }
+        }
+        
+        secantSlider.addEventListener('input', updateSecant);
+        updateSecant();
     }
 });
