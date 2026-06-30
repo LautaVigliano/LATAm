@@ -2068,13 +2068,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let greekStepCount = 0;
     const greekTexts = [
-        "Paso 1: Supongamos que el área A es mayor que K.",
-        "Paso 2: Por tanto, podemos inscribir un polígono P tal que K < P < A.",
-        "Paso 3: Pero el área del polígono inscrito siempre es estrictamente menor que el área de la figura.",
-        "Paso 4: Esto es una contradicción. Por lo tanto, A no puede ser mayor que K.",
-        "Paso 5: Supongamos ahora que A es menor que K...",
-        "Paso 6: Inscribimos otro polígono que contradice la suposición.",
-        "Paso 7: Al no ser ni mayor ni menor, A debe ser exactamente igual a K. Q.E.D."
+        "Paso 1: Queremos medir un área curva exacta, pero solo confiamos en áreas de líneas rectas (polígonos).",
+        "Paso 2: Como le tememos al infinito, no podemos simplemente decir 'usemos un polígono de infinitos lados'.",
+        "Paso 3: Entonces, 'rodeamos' el problema. Primero, imaginemos por un momento que el área curva fuera MÁS GRANDE de lo calculado.",
+        "Paso 4: Si fuera más grande, podríamos meter un polígono adentro que demuestra que eso es lógicamente imposible.",
+        "Paso 5: Ahora, imaginemos que el área curva fuera MÁS CHICA de lo calculado.",
+        "Paso 6: Si fuera más chica, podríamos meter otro polígono que también demuestra que es imposible.",
+        "Paso 7: ¡Ajá! Si no puede ser ni más grande ni más chica... ¡Debe ser exactamente igual! (Extremadamente largo, ¿verdad?)"
     ];
     
     if (btnGreek && btnModern) {
