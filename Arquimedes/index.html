@@ -138,13 +138,13 @@
                         <div class="explore-card" onclick="document.getElementById('nav-btn-lab').click()">
                             <div class="card-icon"></div>
                             <h3>Lab de Exhausción</h3>
-                            <p>Atrapa el círculo unitario usando polígonos. Completa misiones de precisión para aproximar Pi y achicar el error.</p>
+                            <p>Atrapa el círculo unitario usando polígonos. Completa misiones de precisión para aproximar Pi y achicar la diferencia.</p>
                             <span class="card-action">Ir al Laboratorio &rarr;</span>
                         </div>
                         <div class="explore-card" onclick="document.getElementById('nav-btn-limit').click()">
                             <div class="card-icon"></div>
                             <h3>Sintonizar el Límite</h3>
-                            <p>Encuentra el paso crítico en el que una aproximación se estabiliza de por vida dentro de un margen de error tolerable.</p>
+                            <p>Encuentra el paso crítico en el que una aproximación se estabiliza de por vida dentro de un margen de tolerancia aceptable.</p>
                             <span class="card-action">Sintonizar Límite &rarr;</span>
                         </div>
                         <div class="explore-card" onclick="document.getElementById('nav-btn-history').click()">
@@ -182,7 +182,7 @@
                         </div>
                         
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
                                 Zenón propone que para comer una barra de chocolate de tamaño 1, cada día comés exactamente la mitad de lo restante. Hacé clic en <strong>"Comer la Mitad"</strong> para observar cómo divides la barra indefinidamente sin rebasarla nunca.
                             </p>
@@ -249,7 +249,7 @@
                         </div>
                         
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
                                 En esta versión responsiva de la paradoja de Zenón, <strong>la Tortuga 🐢 persigue a Aquiles 🏃 de derecha a izquierda</strong>. La Tortuga parte de 300m y Aquiles de 100m (con ventaja). Hacé clic en <strong>"Dar un Paso"</strong> para ver cómo la Tortuga avanza al punto donde estaba Aquiles, mientras Aquiles avanza una proporción suave para no ser alcanzado.
                             </p>
@@ -331,7 +331,7 @@
                         </div>
                         
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
                                 Visualizá las sumas infinitas de forma puramente geométrica. El cuadrado completo representa una superficie de área 1. Hacé clic en <strong>"Añadir Fracción"</strong> para ir coloreando pedazos proporcionales del espacio sobrante (\(1/2\), luego \(1/4\), \(1/8\)...) y observa cómo se agota el color blanco.
                             </p>
@@ -393,109 +393,90 @@
                     <h2>El Laboratorio de Exhausción</h2>
                     <p>Acorralando el círculo con polígonos inscritos y circunscritos</p>
                 </div>
+                
+                <div class="archimedes-dialogue" style="margin-bottom: 2rem;">
+                    <div class="archimedes-avatar">🏛️</div>
+                    <div class="archimedes-speech">
+                        <h4>🏛️ Reflexión de Arquímedes</h4>
+                        <p>Te preguntaste <strong>cómo unas varas rectas pueden acorralar una curva circular</strong>. ¡Aquí tienes tu respuesta visual! Te guiaré a lo largo de este laboratorio para que veas cómo, aumentando el número de varas rectas, podemos estrangular la curva perfecta hasta que la diferencia desaparezca por completo.</p>
+                    </div>
+                </div>
   
                 <div class="grid-layout">
-                    <!-- TARJETA 2.1: SIMULADOR Y LUPA DEL SÁNDWICH TRIGONOMÉTRICO -->
-                    <div class="card interactive-activity" id="exhaustion-activity-card">
+                    <!-- TARJETA 2.1: LABORATORIO DE EXHAUSCIÓN -->
+                    <div class="card interactive-activity" id="exhaustion-target-activity-card">
                         <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3>Simulador y Lupa del Sándwich Trigonométrico</h3>
+                            <h3>Laboratorio de Exhausción: Atrapando a Pi</h3>
+                            <span id="mission-cota-1" class="badge">Misión Activa</span>
                         </div>
                         
-                        <!-- Sister Panels Layout -->
-                        <div class="sister-panels-layout" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-                            <!-- Panel A: Full Circle Simulator -->
-                            <div class="sister-panel" id="panel-full-circle" style="display: flex; flex-direction: column; align-items: center;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; text-align: center; color: var(--color-primary);">El Círculo Unitario y los Polígonos</h4>
-                                <div class="svg-container" style="width: 100%; max-width: 280px; aspect-ratio: 1/1;">
+                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
+                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
+                                El Rey Hierón necesita que calcules el área de un círculo perfecto. Mueve el <strong>Número de Lados</strong> para acorralar la curva. Tu misión es aumentar los lados hasta que la diferencia (el <strong>Margen de Tolerancia</strong>) entre el área interior y exterior sea tan pequeña que estés "atrapando" el valor real.
+                            </p>
+                        </div>
+
+                        <!-- Panel A: Full Circle Simulator & Vertical Tuner -->
+                        <div class="sister-panel" id="panel-full-circle" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5rem;">
+                            <h4 style="font-size: 0.95rem; margin-bottom: 1rem; text-align: center; color: var(--color-primary);">El Círculo Unitario y los Polígonos</h4>
+                            <div style="display: flex; flex-direction: row; align-items: stretch; justify-content: center; gap: 1.5rem; width: 100%;">
+                                <!-- SVG Container -->
+                                <div class="svg-container" style="width: 100%; max-width: 280px; aspect-ratio: 1/1; margin: 0;">
                                     <svg id="exhaustion-svg" viewBox="-120 -120 240 240" width="100%" height="100%">
                                         <line x1="-120" y1="0" x2="120" y2="0" class="svg-grid" />
                                         <line x1="0" y1="-120" x2="0" y2="120" class="svg-grid" />
-                                        
                                         <circle cx="0" cy="0" r="80" class="svg-unit-circle" />
-                                        
                                         <polygon id="inscribed-poly" points="" class="svg-poly-inscribed" />
                                         <polygon id="circumscribed-poly" points="" class="svg-poly-circumscribed" />
-                                        
                                         <g id="angle-indicators"></g>
                                         <text x="85" y="-5" class="svg-label">r = 1</text>
                                     </svg>
                                 </div>
-                            </div>
-                            
-                            <!-- Panel B: Sector Zoom (Magnifying Glass) -->
-                            <div class="sister-panel" id="panel-sector-zoom" style="display: flex; flex-direction: column; align-items: center;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; text-align: center; color: var(--color-primary);">Lupa de Sector: Inecuación de Áreas</h4>
-                                <div class="svg-container" style="width: 100%; max-width: 280px; aspect-ratio: 1/1; background-color: #0f172a;">
-                                    <svg id="sector-zoom-svg" viewBox="0 0 220 200" width="100%" height="100%">
-                                        <line x1="20" y1="180" x2="210" y2="180" class="zoom-axis" stroke-width="1.5"/>
-                                        <line x1="20" y1="10" x2="20" y2="190" class="zoom-axis" stroke-width="1.5"/>
+                                
+                                <!-- Vertical Tuner -->
+                                <div class="vertical-tuner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 10px 0;">
+                                    <span style="font-size: 0.75rem; font-weight: bold; color: var(--color-text-muted);">4.0</span>
+                                    <div class="vertical-tuner-track" style="flex-grow: 1; width: 36px; background-color: var(--color-card-bg); border: 2px solid var(--color-svg-border); border-radius: 8px; position: relative; overflow: hidden; margin: 5px 0;">
+                                        <!-- Safe Zone / Tolerance Band -->
+                                        <div id="target-safe-zone" style="position: absolute; bottom: 0%; height: 100%; width: 100%; background-color: rgba(56, 123, 91, 0.2); border-top: 2px dashed var(--color-success); border-bottom: 2px dashed var(--color-danger); transition: all 0.3s ease;"></div>
                                         
-                                        <path id="zoom-arc" d="M 170 180 A 150 150 0 0 0 126.06 73.93" fill="none" class="zoom-arc" stroke-dasharray="3,3" stroke-width="2"/>
-                                        <line id="zoom-radius" x1="20" y1="180" x2="126.06" y2="73.93" class="zoom-radial" stroke-width="1.5"/>
-                                        
-                                        <line id="zoom-sine" x1="126.06" y1="73.93" x2="126.06" y2="180" stroke="#3875b7" stroke-width="3" stroke-linecap="round"/>
-                                        <line id="zoom-tangent" x1="170" y1="180" x2="170" y2="50" stroke="#387b5b" stroke-width="3" stroke-linecap="round"/>
-                                        <line id="zoom-secant" x1="20" y1="180" x2="170" y2="50" class="zoom-secant" stroke-width="1" stroke-dasharray="2,2"/>
-                                        <path id="zoom-curve-arc" d="M 170 180 A 150 150 0 0 0 126.06 73.93" fill="none" stroke="#b78a38" stroke-width="3"/>
-                                        
-                                        <circle cx="20" cy="180" r="3" class="zoom-radial"/>
-                                        
-                                        <text x="14" y="193" font-size="8px" class="zoom-arc" font-weight="700">O</text>
-                                        <text x="100" y="140" font-size="8px" fill="#3875b7" font-weight="700">Sen(θ) [Inscrita]</text>
-                                        <text x="135" y="95" font-size="8px" fill="#b78a38" font-weight="700">Arco θ [Curva]</text>
-                                        <text x="175" y="110" font-size="8px" fill="#387b5b" font-weight="700">Tan(θ) [Circ.]</text>
-                                    </svg>
+                                        <!-- User Estimation Pin -->
+                                        <div id="target-shot-pin" style="position: absolute; bottom: 50%; left: 0; width: 100%; height: 4px; background-color: var(--color-warning); transform: translateY(50%); transition: bottom 0.2s ease;"></div>
+                                    </div>
+                                    <span style="font-size: 0.75rem; font-weight: bold; color: var(--color-text-muted);">2.0</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Controls for Both Panels -->
+                        <!-- Controls for Full Circle Panel -->
                         <div class="controls-panel" style="margin-bottom: 1.25rem;">
-                            <div class="slider-group">
+                            <div class="slider-group" style="margin-bottom: 1rem;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <label for="polygon-sides-slider" style="font-weight: 700;">Número de Lados (\(n\)): <span id="sides-val" class="highlight-val">6</span></label>
-                                    <span id="angle-value-display" style="font-size: 0.85rem; font-weight: 700; color: var(--color-warning);">Ángulo \(\theta\): 30.00°</span>
                                 </div>
                                 <input type="range" id="polygon-sides-slider" min="6" max="96" step="1" value="6">
                             </div>
                             
-                            <div class="preset-buttons" id="presets-container" style="margin-top: 0.75rem; justify-content: center;">
+                            <div class="slider-group">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <label for="estimation-slider" style="font-weight: 700;">Tu Estimación de Pi:</label>
+                                    <span id="estimation-val" style="font-size: 0.85rem; font-weight: 700; color: var(--color-warning);">3.0000</span>
+                                </div>
+                                <input type="range" id="estimation-slider" min="2.0000" max="4.0000" step="0.0001" value="3.0000">
+                            </div>
+                            
+                            <div class="preset-buttons" id="presets-container" style="margin-top: 1rem; justify-content: center;">
                                 <button type="button" class="btn-preset active" data-val="6">n = 6</button>
                                 <button type="button" class="btn-preset" data-val="12">n = 12</button>
                                 <button type="button" class="btn-preset" data-val="24">n = 24</button>
                                 <button type="button" class="btn-preset" data-val="48">n = 48</button>
                                 <button type="button" class="btn-preset" data-val="96">n = 96</button>
                             </div>
-                        </div>
-
-                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
-                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                Deslizá el control de número de lados (\(n\)) o hacé clic en los accesos rápidos. Observá cómo al aumentar \(n\), el círculo unitario en el panel izquierdo queda encerrado por polígonos cada vez más ajustados. Al mismo tiempo, en la Lupa de Sector a la derecha, verás cómo el ángulo disminuye y el segmento recto del <span class="tooltip-term" data-tooltip="Relación trigonométrica que indica la proporción entre el cateto opuesto y la hipotenusa. Geométricamente, representa la altura vertical en el círculo unitario (la cuerda recta).">Seno</span> (azul) y la <span class="tooltip-term" data-tooltip="Relación entre el seno y el coseno. Geométricamente es la recta que roza al círculo en un solo punto exterior.">Tangente</span> (verde) estrangulan al arco circular (naranja), reduciendo el error a cero.
-                            </p>
-                        </div>
-                        
-                        <!-- Archimedes Dialogue Bubble -->
-                        <div class="archimedes-dialogue">
-                            <div class="archimedes-avatar">🏛️</div>
-                            <div class="archimedes-speech">
-                                <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p>Al aumentar los lados \(n\), los polígonos <span class="tooltip-term" data-tooltip="Dibujado por dentro. Sus vértices tocan la frontera, pero no se sale de ella.">inscrito</span> y <span class="tooltip-term" data-tooltip="Dibujado por fuera. Sus lados rozan la figura interna, encerrándola por completo.">circunscrito</span> acorralan al círculo. En la lupa del sector verás claramente el sándwich de límites: la recta del <span class="tooltip-term" data-tooltip="Relación trigonométrica que indica la proporción entre el cateto opuesto y la hipotenusa. Geométricamente, representa la altura vertical en el círculo unitario (la cuerda recta).">Seno</span> es menor al arco, y este menor a la <span class="tooltip-term" data-tooltip="Relación entre el seno y el coseno. Geométricamente es la recta que roza al círculo en un solo punto exterior.">Tangente</span>. A medida que \(n\) tiende a infinito, ¡la curva es atrapada por las rectas!</p>
+                            
+                            <div id="estimation-feedback" class="callout secondary" style="margin-top: 1rem; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
+                                Ubicá tu valor estimado dentro de los polígonos.
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- TARJETA 2.2: TIRO AL BLANCO DE ÁREAS (MISIÓN DE CONJETURA) -->
-                    <div class="card interactive-activity" id="target-activity-card">
-                        <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3>Tiro al Blanco de Áreas</h3>
-                        </div>
-                        
-                        <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
-                            <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                Poné a prueba tu puntería matemática. Mueve el control de **"Tu Disparo"** para lanzar una <span class="tooltip-term" data-tooltip="Una suposición educada basada en pistas, que aún debe ser demostrada matemáticamente.">conjetura</span> sobre el valor del área (Pi). Tu objetivo es disparar dentro del rango de la <strong>"Zona Verde"</strong> acotado por los polígonos. ¡A mayor cantidad de lados, la zona verde será más estrecha y recibirás un multiplicador de puntaje mucho mayor!
-                            </p>
                         </div>
                         
                         <div class="activity-simulation-area">
@@ -508,75 +489,46 @@
                                     <span class="bound-symbol">&lt;</span>
                                     <span id="bound-upper" class="bound-val text-green">3.4641</span>
                                 </p>
-                                <div class="error-display" style="font-size: 0.85rem; color: var(--color-text-muted);">
-                                    Diferencia (Error de Exhaustión): <strong id="bound-error" class="highlight-val" style="color: var(--color-warning);">0.4641</strong>
+                                <div class="difference-display" style="font-size: 0.85rem; color: var(--color-text-muted);">
+                                    Diferencia Estructural: <strong id="bound-error" class="highlight-val" style="color: var(--color-warning);">0.4641</strong>
                                 </div>
                             </div>
                             
-                            <!-- Area Gauges (Inscribed vs Circumscribed) -->
-                            <div class="target-gauge-container" style="margin-bottom: 1.25rem;">
-                                <div class="gauge-bar-wrapper">
-                                    <span class="gauge-label">Área Inscrita:</span>
-                                    <div class="gauge-track">
-                                        <div id="gauge-fill-inscribed" class="gauge-fill inscribed" style="width: 50%;"></div>
-                                    </div>
-                                    <span id="gauge-val-inscribed" class="gauge-val-display">3.0000</span>
-                                </div>
-                                <div class="gauge-bar-wrapper" style="margin-top: 0.5rem;">
-                                    <span class="gauge-label">Área Circuns.:</span>
-                                    <div class="gauge-track">
-                                        <div id="gauge-fill-circumscribed" class="gauge-fill circumscribed" style="width: 80%;"></div>
-                                    </div>
-                                    <span id="gauge-val-circumscribed" class="gauge-val-display">3.4641</span>
+                            <!-- Vertical Tuner handles Area Gauges visually now -->
+                            
+                            <!-- Missions and feedback -->
+                            <div class="grid-layout cols-1" style="gap: 1rem; margin-bottom: 1.25rem;">
+                                <div class="math-item" style="margin: 0; padding: 0.75rem 1rem; border-left-color: var(--color-accent);">
+                                    <span class="math-label font-bold">Misión de Precisión:</span>
+                                    <span class="math-formula" id="lab-mission-desc" style="font-size: 1rem; text-align: center;">Lograr que el Margen de Tolerancia sea menor a 0.05</span>
                                 </div>
                             </div>
                             
-                            <!-- Aim box visual with safety zone and shot indicator -->
-                            <div class="shot-target-visual" style="margin-bottom: 1.25rem;">
-                                <div class="shot-target-title" style="font-size: 0.9rem; font-weight: bold; margin-bottom: 0.5rem;">Mira Telescópica de Áreas</div>
-                                <div class="target-aim-box" style="height: 32px; background-color: var(--color-card-bg); border: 1px solid var(--color-svg-border); position: relative; border-radius: 4px; overflow: hidden;">
-                                    <div id="target-safe-zone" class="target-safe-zone" style="left: 10%; width: 40%;"></div>
-                                    <div id="target-shot-pin" class="target-shot-pin" style="left: 50%;"></div>
-                                </div>
-                                <div style="font-size: 0.8rem; color: var(--color-text-muted); text-align: center; margin-top: 0.25rem;">
-                                    Zona Verde = Rango Seguro de Conjetura. ¡Ajustá el slider y dispará!
-                                </div>
-                            </div>
-                            
-                            <!-- Draggable Shot controls -->
-                            <div class="controls-panel" style="gap: 1rem; margin-bottom: 1.25rem;">
-                                <div class="slider-group">
-                                    <label for="aim-shot-slider" style="font-weight: 700;">Tu Disparo (Conjetura de Área): <span id="aim-shot-val" class="highlight-val" style="color: var(--color-danger);">3.2000</span></label>
-                                    <input type="range" id="aim-shot-slider" min="2.8000" max="3.5000" step="0.0001" value="3.2000">
-                                </div>
-                            </div>
-                            
-                            <!-- Score board and feedback -->
-                            <div class="grid-layout cols-2" style="gap: 1rem; margin-bottom: 1.25rem;">
-                                <div class="math-item" style="margin: 0; padding: 0.75rem 1rem;">
-                                    <span class="math-label font-bold">Puntaje Obtenido:</span>
-                                    <span class="math-formula" id="target-score" style="font-size: 1.2rem;">0 pts</span>
-                                </div>
-                                <div class="math-item" style="margin: 0; padding: 0.75rem 1rem; border-left-color: var(--color-success);">
-                                    <span class="math-label font-bold">Multiplicador (n Lados):</span>
-                                    <span class="math-formula" id="target-multiplier" style="font-size: 1.2rem;">x1.0 (n=6)</span>
-                                </div>
-                            </div>
-                            
-                            <div id="target-feedback" class="callout warning" style="margin: 0; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
-                                ¡Ajustá el slider y realizá tu disparo!
+                            <div id="lab-feedback" class="callout warning" style="margin: 0; padding: 0.75rem; border-radius: var(--border-radius-sm); font-weight: 700; text-align: center;">
+                                ¡Añadí más varas rectas (lados) para acorralar la curva y reducir la diferencia!
                             </div>
                         </div>
                         
-                        <!-- Archimedes Dialogue Bubble -->
                         <div class="archimedes-dialogue" style="margin-top: 1.25rem;">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
                                 <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p>¡Las matemáticas acotan el error! Un científico nunca adivina a ciegas. Los límites inferior (inscrito) y superior (circunscrito) te definen matemáticamente la 'zona segura'. A medida que aumentamos los lados, esa zona se estrecha tanto que no queda más opción que dar en el blanco exacto de Pi.</p>
+                                <p>Al aumentar los lados \(n\) (añadiendo más varas rectas), los polígonos inscrito y circunscrito acorralan al círculo. Los límites recto inferior y superior definen una 'zona segura'. Al achicar la diferencia entre ambas medidas rectas, estrangulamos el área hasta dar inevitablemente en el valor exacto de la curva de Pi.</p>
                             </div>
                         </div>
                     </div>
+
+
+                    <!-- REFLEXIONES DE PROFUNDIZACIÓN -->
+                    <div style="grid-column: 1 / -1; margin-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--color-primary); border-bottom: 2px solid var(--color-svg-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Reflexiones de Profundización</h3>
+                        <div class="expansion-banner" onclick="switchSection('sub-exhaustion')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
+                            <h4 style="margin-bottom: 0.25rem; font-size: 0.95rem; color: var(--color-primary);">¿Qué pasaría si...?</h4>
+                            <p style="margin-bottom: 0; font-size: 0.85rem;">¿Intentamos usar este mismo método de "rodajas rectas" para medir volúmenes curvos en 3D (como la esfera)?</p>
+                        </div>
+                    </div>
+
+                    
                 </div>
             </section>
  
@@ -595,9 +547,9 @@
                         </div>
                         
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                El límite formal indica que para cualquier margen de error (\( \varepsilon \)) que elijas, podés hallar un paso crítico (\( N \)) a partir del cual todos los puntos siguientes caen dentro del margen. Seleccioná la sucesión (Estable u Oscilante), definí la tolerancia \( \varepsilon \) y luego mové el control de **Paso Mínimo Elegido (\( N \))** para encerrar todos los puntos de ese paso en adelante dentro de la franja verde.
+                                El límite formal indica que para cualquier margen de tolerancia (\( \varepsilon \)) que elijas, podés hallar un paso crítico (\( N \)) a partir del cual todos los puntos siguientes caen dentro del margen. Seleccioná la sucesión (Estable u Oscilante), definí la tolerancia \( \varepsilon \) y luego mové el control de **Paso Mínimo Elegido (\( N \))** para encerrar todos los puntos de ese paso en adelante dentro de la franja verde.
                             </p>
                         </div>
                         
@@ -606,7 +558,7 @@
                             <div class="svg-container graph-container" style="aspect-ratio: 1.8 / 1; padding: 0.5rem; width: 100%; height: auto; margin-bottom: 0;">
                                 <svg id="epsilon-graph-svg" viewBox="0 0 400 200" width="100%" height="100%">
                                     <!-- Shaded Epsilon Band (Green Zone) -->
-                                    <rect id="epsilon-band" x="40" y="50" width="340" height="40" fill="rgba(56, 123, 91, 0.15)" stroke="rgba(56, 123, 91, 0.3)" stroke-width="1" stroke-dasharray="2,2"/>
+                                    <rect id="epsilon-band" x="40" y="50" width="340" height="40" fill="var(--archer-target-bg)" stroke="rgba(56, 123, 91, 0.3)" stroke-width="1" stroke-dasharray="2,2"/>
                                     
                                     <!-- Limit Target Line (L = 1) -->
                                     <line x1="40" y1="70" x2="380" y2="70" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="4,4"/>
@@ -645,7 +597,7 @@
                                     </div>
                                 </div>
                                 <div class="slider-group" style="margin-top: 0.5rem;">
-                                    <label for="epsilon-slider">Tolerancia de Error (\(\varepsilon\)): <span id="epsilon-val" class="highlight-val">0.10</span></label>
+                                    <label for="epsilon-slider">Margen Aceptable (\(\varepsilon\)): <span id="epsilon-val" class="highlight-val">0.10</span></label>
                                     <input type="range" id="epsilon-slider" min="0.01" max="0.25" step="0.01" value="0.10">
                                 </div>
                                 <div class="slider-group" style="margin-top: 0.5rem;">
@@ -689,10 +641,10 @@
                             En la antigua Grecia, los matemáticos sentían pánico ante el concepto del "infinito actual" (el <em><span class="tooltip-term" data-tooltip="Término griego para referirse a lo infinito o sin límites. ¡Les daba mucho miedo!">Apeiron</span></em>). Argumentos como los de Zenón sugerían que sumar infinitos pasos llevaría a absurdos insolubles.
                         </p>
                         <p>
-                            Para resolver esto sin invocar el infinito de manera directa, <strong>Arquímedes</strong> perfeccionó el <strong>Método de <span class="tooltip-term" data-tooltip="Técnica de 'agotar' o rellenar un espacio curvo usando figuras rectas conocidas.">Exhausción</span></strong>. En lugar de decir "sumamos infinitos triángulos", dijo: <em>"Podemos rellenar una forma curva con triángulos de modo que la diferencia (el error restante) se vuelva tan pequeña como queramos."</em>
+                            Para resolver esto sin invocar el infinito de manera directa, <strong>Arquímedes</strong> perfeccionó el <strong>Método de <span class="tooltip-term" data-tooltip="Técnica de 'agotar' o rellenar un espacio curvo usando figuras rectas conocidas.">Exhausción</span></strong>. En lugar de decir "sumamos infinitos triángulos", dijo: <em>"Podemos rellenar una forma curva con triángulos de modo que la diferencia (la brecha restante) se vuelva tan pequeña como queramos."</em>
                         </p>
                         <p>
-                            Esto es exactamente el concepto moderno de <strong>límite e <span class="tooltip-term" data-tooltip="Cantidad infinitamente pequeña. Acercarse a cero sin tocarlo.">infinitésimo</span></strong>: ¡hacer que el error tienda a cero!
+                            Esto es exactamente el concepto moderno de <strong>límite e <span class="tooltip-term" data-tooltip="Cantidad infinitamente pequeña. Acercarse a cero sin tocarlo.">infinitésimo</span></strong>: ¡hacer que la diferencia tienda a cero!
                         </p>
                         
                         <div class="callout warning" style="margin-top: 1rem;">
@@ -713,7 +665,7 @@
                         </div>
                         
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
-                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Instrucciones de uso:</h4>
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
                                 Añadí pequeños triángulos en los huecos sobrantes. Observá cómo la suma de las áreas de estos triángulos agota la curva de la parábola.
                             </p>
@@ -791,7 +743,87 @@
                         </div>
                     </div>
                 </div>
+            
+                    <!-- REFLEXIONES DE PROFUNDIZACIÓN -->
+                    <div style="grid-column: 1 / -1; margin-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--color-primary); border-bottom: 2px solid var(--color-svg-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">Reflexiones de Profundización</h3>
+                        <div class="expansion-banner" onclick="switchSection('sub-history')" style="background: var(--color-card-bg); border: 1px solid var(--color-svg-border); border-left: 4px solid var(--color-accent); color: var(--color-text-dark); border-radius: var(--border-radius-sm); padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);">
+                            <h4 style="margin-bottom: 0.25rem; font-size: 0.95rem; color: var(--color-primary);">¿Cómo es posible que...?</h4>
+                            <p style="margin-bottom: 0; font-size: 0.85rem;">Si Arquímedes estuvo tan cerca, ¿por qué la humanidad tardó casi 2000 años más en inventar el Cálculo?</p>
+                        </div>
+                    </div>
+                </div>
             </section>
+        
+            <!-- ================= SUB-SECTIONS ================= -->
+            
+            <!-- SUB-PARADOX -->
+            <section id="sub-paradox" class="content-section">
+                <div class="section-header">
+                    <h2>El Mundo Físico vs El Modelo Matemático</h2>
+                    <p>Resolviendo la paradoja de Zenón en la realidad</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h3>¿Realmente nunca alcanza Aquiles a la tortuga?</h3>
+                        <p>Matemáticamente, la serie de subdivisiones es infinita. Sin embargo, físicamente, el espacio y el tiempo no se pueden dividir para siempre. En la realidad microscópica, entramos en el dominio de la física cuántica, donde existe una longitud mínima (Longitud de Planck) y un tiempo mínimo.</p>
+                        <p>Pero incluso manteniendo la regla matemática: una suma de infinitos términos que se hacen cada vez más pequeños (1/2 + 1/4 + 1/8 + ...) resulta en un número <strong>finito</strong> (1). Así, Aquiles recorre las infinitas divisiones en un tiempo finito, atrapando a la tortuga sin problemas.</p>
+                        <button class="btn-primary" style="margin-top: 1rem;" onclick="switchSection('section-paradox')">Volver a Paradojas</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SUB-EXHAUSTION -->
+            <section id="sub-exhaustion" class="content-section">
+                <div class="section-header">
+                    <h2>El Orgullo de Arquímedes: 3D</h2>
+                    <p>Midiendo un volumen curvo con rodajas rectas</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h3>La Esfera y el Cilindro</h3>
+                        <p>Así como usamos polígonos rectos para aproximarnos al círculo 2D, Arquímedes usó "rodajas" cilíndricas rectas para aproximarse al volumen de una esfera 3D.</p>
+                        <p>Al aplicar este método de exhausción tridimensional, logró una de sus mayores hazañas matemáticas: demostrar que el volumen de una esfera es exactamente dos tercios (2/3) del volumen del cilindro que la circunscribe. Estaba tan orgulloso de este descubrimiento que pidió que se grabara una esfera dentro de un cilindro en su tumba.</p>
+                        <button class="btn-primary" style="margin-top: 1rem;" onclick="switchSection('section-lab')">Volver al Laboratorio</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SUB-LIMIT -->
+            <section id="sub-limit" class="content-section">
+                <div class="section-header">
+                    <h2>El Mito del Polígono Infinito</h2>
+                    <p>Diferenciando el modelo de la figura geométrica</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h3>¿El círculo es un polígono de infinitos lados?</h3>
+                        <p>Es muy común escuchar esta afirmación, pero es <strong>falsa</strong>. Un polígono, por definición, siempre tendrá lados rectos. Un círculo tiene una curvatura continua sin lados rectos.</p>
+                        <p>El límite (la exhausción) nos dice que el <em>valor del área</em> del polígono se acerca infinitesimalmente al <em>valor del área</em> del círculo. Pero la figura poligonal no se "transforma" mágicamente en un círculo. Esta es la diferencia fundamental entre un cambio cuantitativo (valor numérico del área) y uno cualitativo (la esencia de la forma geométrica).</p>
+                        <button class="btn-primary" style="margin-top: 1rem;" onclick="switchSection('section-limit')">Volver al Sintonizador</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SUB-HISTORY -->
+            <section id="sub-history" class="content-section">
+                <div class="section-header">
+                    <h2>El Horror al Infinito</h2>
+                    <p>¿Por qué tardamos 1800 años en inventar el cálculo?</p>
+                </div>
+                <div class="grid-layout">
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h3>¿Por qué Arquímedes no inventó el cálculo moderno?</h3>
+                        <p>Arquímedes tenía la intuición del cálculo integral, pero carecía de dos herramientas fundamentales que Newton y Leibniz tendrían casi dos milenios después:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--color-text-dark);">
+                            <li><strong>Un sistema de notación eficiente:</strong> Los griegos usaban letras para los números (sin un sistema decimal o cero) y carecían de álgebra simbólica. Toda demostración debía ser narrada geométricamente.</li>
+                            <li><strong>El horror al infinito:</strong> La filosofía griega desconfiaba del "infinito en acto" (un infinito completado). Por eso Arquímedes recurría a la exhausción y a la prueba por doble contradicción en lugar de operar directamente con el infinito matemático.</li>
+                        </ul>
+                        <button class="btn-primary" style="margin-top: 1rem;" onclick="switchSection('section-history')">Volver a Historia</button>
+                    </div>
+                </div>
+            </section>
+
         </main>
         
         <!-- FOOTER FOR MOBILE / DOCK -->
