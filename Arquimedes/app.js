@@ -1288,143 +1288,130 @@ document.addEventListener('DOMContentLoaded', () => {
         closeChatbot();
     });
 
+    
     /* ==========================================================================
-       6. INSTANCE 4: HISTORICAL LEGACY - PARABOLA QUADRATURE SIMULATION
+       6. INSTANCE 4: HISTORICAL LEGACY - CIRCLE EXHAUSTION SIMULATION
        ========================================================================== */
-    const parabolaStepSlider = document.getElementById('parabola-step-slider');
-    const parabolaStepValDisplay = document.getElementById('parabola-step-val');
-    const btnParabolaAdd = document.getElementById('btn-parabola-add');
-    const btnParabolaReset = document.getElementById('btn-parabola-reset');
-    const parabolaTrianglesGroup = document.getElementById('parabola-triangles-group');
-    const parabolaTableBody = document.getElementById('parabola-table-body');
-    const parabolaAreaSum = document.getElementById('parabola-area-sum');
+    const circleStepSlider = document.getElementById('circle-step-slider');
+    const circleStepValDisplay = document.getElementById('circle-step-val');
+    const btnCircleAdd = document.getElementById('btn-circle-add');
+    const btnCircleReset = document.getElementById('btn-circle-reset');
+    const circlePolygonsGroup = document.getElementById('circle-polygons-group');
+    const circleTableBody = document.getElementById('circle-table-body');
+    const circleAreaSum = document.getElementById('circle-area-sum');
     const historyDialogueText = document.getElementById('history-dialogue-text');
 
-    let parabolaStepK = 0;
-
+    // Circle Simulation State (Refined story-driven dialogues)
+    let circleStepK = 0;
     const historyDialogues = [
-        "He trazado el triángulo principal en color ocre. Su área es de exactamente 1.0000 unidad relativa. ¿Cuánto crees que mide todo el segmento curvo? ¡Prueba agregar triángulos para descubrirlo!",
-        "¡Excelente! Hemos añadido 2 nuevos triángulos en las brechas laterales. Cada uno tiene un área de 0.1250, sumando 0.2500 en este paso. La diferencia con la curva se va reduciendo.",
-        "Añadimos 4 triángulos más pequeños. Su área sumada en este paso es de 0.0625, acumulando 1.3125. Observa cómo los nuevos triángulos se van adaptando a la forma curva de la parábola.",
-        "Paso k=3: sumamos 8 triángulos diminutos (área de 0.0156). Ya acumulamos 1.3281. La diferencia curvo-rectilínea es casi imperceptible a la vista.",
-        "¡Sublime! Llegamos al paso k=4 con 16 triángulos agregados en este paso. El área total acumulada es de 1.3320. Demostré matemáticamente que la suma converge exactamente a 4/3 (1.3333). ¡Hemos atrapado la parábola!"
+        "Tomé mi rama de olivo y tracé este semicírculo en la arena de Siracusa. Aún no he inscrito ningún polígono. ¡Multiplica los lados para ver el misterio!",
+        "Aquí tenemos la primera aproximación con varas rectas bajo la curva (2 lados rectos, como un triángulo). El área cubierta en la arena es de apenas 63.66%. Aún queda mucha bahía sin medir.",
+        "He duplicado los lados: ahora es medio octógono (4 varas de medir). Mira cómo el polígono recto se estira hacia la curva, cubriendo el 90.03% del área.",
+        "Añadimos más varas rectas. Con 8 lados, la aproximación comienza a verse casi tan redonda como el agua de la bahía circular. Cubrimos el 97.45%.",
+        "¡Sublime! Con 16 lados, cubrimos el 99.36% del semicírculo. Al continuar este proceso infinitamente en tu mente, la diferencia física se extingue y el cálculo es exacto."
     ];
 
-    function getParabolaY(x) {
-        const dx = (x - 200) / 150;
-        return 160 - 120 * (1 - dx * dx);
-    }
-
-    function generateParabolaTriangles(xStart, xEnd, depth, maxDepth, result) {
-        const xMid = (xStart + xEnd) / 2;
-        const yStart = getParabolaY(xStart);
-        const yEnd = getParabolaY(xEnd);
-        const yMid = getParabolaY(xMid);
-        
-        if (depth === maxDepth) {
-            result.push([xStart, yStart, xEnd, yEnd, xMid, yMid]);
-            return;
-        }
-        
-        generateParabolaTriangles(xStart, xMid, depth + 1, maxDepth, result);
-        generateParabolaTriangles(xMid, xEnd, depth + 1, maxDepth, result);
-    }
-
-    function updateParabolaSimulation() {
-        if (!parabolaStepSlider) return;
+    function updateCircleSimulation() {
+        if (!circleStepSlider) return;
 
         // Sync display and slider
-        if (parabolaStepValDisplay) parabolaStepValDisplay.textContent = parabolaStepK;
-        parabolaStepSlider.value = parabolaStepK;
+        if (circleStepValDisplay) circleStepValDisplay.textContent = circleStepK;
+        circleStepSlider.value = circleStepK;
 
-        // Clear existing SVG triangles
-        if (parabolaTrianglesGroup) {
-            parabolaTrianglesGroup.innerHTML = '';
+        // Clear existing SVG
+        if (circlePolygonsGroup) {
+            circlePolygonsGroup.innerHTML = '';
         }
 
-        // Draw triangles dynamically for each level up to parabolaStepK
-        for (let i = 0; i <= parabolaStepK; i++) {
-            const levelTriangles = [];
-            generateParabolaTriangles(50, 350, 0, i, levelTriangles);
+        const cx = 200, cy = 180, r = 150;
+        
+        let segments = 0;
+        if (circleStepK === 1) segments = 2; // Triangle
+        else if (circleStepK === 2) segments = 4; // Half Octagon
+        else if (circleStepK === 3) segments = 8;
+        else if (circleStepK === 4) segments = 16;
+        
+        let areaPercent = 0;
+
+        if (segments > 0) {
+            // Draw polygon inside semicircle
+            let pts = [];
+            for(let i=0; i<=segments; i++){
+                let angle = i * Math.PI / segments;
+                pts.push({
+                    x: cx - r * Math.cos(angle),
+                    y: cy - r * Math.sin(angle)
+                });
+            }
             
-            levelTriangles.forEach(t => {
-                const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-                polygon.setAttribute('points', `${t[0]},${t[1]} ${t[4]},${t[5]} ${t[2]},${t[3]}`);
-                
-                let className = 'parabola-triangle';
-                if (i === 1) className = 'parabola-triangle-step1';
-                else if (i === 2) className = 'parabola-triangle-step2';
-                else if (i >= 3) className = 'parabola-triangle-step3';
-                
-                polygon.setAttribute('class', className);
-                if (parabolaTrianglesGroup) {
-                    parabolaTrianglesGroup.appendChild(polygon);
-                }
-            });
+            const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            let pointsStr = "";
+            for(let p of pts) pointsStr += `${p.x},${p.y} `;
+            poly.setAttribute('points', pointsStr);
+            poly.setAttribute('fill', 'rgba(99, 102, 241, 0.4)');
+            poly.setAttribute('stroke', 'var(--color-primary)');
+            poly.setAttribute('stroke-width', '2');
+            if (circlePolygonsGroup) circlePolygonsGroup.appendChild(poly);
+            
+            // Area calculation
+            let areaRatio = (segments/2) * Math.sin(Math.PI/segments) / (Math.PI/2);
+            areaPercent = areaRatio * 100;
         }
 
         // Update Dialogue Bubble text
         if (historyDialogueText) {
-            historyDialogueText.textContent = historyDialogues[parabolaStepK];
+            historyDialogueText.textContent = historyDialogues[circleStepK];
         }
 
         // Update calculations table
-        let totalArea = 0;
         let tableHTML = '';
-        for (let j = 0; j <= parabolaStepK; j++) {
-            const count = Math.pow(2, j);
-            const added = 1 / Math.pow(4, j);
-            totalArea += added;
-
+        for (let j = 0; j <= circleStepK; j++) {
+            let segs = j === 0 ? 0 : Math.pow(2, j);
+            let pct = j === 0 ? 0 : ((segs/2) * Math.sin(Math.PI/segs) / (Math.PI/2) * 100);
+            
             tableHTML += `
                 <tr style="border-bottom: 1px solid var(--color-svg-border);">
                     <td style="padding: 0.5rem 0.25rem; font-weight:700;">k = ${j}</td>
-                    <td style="padding: 0.5rem 0.25rem;">${count}</td>
-                    <td style="padding: 0.5rem 0.25rem; font-family:monospace;">${added.toFixed(4)}</td>
-                    <td style="padding: 0.5rem 0.25rem; font-family:monospace; font-weight:700; color:var(--color-accent);">${totalArea.toFixed(4)}</td>
+                    <td style="padding: 0.5rem 0.25rem;">${segs}</td>
+                    <td style="padding: 0.5rem 0.25rem; font-family:monospace; font-weight:700; color:var(--color-accent);">${pct.toFixed(2)}%</td>
                 </tr>
             `;
         }
 
-        if (parabolaTableBody) {
-            parabolaTableBody.innerHTML = tableHTML;
+        if (circleTableBody) {
+            circleTableBody.innerHTML = tableHTML;
         }
 
-        if (parabolaAreaSum) {
-            parabolaAreaSum.textContent = totalArea.toFixed(4);
-        }
-        
-        // Retrigger math formulas render
-        if (window.MathJax && window.MathJax.typesetPromise) {
-            window.MathJax.typesetPromise();
+        if (circleAreaSum) {
+            circleAreaSum.textContent = areaPercent.toFixed(2) + '%';
         }
     }
 
-    if (parabolaStepSlider) {
-        parabolaStepSlider.addEventListener('input', (e) => {
-            parabolaStepK = parseInt(e.target.value);
-            updateParabolaSimulation();
+    if (circleStepSlider) {
+        circleStepSlider.addEventListener('input', (e) => {
+            circleStepK = parseInt(e.target.value);
+            updateCircleSimulation();
         });
     }
 
-    if (btnParabolaAdd) {
-        btnParabolaAdd.addEventListener('click', () => {
-            if (parabolaStepK < 4) {
-                parabolaStepK++;
-                updateParabolaSimulation();
+    if (btnCircleAdd) {
+        btnCircleAdd.addEventListener('click', () => {
+            if (circleStepK < 4) {
+                circleStepK++;
+                updateCircleSimulation();
             }
         });
     }
 
-    if (btnParabolaReset) {
-        btnParabolaReset.addEventListener('click', () => {
-            parabolaStepK = 0;
-            updateParabolaSimulation();
+    if (btnCircleReset) {
+        btnCircleReset.addEventListener('click', () => {
+            circleStepK = 0;
+            updateCircleSimulation();
         });
     }
 
-    // Initialize Parabola Simulation
-    updateParabolaSimulation();
+    // Initialize state
+    setTimeout(() => { updateCircleSimulation(); }, 100);
 
     /* ==========================================================================
        4. INSTANCE 4: DESENROLLANDO EL CÍRCULO (SECCIÓN 2)
