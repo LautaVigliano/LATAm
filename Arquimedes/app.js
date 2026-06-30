@@ -2017,9 +2017,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 🏛️ <em>"Geómetra, mi mente concibe divisiones que superan a toda la materia física de Siracusa. El infinito no tiene fronteras rígidas".</em> — Arquímedes
             `;
             
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                window.MathJax.typesetPromise([microscopicResult]).catch((err) => console.log(err));
-            }
+            setTimeout(() => {
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    window.MathJax.typesetPromise().catch((err) => console.log(err));
+                }
+            }, 50);
         });
     }
 
@@ -2049,9 +2051,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 No importa qué número elijas antes del 1.0, la aproximación infinita siempre lo sobrepasará si camina suficientes pasos. Por eso el 1.0 es el único horizonte verdadero.
             `;
             
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                window.MathJax.typesetPromise([barrierResult]).catch((err) => console.log(err));
-            }
+            setTimeout(() => {
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    window.MathJax.typesetPromise().catch((err) => console.log(err));
+                }
+            }, 50);
         });
     }
     
