@@ -2178,12 +2178,14 @@ document.addEventListener('DOMContentLoaded', () => {
         "Paso 7: ¡Ajá! Si no puede ser ni más grande ni más chica... ¡Debe ser exactamente igual! (Extremadamente largo, ¿verdad?)"
     ];
     
+    const btnGreekReset = document.getElementById('btn-greek-reset');
+    
     if (btnGreek) {
         btnGreek.addEventListener('click', () => {
             if (greekStepCount === 0) greekSteps.innerHTML = '';
             if (greekStepCount < greekTexts.length) {
                 const p = document.createElement('p');
-                p.style.marginBottom = '0.5rem';
+                p.style.marginBottom = '0.75rem';
                 p.innerText = greekTexts[greekStepCount];
                 greekSteps.appendChild(p);
                 greekSteps.scrollTop = greekSteps.scrollHeight;
@@ -2197,7 +2199,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     btnGreek.innerText = "¡Demostración Completa!";
                     btnGreek.disabled = true;
                     btnGreek.style.opacity = '0.5';
+                    btnGreek.style.cursor = 'not-allowed';
                 }
+            }
+        });
+    }
+    
+    if (btnGreekReset) {
+        btnGreekReset.addEventListener('click', () => {
+            greekStepCount = 0;
+            greekSteps.innerHTML = '<div style="color: #94a3b8; font-family: sans-serif; font-style: normal; text-align: center; margin-top: 1rem;">Esperando el razonamiento...</div>';
+            btnGreek.innerText = "📜 Razonar paso lógico";
+            btnGreek.disabled = false;
+            btnGreek.style.opacity = '1';
+            btnGreek.style.cursor = 'pointer';
+            if (typeof drawGreekVisual === 'function') {
+                drawGreekVisual(0);
             }
         });
     }

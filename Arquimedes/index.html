@@ -889,10 +889,13 @@
                                 <!-- Método Griego -->
                                 <div style="background: rgba(0,0,0,0.2); padding: 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
                                     <h5 style="color: #b45309; margin-bottom: 0.5rem;">🏛️ Método de Arquímedes (Rodeando el problema)</h5>
-                                    <div id="greek-steps" style="font-size: 0.8rem; height: 100px; overflow-y: auto; background: rgba(255,255,255,0.05); color: #cbd5e1; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 0.5rem; font-family: 'Times New Roman', serif;">
-                                        <em>Esperando el razonamiento griego...</em>
+                                    <div id="greek-steps" style="font-size: 0.9rem; line-height: 1.5; height: 120px; overflow-y: auto; background: rgba(0, 0, 0, 0.4); color: #fde68a; padding: 0.75rem; border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 6px; margin-bottom: 0.75rem; font-family: 'Georgia', serif; font-style: italic; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);">
+                                        <div style="color: #94a3b8; font-family: sans-serif; font-style: normal; text-align: center; margin-top: 1rem;">Esperando el razonamiento...</div>
                                     </div>
-                                    <button id="btn-greek-step" class="btn-primary" style="background: #b45309; border: none; font-size: 0.8rem; width: 100%;">Razonar el siguiente paso lógico</button>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <button id="btn-greek-step" class="btn-primary" style="flex: 1; background: linear-gradient(135deg, #d97706, #b45309); border: none; font-size: 0.85rem; font-weight: bold; box-shadow: 0 4px 6px rgba(180, 83, 9, 0.3); transition: all 0.2s; border-radius: 4px;">📜 Razonar paso lógico</button>
+                                        <button id="btn-greek-reset" class="btn-secondary" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; padding: 0.5rem 0.75rem; color: #cbd5e1; transition: all 0.2s; border-radius: 4px; cursor: pointer;" title="Reiniciar demostración">🔄</button>
+                                    </div>
                                 </div>
                                 <!-- Representación Visual -->
                                 <div style="background: rgba(0,0,0,0.2); padding: 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; display: flex; flex-direction: column; align-items: center;">
