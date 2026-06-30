@@ -842,61 +842,61 @@
                         <div class="callout warning" style="margin-top: 1rem;">
                             <h4>Descubrimientos Clave de Arquímedes:</h4>
                             <ul>
-                                <li><strong><span class="tooltip-term" data-tooltip="Encontrar un cuadrado u otra figura recta que tenga exactamente la misma área que una figura curva.">Cuadratura</span> de la Parábola:</strong> Demostró que el área encerrada por una parábola es exactamente \(\frac{4}{3}\) del área del triángulo <span class="tooltip-term" data-tooltip="Dibujado por dentro. Sus vértices tocan la frontera, pero no se sale de ella.">inscrito</span>.</li>
+                                <li><strong><span class="tooltip-term" data-tooltip="Encontrar un cuadrado u otra figura recta que tenga exactamente la misma área que una figura curva.">Exhausción</span> del Círculo:</strong> Demostró cómo calcular y acorralar el área inscribiendo triángulos sucesivos para aproximarse a la curva perfecta.</li>
                                 <li><strong>Aproximación de Pi:</strong> Encerró el círculo entre polígonos de hasta 96 lados.</li>
                                 <li><strong>Área de la Espiral:</strong> Realizó una de las primeras integraciones de la historia para medir espirales.</li>
                             </ul>
                         </div>
                     </div>
 
-                    <!-- TARJETA 4.1: LA CUADRATURA DE LA PARÁBOLA -->
-                    <div class="card interactive-activity" id="parabola-activity-card">
+                    <!-- TARJETA 4.1: EL SEMICÍRCULO DE ARQUÍMEDES -->
+                    <div class="card interactive-activity" id="semicircle-activity-card">
                         <div class="activity-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h3>La Cuadratura de la Parábola</h3>
-                            <span class="badge" id="parabola-challenge-badge">Misión Parábola</span>
+                            <h3>El Semicírculo de Arquímedes</h3>
+                            <span class="badge" id="semicircle-challenge-badge" style="background-color: var(--color-accent); color: var(--color-text-light);">Misión Semicírculo</span>
                         </div>
                         
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                Añadí pequeños triángulos en los huecos sobrantes. Observá cómo la suma de las áreas de estos triángulos agota la curva de la parábola.
+                                Rellená el área del semicírculo agregando sucesivos triángulos en los huecos sobrantes. Observá cómo la suma de las áreas se acerca al área de la curva sin sobrepasarla jamás.
                             </p>
                         </div>
                         
                         <div class="activity-simulation-area">
-                            <!-- Parabola SVG visualizer -->
-                            <div class="parabola-container" style="margin-bottom: 1.25rem;">
-                                <svg id="parabola-svg" viewBox="0 0 400 200" width="100%" height="200px" style="background-color: var(--color-svg-bg); border: 1px solid var(--color-svg-border); border-radius: 8px;">
-                                    <!-- Parabolic Segment background curve and chord -->
-                                    <path d="M 50 160 Q 200 -80 350 160 Z" fill="rgba(255,255,255,0.02)" stroke="none"/>
+                            <!-- Semicircle SVG visualizer -->
+                            <div class="parabola-container" style="margin-bottom: 1.25rem; display: flex; justify-content: center;">
+                                <svg id="semicircle-svg" viewBox="0 0 400 200" width="100%" height="200px" style="background-color: var(--color-svg-bg); border: 1px solid var(--color-svg-border); border-radius: 8px;">
+                                    <!-- Semicircle path boundary (filled with very translucent amber/white) -->
+                                    <path d="M 50 180 A 150 150 0 0 1 350 180 Z" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3,3"/>
                                     
-                                    <!-- Chord line AB -->
-                                    <line x1="50" y1="160" x2="350" y2="160" class="parabola-chord"/>
+                                    <!-- Diameter baseline -->
+                                    <line x1="50" y1="180" x2="350" y2="180" stroke="var(--color-text-muted)" stroke-width="2"/>
                                     
-                                    <!-- Parabola Curve path -->
-                                    <path id="parabola-curve-path" d="M 50 160 Q 200 -80 350 160" class="parabola-curve"/>
+                                    <!-- Arc curve line -->
+                                    <path d="M 50 180 A 150 150 0 0 1 350 180" stroke="var(--color-accent)" stroke-width="3" fill="none"/>
                                     
-                                    <!-- Triangles groups populated dynamically via JS -->
-                                    <g id="parabola-triangles-group"></g>
+                                    <!-- Triangles group populated via JS -->
+                                    <g id="semicircle-triangles-group"></g>
                                     
-                                    <!-- Point Labels -->
-                                    <text x="35" y="165" class="graph-tick-text" fill="var(--color-primary)">A</text>
-                                    <text x="360" y="165" class="graph-tick-text" fill="var(--color-primary)">B</text>
-                                    <text x="200" y="30" class="graph-tick-text" fill="var(--color-primary)" text-anchor="middle">V</text>
+                                    <!-- Labels -->
+                                    <text x="35" y="185" class="graph-tick-text" fill="var(--color-primary)">A</text>
+                                    <text x="360" y="185" class="graph-tick-text" fill="var(--color-primary)">B</text>
+                                    <text x="200" y="22" class="graph-tick-text" fill="var(--color-primary)" text-anchor="middle">V</text>
                                 </svg>
                             </div>
 
-                            <!-- Parabola Game Controls -->
+                            <!-- Semicircle Game Controls -->
                             <div class="slider-group" style="margin-bottom: 1.25rem;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <label for="parabola-step-slider" style="font-weight: 700;">Paso de Exhausción (\(k\)): <span id="parabola-step-val" class="highlight-val">0</span></label>
+                                    <label for="semicircle-step-slider" style="font-weight: 700;">Paso de Exhausción (\(k\)): <span id="semicircle-step-val" class="highlight-val">0</span></label>
                                 </div>
-                                <input type="range" id="parabola-step-slider" min="0" max="4" step="1" value="0">
+                                <input type="range" id="semicircle-step-slider" min="0" max="4" step="1" value="0" style="width: 100%;">
                             </div>
 
                             <div class="preset-buttons" style="margin-top: 1rem; margin-bottom: 1.25rem; justify-content: center;">
-                                <button id="btn-parabola-add" class="btn-preset active" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">➕ Agregar Triángulos</button>
-                                <button id="btn-parabola-reset" class="btn-preset" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">🔄 Reiniciar</button>
+                                <button id="btn-semicircle-add" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 0.95rem; margin-right: 0.5rem;">➕ Agregar Triángulos</button>
+                                <button id="btn-semicircle-reset" class="btn-preset" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">🔄 Reiniciar</button>
                             </div>
 
                             <!-- Calculations Table -->
@@ -904,33 +904,34 @@
                                 <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left;">
                                     <thead>
                                         <tr style="border-bottom: 2px solid var(--color-svg-border); color: var(--color-primary); font-weight: bold;">
-                                            <th style="padding: 0.5rem 0.25rem;">Paso</th>
-                                            <th style="padding: 0.5rem 0.25rem;">Triángulos</th>
+                                            <th style="padding: 0.5rem 0.25rem;">Paso \(k\)</th>
+                                            <th style="padding: 0.5rem 0.25rem;">Nuevos Triángulos</th>
                                             <th style="padding: 0.5rem 0.25rem;">Área Agregada</th>
-                                            <th style="padding: 0.5rem 0.25rem;">Área Acumulada</th>
+                                            <th style="padding: 0.5rem 0.25rem;">Área Total</th>
+                                            <th style="padding: 0.5rem 0.25rem;">Brecha Restante</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="parabola-table-body" style="color: var(--color-text-dark);">
+                                    <tbody id="semicircle-table-body" style="color: var(--color-text-dark);">
                                         <!-- Populated via JS -->
                                     </tbody>
                                 </table>
                             </div>
 
                             <!-- Convergence Target inequality -->
-                            <div class="bounds-container" style="padding: 0.75rem; margin-bottom: 1.25rem; border: 1px solid var(--color-svg-border); background-color: var(--color-bg-primary);">
-                                <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0.25rem;">Límite del Área Acumulada:</div>
-                                <div style="font-size: 1.4rem; font-weight: 800;">
-                                    <span id="parabola-area-sum" class="highlight-val">1.0000</span> / <span style="color: var(--color-success);">1.3333 (\(\frac{4}{3}\))</span>
+                            <div class="bounds-container" style="padding: 0.75rem; margin-bottom: 1.25rem; border: 1px solid var(--color-svg-border); background-color: var(--color-bg-primary); border-radius: 4px;">
+                                <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0.25rem;">Área acumulada frente al área del Semicírculo:</div>
+                                <div style="font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span id="semicircle-area-sum" class="highlight-val">1.0000</span> / <span style="color: var(--color-accent);">\( \frac{\pi}{2} \approx 1.5708 \)</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Archimedes Dialogue Bubble -->
-                        <div class="archimedes-dialogue" id="archimedes-history-dialogue">
+                        <div class="archimedes-dialogue" id="archimedes-history-dialogue" style="margin-top: 1rem;">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
                                 <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p id="history-dialogue-text">He trazado el triángulo principal en color ocre. Su área es de exactamente 1.0000 unidad relativa. ¿Cuánto crees que mide todo el segmento curvo? ¡Prueba agregar triángulos para descubrirlo!</p>
+                                <p id="history-dialogue-text">He trazado el triángulo principal en color ocre. Su área es de exactamente \( 1.0000 \) unidad relativa. ¿Cuánto crees que mide todo el semicírculo? ¡Prueba agregar triángulos para descubrirlo!</p>
                             </div>
                         </div>
                     </div>
@@ -1080,7 +1081,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- Modern App Logic -->
-    <script src="app.js?v=10"></script>
+    <script src="app.js?v=11"></script>
 </body>
 </html>
 
