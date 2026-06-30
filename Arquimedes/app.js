@@ -1110,7 +1110,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 epsilonFeedback.className = 'callout warning';
             }
         }
-    }\n\n    if (epsilonSlider) {
+    }
+
+    if (epsilonSlider) {
         epsilonSlider.addEventListener('input', updateEpsilonTuner);
     }
     
