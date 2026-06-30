@@ -2077,7 +2077,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Paso 7: ¡Ajá! Si no puede ser ni más grande ni más chica... ¡Debe ser exactamente igual! (Extremadamente largo, ¿verdad?)"
     ];
     
-    if (btnGreek && btnModern) {
+    if (btnGreek) {
         btnGreek.addEventListener('click', () => {
             if (greekStepCount === 0) greekSteps.innerHTML = '';
             if (greekStepCount < greekTexts.length) {
@@ -2086,20 +2086,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 p.innerText = greekTexts[greekStepCount];
                 greekSteps.appendChild(p);
                 greekSteps.scrollTop = greekSteps.scrollHeight;
+                
                 greekStepCount++;
+                if (typeof drawGreekVisual === 'function') {
+                    drawGreekVisual(greekStepCount);
+                }
+                
                 if (greekStepCount === greekTexts.length) {
                     btnGreek.innerText = "¡Demostración Completa!";
                     btnGreek.disabled = true;
                     btnGreek.style.opacity = '0.5';
                 }
             }
-        });
-        
-        btnModern.addEventListener('click', () => {
-            modernSteps.innerHTML = '<span style="font-size: 1.5rem; font-weight: bold;">&#8747; f(x) dx = Área</span>';
-            btnModern.innerText = "¡Cálculo resuelto en 1 paso!";
-            btnModern.disabled = true;
-            btnModern.style.opacity = '0.5';
         });
     }
 
