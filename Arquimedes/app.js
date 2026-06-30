@@ -2011,11 +2011,15 @@ document.addEventListener('DOMContentLoaded', () => {
             microscopicResult.style.display = 'block';
             microscopicResult.innerHTML = `
                 <strong>¡Sintonía de escala lograda!</strong><br>
-                Para una tolerancia equivalente a <strong>${selectText}</strong> (error = ${eps.toFixed(10)}), 
-                necesitás dar un mínimo de <strong>${N.toLocaleString()}</strong> pasos para asegurar que todos los puntos 
+                Para una tolerancia equivalente a <strong>${selectText}</strong> (error \\( \\varepsilon = ${eps.toFixed(10)} \\)), 
+                necesitás dar un mínimo de <strong>\\( N = ${N.toLocaleString('es-AR')} \\)</strong> pasos para asegurar que todos los puntos 
                 posteriores queden atrapados dentro de la franja verde.<br><br>
                 🏛️ <em>"Geómetra, mi mente concibe divisiones que superan a toda la materia física de Siracusa. El infinito no tiene fronteras rígidas".</em> — Arquímedes
             `;
+            
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([microscopicResult]).catch((err) => console.log(err));
+            }
         });
     }
 
@@ -2039,11 +2043,15 @@ document.addEventListener('DOMContentLoaded', () => {
             barrierResult.style.borderLeftColor = 'var(--color-accent)';
             barrierResult.innerHTML = `
                 <strong>¡Barrera superada!</strong><br>
-                Definiste una barrera en <strong>${val}</strong>.<br>
-                La Escalera sobrepasa esa barrera en el paso <strong>n = ${N.toLocaleString()}</strong>, 
-                alcanzando el valor de <strong>${actualVal.toFixed(8)}</strong>.<br><br>
+                Definiste una barrera en \\( B = ${val} \\).<br>
+                La Escalera sobrepasa esa barrera en el paso <strong>\\( n = ${N.toLocaleString('es-AR')} \\)</strong>, 
+                alcanzando el valor de <strong>\\( a_n = ${actualVal.toFixed(8)} \\)</strong>.<br><br>
                 No importa qué número elijas antes del 1.0, la aproximación infinita siempre lo sobrepasará si camina suficientes pasos. Por eso el 1.0 es el único horizonte verdadero.
             `;
+            
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([barrierResult]).catch((err) => console.log(err));
+            }
         });
     }
     
