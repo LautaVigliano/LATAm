@@ -2062,9 +2062,110 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 4. EL DESAFIO DE LA NOTACION
     const btnGreek = document.getElementById('btn-greek-step');
-    const btnModern = document.getElementById('btn-modern-step');
     const greekSteps = document.getElementById('greek-steps');
-    const modernSteps = document.getElementById('modern-steps');
+    const canvas = document.getElementById('greek-visual-canvas');
+    const caption = document.getElementById('greek-visual-caption');
+    
+    function drawGreekVisual(step) {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const cx = 100, cy = 55, r = 40;
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Base curve (The true area)
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        if (step === 0 || step === 1 || step === 2) {
+            caption.innerText = step === 2 ? "Buscamos el área pero sin usar infinitos." : "Área curva exacta (Desconocida)";
+        }
+        else if (step === 3) {
+            // Assume Area is LARGER
+            ctx.beginPath();
+            ctx.arc(cx, cy, r + 10, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ef4444'; // red
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            caption.innerHTML = "Suposición falsa:<br><span style='color:#ef4444'>Área > Real</span>";
+        }
+        else if (step === 4) {
+            // Assume Area is LARGER + Inscribed polygon
+            ctx.beginPath();
+            ctx.arc(cx, cy, r + 10, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ef4444';
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Inscribed hexagon
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                let angle = i * Math.PI / 3;
+                let px = cx + r * Math.cos(angle);
+                let py = cy + r * Math.sin(angle);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.4)'; // blue
+            ctx.fill();
+            ctx.strokeStyle = '#3b82f6';
+            ctx.stroke();
+            caption.innerHTML = "Un polígono inscrito <span style='color:#3b82f6'>choca</span> con la suposición.";
+        }
+        else if (step === 5) {
+            // Assume Area is SMALLER
+            ctx.beginPath();
+            ctx.arc(cx, cy, r - 10, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ef4444';
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            caption.innerHTML = "Suposición falsa:<br><span style='color:#ef4444'>Área < Real</span>";
+        }
+        else if (step === 6) {
+            // Assume Area is SMALLER + Circumscribed polygon
+            ctx.beginPath();
+            ctx.arc(cx, cy, r - 10, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ef4444';
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Circumscribed hexagon
+            let r_out = r / Math.cos(Math.PI / 6);
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                let angle = i * Math.PI / 3 + Math.PI / 6;
+                let px = cx + r_out * Math.cos(angle);
+                let py = cy + r_out * Math.sin(angle);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(34, 197, 94, 0.4)'; // green
+            ctx.fill();
+            ctx.strokeStyle = '#22c55e';
+            ctx.stroke();
+            caption.innerHTML = "Un polígono externo <span style='color:#22c55e'>choca</span> con la suposición.";
+        }
+        else if (step >= 7) {
+            // Exact
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+            ctx.fillStyle = 'rgba(234, 179, 8, 0.6)'; // yellow/gold
+            ctx.fill();
+            caption.innerHTML = "<strong>Área Exacta Confirmada</strong>";
+        }
+    }
+    
+    // Initial draw
+    setTimeout(() => { if(typeof drawGreekVisual === 'function') drawGreekVisual(0); }, 100);
     
     let greekStepCount = 0;
     const greekTexts = [
