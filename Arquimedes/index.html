@@ -118,8 +118,17 @@
                     <span class="badge">Matemática Interactiva</span>
                     <h2>Descubriendo el Infinito y el Infinitésimo</h2>
                     <p class="hero-desc">
-                        Embarcate en un viaje de exploración matemática. A través de acertijos visuales, polígonos que encierran curvas y sintonizadores de precisión, vas a construir por tu cuenta las nociones de <strong>límite</strong> e <strong>infinitésimo</strong>.
+                        Embarcate en un viaje de exploración matemática. A través de acertijos visuales, polígonos que encierran curvas y sintonizadores de precisión, vas a construir por tu cuenta las nociones de <strong><span class="tooltip-term" data-tooltip="Valor al que se aproxima una sucesión o función de forma infinita sin necesariamente tocarlo.">límite</span></strong> e <strong><span class="tooltip-term" data-tooltip="Algo tan infinitamente pequeño que es casi cero, pero no es exactamente cero.">infinitésimo</span></strong>.
                     </p>
+
+                    <!-- Aporte de Arquímedes en el Inicio (Saludo de Bienvenida) -->
+                    <div class="archimedes-dialogue" style="margin-top: 1.5rem; margin-bottom: 2rem; text-align: left;">
+                        <div class="archimedes-avatar">🏛️</div>
+                        <div class="archimedes-speech">
+                            <h4>Saludo de Arquímedes</h4>
+                            <p>¡Saludos, joven buscador del saber! El infinito solía atemorizar a nuestros filósofos, pues daba lugar a contradicciones sin fin. Por ello, preferí crear un método riguroso: la <span class="tooltip-term" data-tooltip="Método de aproximación geométrica que rellena un área curva usando figuras rectas conocidas (como polígonos).">exhausción</span>. Te invito a explorar estas actividades para comprender cómo acorralar lo inalcanzable.</p>
+                        </div>
+                    </div>
 
                     <p class="story-text"><strong>El templo en la arena</strong></p>
                     <p class="story-text">El sol de la tarde cae pesado sobre las playas de Siracusa. Sentado a la orilla del mar, un hombre de barba espesa y ojos brillantes dibuja figuras en la arena con una rama de olivo. Es Arquímedes. A su alrededor, los constructores del rey Hierón intentan medir los terrenos del puerto usando largas varas de madera de cedro, perfectamente rígidas y rectas. Pero hay un problema que los está volviendo locos.</p>
@@ -155,14 +164,6 @@
                         </div>
                     </div>
                     
-                    <!-- Aporte de Arquímedes en el Inicio -->
-                    <div class="archimedes-dialogue" style="margin-top: 2rem; text-align: left;">
-                        <div class="archimedes-avatar"></div>
-                        <div class="archimedes-speech">
-                            <h4>Saludo de Arquímedes</h4>
-                            <p>¡Saludos, joven buscador del saber! El infinito solía atemorizar a nuestros filósofos, pues daba lugar a contradicciones sin fin. Por ello, preferí crear un método riguroso: la exhausción. Te invito a explorar estas actividades para comprender cómo acorralar lo inalcanzable.</p>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -176,7 +177,7 @@
                     <div class="archimedes-avatar">🏛️</div>
                     <div class="archimedes-speech">
                         <h4>🏛️ Introducción de Arquímedes</h4>
-                        <p>¡Te doy la bienvenida al primer recorrido! Los filósofos de mi época solían atemorizarse con el infinito, pensando que sumando infinitos pasos llegarían al caos. Te invito a explorar estas paradojas para descubrir por ti mismo: <strong>¿sumar infinitos pasos nos lleva al caos o a un límite exacto?</strong> ¡Empecemos a jugar!</p>
+                        <p>¡Te doy la bienvenida a este recorrido sobre paradojas! Los filósofos de mi época solían atemorizarse con el infinito, pensando que sumando infinitos pasos llegarían al caos. Te invito a explorar estas paradojas para descubrir por ti mismo: <strong>¿sumar infinitos pasos nos lleva al caos o a un límite exacto?</strong> ¡Empecemos a jugar!</p>
                     </div>
                 </div>
   
@@ -228,7 +229,7 @@
      
                             <!-- Challenge Panel -->
                             <div class="bounds-container" style="background-color: var(--color-bg-primary); border: 1px solid var(--color-svg-border); color: var(--color-text-dark); padding: 1.25rem; margin-bottom: 1.25rem;">
-                                <h4 id="choc-challenge-title" style="color: var(--color-primary); margin-bottom: 0.5rem; font-weight: 700;">Desafío del 1% (Tolerancia \(\varepsilon = 0.01\))</h4>
+                                <h4 id="choc-challenge-title" style="color: var(--color-primary); margin-bottom: 0.5rem; font-weight: 700;">Desafío del 1% (<span class="tooltip-term" data-tooltip="Una cantidad muy pequeña que define el margen de error aceptable en una aproximación.">Tolerancia</span> \(\varepsilon = 0.01\))</h4>
                                 <p id="choc-challenge-desc" style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.75rem;">
                                     Comé suficiente chocolate para que el trozo sobrante sea menor al 1% (\(0.01\)) de la barra original.
                                 </p>
@@ -242,8 +243,11 @@
                         <div class="archimedes-dialogue">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
-                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <h4>🏛️ Reflexión de Arquímedes</h4>
                                 <p>Zenón propuso estas <span class="tooltip-term" data-tooltip="Una idea que parece lógica pero que lleva a un resultado imposible o contradictorio.">paradojas</span> para probar que el movimiento no existía. Pero fíjate en esto: al sumar fracciones cada vez más pequeñas (\(\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \dots\)), la suma total se acerca tanto como desees a una sola unidad entera sin superarla jamás. ¡El límite atrapa la infinitud!</p>
+                                <p style="margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.85; border-top: 1px dashed var(--color-svg-border); padding-top: 0.5rem;">
+                                    ¿Te fijaste qué pasa con el chocolate si comés de esta forma durante mil días? ¿Quedará algo visible en la mano? ¿Se te ocurrió si es correcto decir que la suma de tus bocados tiende a 1 si nunca terminás de comer la barra? Preguntale a mi autómata: <em>"¿Por qué la suma de infinitas fracciones da un número exacto?"</em>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -324,8 +328,11 @@
                         <div class="archimedes-dialogue">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
-                                <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p>¡Una carrera que desafía el sentido común! La Tortuga nunca llega a tocar a Aquiles en esta sucesión porque cada paso representa un intervalo de tiempo cada vez más pequeño. No obstante, en la física real, la suma infinita de estos tiempos da un valor límite perfectamente finito, momento en el cual la tortuga lo rebasa.</p>
+                                <h4>🏛️ Reflexión de Arquímedes</h4>
+                                <p>¡Una carrera que desafía el sentido común! La Tortuga nunca llega a tocar a Aquiles en esta <span class="tooltip-term" data-tooltip="Lista ordenada de números que siguen una regla o patrón matemático.">sucesión</span> porque cada paso representa un intervalo de tiempo cada vez más pequeño. No obstante, en la física real, la suma infinita de estos tiempos da un valor límite perfectamente finito, momento en el cual la tortuga lo rebasa.</p>
+                                <p style="margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.85; border-top: 1px dashed var(--color-svg-border); padding-top: 0.5rem;">
+                                    ¿Te fijaste que si cada paso toma un tiempo cada vez menor, la carrera podría durar un tiempo finito en vez de infinito? ¿Se te ocurrió cómo influye la velocidad de cada uno en el momento exacto del encuentro? Consultale a mi oráculo: <em>"¿Cómo resolvió la matemática moderna la paradoja de Aquiles?"</em>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -340,7 +347,7 @@
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                Visualizá las sumas infinitas de forma puramente geométrica. El cuadrado completo representa una superficie de área 1. Hacé clic en <strong>"Añadir Fracción"</strong> para ir coloreando pedazos proporcionales del espacio sobrante (\(1/2\), luego \(1/4\), \(1/8\)...) y observa cómo se agota el color blanco.
+                                Visualizá las <span class="tooltip-term" data-tooltip="Suma de infinitos números que, sorprendentemente, puede resultar en un valor exacto.">sumas infinitas</span> de forma puramente geométrica. El cuadrado completo representa una superficie de área 1. Hacé clic en <strong>"Añadir Fracción"</strong> para ir coloreando pedazos proporcionales del espacio sobrante (\(1/2\), luego \(1/4\), \(1/8\)...) y observa cómo se agota el color blanco.
                             </p>
                         </div>
                         
@@ -388,8 +395,11 @@
                         <div class="archimedes-dialogue">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
-                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <h4>🏛️ Reflexión de Arquímedes</h4>
                                 <p>El cuadrado que ves tiene <strong>área 1</strong>, y eso es exactamente tu punto de llegada. Cada vez que agregás una fracción, coloreás la <strong>mitad</strong> del espacio blanco que todavía queda libre: primero \(\frac{1}{2}\) del cuadrado, luego \(\frac{1}{4}\), luego \(\frac{1}{8}\)... El área blanca se achica a la mitad en cada paso, pero nunca desaparece del todo. Sin embargo, fijate en lo que pasa con lo que ya pintaste: se va acercando cada vez más a 1. Cuando el cuadrado queda completamente coloreado, la suma de todas esas fracciones <em>alcanzó exactamente</em> el área total: <strong>1</strong>. Ese es el límite: el valor al que la suma se aproxima sin parar hasta tocarlo.</p>
+                                <p style="margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.85; border-top: 1px dashed var(--color-svg-border); padding-top: 0.5rem;">
+                                    ¿Te fijaste que, aunque sumemos infinitas partes, el área total nunca supera a 1? ¿Cómo cambia tu percepción del infinito al verlo acotado de forma geométrica dentro de un cuadrado? Escribile al oráculo: <em>"¿Qué es la convergencia de una serie geométrica?"</em>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -481,7 +491,7 @@
                     <div class="archimedes-avatar">🏛️</div>
                     <div class="archimedes-speech">
                         <h4>🏛️ Introducción de Arquímedes</h4>
-                        <p>Los constructores de Hierón se desesperaban intentando medir la bahía circular usando varas rectas rígidas. Te invito a usar este simulador para experimentar lo mismo y responder esta gran incógnita: <strong>¿cómo pueden varas rígidas y rectas medir una bahía circular perfecta?</strong> Aumenta los lados del polígono y observa cómo estrangulamos el error para acorralar a Pi.</p>
+                        <p>Los constructores de Hierón se desesperaban intentando medir la bahía circular usando varas rectas rígidas. Te invito a usar este simulador para experimentar lo mismo y responder esta gran incógnita: <strong>¿cómo pueden varas rígidas y rectas medir una bahía circular perfecta?</strong> Aumenta los lados del <span class="tooltip-term" data-tooltip="Figura geométrica plana limitada por tres o más segmentos rectos (como triángulos o pentágonos).">polígono</span> y observa cómo estrangulamos el error para acorralar a <span class="tooltip-term" data-tooltip="Constante que representa la relación entre la longitud de cualquier circunferencia y su diámetro. Su valor aproximado es 3.14159.">Pi</span>.</p>
                     </div>
                 </div>
   
@@ -532,7 +542,7 @@
 
                                 <!-- Panel de Acotación de Pi (derecha) -->
                                 <div class="bounds-container" style="flex: 2 1 200px; min-width: 200px; padding: 1.25rem; background-color: var(--color-bg-primary); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: var(--shadow-inset);">
-                                    <h5 style="margin-top: 0; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); font-weight: 700; text-align: center;">Acotación de \( \pi \)</h5>
+                                    <h5 style="margin-top: 0; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); font-weight: 700; text-align: center;"><span class="tooltip-term" data-tooltip="Establecer límites (cotas) superiores e inferiores para acorralar un valor desconocido.">Acotación</span> de \( \pi \)</h5>
                                     <p class="bounds-inequality" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: flex; justify-content: center; align-items: center; gap: 0.4rem; font-weight: 700;">
                                         <span id="bound-lower" class="bound-val text-blue" style="color: var(--color-bound-blue);">3.0000</span>
                                         <span class="bound-symbol" style="color: var(--color-text-muted); font-weight: 300;">&lt;</span>
@@ -603,8 +613,11 @@
                         <div class="archimedes-dialogue" style="margin-top: 1.25rem;">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
-                                <h4>🏛️ Explicación de Arquímedes</h4>
-                                <p>Al aumentar los lados \(n\) (añadiendo más varas rectas), los polígonos inscrito y circunscrito acorralan al círculo. Los límites recto inferior y superior definen una 'zona segura'. Al achicar la diferencia entre ambas medidas rectas, estrangulamos el área hasta dar inevitablemente en el valor exacto de la curva de Pi.</p>
+                                <h4>🏛️ Reflexión de Arquímedes</h4>
+                                <p>Al aumentar los lados \(n\) (añadiendo más varas rectas), los polígonos <span class="tooltip-term" data-tooltip="Figura dibujada por dentro de otra, de modo que toca sus bordes internos.">inscrito</span> y <span class="tooltip-term" data-tooltip="Figura dibujada por fuera de otra, de modo que encierra sus bordes externos.">circunscrito</span> acorralan al círculo. Los límites recto inferior y superior definen una 'zona segura'. Al achicar la diferencia entre ambas medidas rectas, estrangulamos el área hasta dar inevitablemente en el valor exacto de la curva de Pi.</p>
+                                <p style="margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.85; border-top: 1px dashed var(--color-svg-border); padding-top: 0.5rem;">
+                                    ¿Te fijaste si un polígono de infinitos lados se convertiría en un círculo perfecto o seguiría siendo un polígono? ¿Se te ocurrió cómo un número con infinitos decimales como Pi representa un área perfectamente finita y cerrada? Consultale al chatbot: <em>"¿Cómo calculó Arquímedes los primeros decimales de Pi?"</em>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -686,7 +699,7 @@
                         <div class="activity-instructions" style="background-color: rgba(99, 102, 241, 0.03); border: 1px solid var(--color-svg-border); border-radius: var(--border-radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem; color: var(--color-primary);"><i class="fa-solid fa-circle-info"></i> Consigna de Aprendizaje:</h4>
                             <p style="font-size: 0.85rem; color: var(--color-text-dark); line-height: 1.4;">
-                                El límite formal indica que para cualquier margen de tolerancia (\( \varepsilon \)) que elijas, podés hallar un paso crítico (\( N \)) a partir del cual todos los puntos siguientes caen dentro del margen. Seleccioná una aproximación (La Escalera, La Pelota o El Péndulo), definí la tolerancia \( \varepsilon \) (nuestro "grano de arena") y luego mové el control de **Paso Mínimo Elegido (\( N \))** para encerrar todos los puntos posteriores dentro de la franja verde.
+                                El <span class="tooltip-term" data-tooltip="La definición rigurosa de límite matemático propuesta en el siglo XIX usando épsilon y deltas.">límite formal</span> indica que para cualquier margen de tolerancia (\( \varepsilon \)) que elijas, podés hallar un <span class="tooltip-term" data-tooltip="El número de paso a partir del cual todos los términos de la sucesión caen dentro del margen de error.">paso crítico (\( N \))</span> a partir del cual todos los puntos siguientes caen dentro del margen. Seleccioná una aproximación (La Escalera, La Pelota o El Péndulo), definí la tolerancia \( \varepsilon \) (nuestro "grano de arena") y luego mové el control de **Paso Mínimo Elegido (\( N \))** para encerrar todos los puntos posteriores dentro de la franja verde.
                             </p>
                         </div>
                         
@@ -725,15 +738,15 @@
                                     <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.25rem;">
                                         <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--color-primary);">
                                             <input type="radio" name="sequence-type" value="ladder" checked style="width:16px; height:16px; accent-color: var(--color-accent);">
-                                            La Escalera (Monótona: sube con escalones cada vez más cortos hacia 1.0)
+                                            La Escalera (<span class="tooltip-term" data-tooltip="Sucesión que siempre avanza en la misma dirección (crece o decrece continuamente).">Monótona</span>: sube con escalones cada vez más cortos hacia 1.0)
                                         </label>
                                         <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--color-primary);">
                                             <input type="radio" name="sequence-type" value="ball" style="width:16px; height:16px; accent-color: var(--color-accent);">
-                                            La Pelota (Monótona: cae rebotando cada vez más cerca del piso hacia 1.0)
+                                            La Pelota (<span class="tooltip-term" data-tooltip="Sucesión que siempre avanza en la misma dirección (crece o decrece continuamente).">Monótona</span>: cae rebotando cada vez más cerca del piso hacia 1.0)
                                         </label>
                                         <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--color-primary);">
                                             <input type="radio" name="sequence-type" value="pendulum" style="width:16px; height:16px; accent-color: var(--color-accent);">
-                                            El Péndulo (Oscilante: se balancea de lado a lado alejándose cada vez menos en sus extremos)
+                                            El Péndulo (<span class="tooltip-term" data-tooltip="Sucesión que fluctúa alternadamente por encima y por debajo del valor límite.">Oscilante</span>: se balancea de lado a lado alejándose cada vez menos en sus extremos)
                                         </label>
                                     </div>
                                 </div>
@@ -756,8 +769,11 @@
                         <div class="archimedes-dialogue" style="margin-top: 1.25rem;">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
-                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <h4>🏛️ Reflexión de Arquímedes</h4>
                                 <p>Este sintonizador de Épsilon (\(\varepsilon\)) nos da la respuesta rigurosa. Piensa en Épsilon como la medida del <strong>grano de arena más pequeño</strong> de Siracusa (representado por la franja verde). No importa cuán diminuto sea el grano que nos propongan, si agregamos suficientes varas (paso \(N\)), la diferencia restante será tan insignificante que quedará atrapada dentro de la tolerancia. ¡La curva perfecta ha sido domada!</p>
+                                <p style="margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.85; border-top: 1px dashed var(--color-svg-border); padding-top: 0.5rem;">
+                                    ¿Te fijaste qué diferencia hay entre el límite físico del grano de arena y el límite abstracto en matemática? ¿Se te ocurrió por qué es necesario definir un paso crítico \(N\) para garantizar que todos los puntos caigan dentro del margen? Escribile al oráculo: <em>"¿Cuál es la definición formal de límite de una sucesión?"</em>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -850,30 +866,27 @@
                     <div class="archimedes-avatar">🏛️</div>
                     <div class="archimedes-speech">
                         <h4>🏛️ Introducción de Arquímedes</h4>
-                        <p>¡Aquí concluye nuestro viaje! Te invito a explorar mi demostración geométrica más querida para responder el enigma final: <strong>¿qué misterio grabó el sabio con su rama de olivo en la arena?</strong> Usa el simulador del segmento de parábola para ver cómo se acorrala el área con triángulos exactos.</p>
+                        <p>¡Te doy la bienvenida a este recorrido sobre mi legado! Te invito a explorar mi demostración geométrica más querida para responder el enigma final: <strong>¿qué misterio grabó el sabio con su rama de olivo en la arena?</strong> Usa el simulador del <span class="tooltip-term" data-tooltip="La mitad de un círculo, delimitado por un diámetro y un arco de circunferencia.">semicírculo</span> para ver cómo se acorrala el área con triángulos exactos.</p>
                     </div>
                 </div>
 
                 <div class="grid-layout">
                     <!-- Historical explanation -->
                     <div class="card story-panel">
-                        <h3>🏛️ La Geometría contra el Infinito</h3>
+                        <h3>🏛️ Arquímedes: El Genio de Siracusa</h3>
                         <p>
-                            En la antigua Grecia, los matemáticos sentían pánico ante el concepto del "infinito actual" (el <em><span class="tooltip-term" data-tooltip="Término griego para referirse a lo infinito o sin límites. ¡Les daba mucho miedo!">Apeiron</span></em>). Argumentos como los de Zenón sugerían que sumar infinitos pasos llevaría a absurdos insolubles.
+                            Arquímedes (~287 a.C. - 212 a.C.) nació y vivió en Siracusa, Sicilia. Fue físico, astrónomo, inventor y el matemático más brillante de la antigüedad. Es famoso por gritar *«¡Eureka!»* al descubrir el principio de flotación y por defender su ciudad con ingeniosas máquinas, pero su verdadero orgullo residía en la geometría pura.
                         </p>
                         <p>
-                            Para resolver esto sin invocar el infinito de manera directa, <strong>Arquímedes</strong> perfeccionó el <strong>Método de <span class="tooltip-term" data-tooltip="Técnica de 'agotar' o rellenar un espacio curvo usando figuras rectas conocidas.">Exhausción</span></strong>. En lugar de decir "sumamos infinitos triángulos", dijo: <em>"Podemos rellenar una forma curva con triángulos de modo que la diferencia (la brecha restante) se vuelva tan pequeña como queramos."</em>
-                        </p>
-                        <p>
-                            Esto es exactamente el concepto moderno de <strong>límite e <span class="tooltip-term" data-tooltip="Cantidad infinitamente pequeña. Acercarse a cero sin tocarlo.">infinitésimo</span></strong>: ¡hacer que la diferencia tienda a cero!
+                            Desafiando el temor griego al "infinito actual" (el <em><span class="tooltip-term" data-tooltip="Término griego para referirse a lo infinito o sin límites. ¡Les daba mucho miedo!">Apeiron</span></em>), perfeccionó el método de <strong><span class="tooltip-term" data-tooltip="Técnica de 'agotar' o rellenar un espacio curvo usando figuras rectas conocidas.">Exhausción</span></strong>. En lugar de temerle a la curva, demostró que se podía "agotar" la brecha entre rectas y curvas haciendo que la diferencia tienda a cero, sentando las bases del moderno <strong>límite e <span class="tooltip-term" data-tooltip="Cantidad infinitamente pequeña. Acercarse a cero sin tocarlo.">infinitésimo</span></strong>.
                         </p>
                         
                         <div class="callout warning" style="margin-top: 1rem;">
-                            <h4>Descubrimientos Clave de Arquímedes:</h4>
+                            <h4>Hitos Matemáticos y Reivindicación:</h4>
                             <ul>
-                                <li><strong><span class="tooltip-term" data-tooltip="Encontrar un cuadrado u otra figura recta que tenga exactamente la misma área que una figura curva.">Exhausción</span> del Círculo:</strong> Demostró cómo calcular y acorralar el área inscribiendo triángulos sucesivos para aproximarse a la curva perfecta.</li>
-                                <li><strong>Aproximación de Pi:</strong> Encerró el círculo entre polígonos de hasta 96 lados.</li>
-                                <li><strong>Área de la Espiral:</strong> Realizó una de las primeras integraciones de la historia para medir espirales.</li>
+                                <li><strong><span class="tooltip-term" data-tooltip="Encontrar un cuadrado u otra figura recta que tenga exactamente la misma área que una figura curva.">Cuadratura</span> del Círculo:</strong> Acorraló el valor de Pi encerrando el círculo con polígonos de hasta 96 lados.</li>
+                                <li><strong>La Esfera y el Cilindro:</strong> Demostró que el volumen de una esfera es exactamente dos tercios del cilindro que la circunscribe (su logro más querido).</li>
+                                <li><strong>Precursor del Cálculo:</strong> Creó métodos de suma infinita de rodajas que sentaron los cimientos de la <span class="tooltip-term" data-tooltip="Operación matemática para calcular el área acumulada bajo una curva o el volumen de un cuerpo.">integración</span> moderna.</li>
                             </ul>
                         </div>
                     </div>
@@ -981,8 +994,11 @@
                         <div class="archimedes-dialogue" id="archimedes-history-dialogue" style="margin-top: 1rem;">
                             <div class="archimedes-avatar">🏛️</div>
                             <div class="archimedes-speech">
-                                <h4>🏛️ Explicación de Arquímedes</h4>
+                                <h4>🏛️ Reflexión de Arquímedes</h4>
                                 <p id="history-dialogue-text">He trazado el triángulo principal en color ocre. Su área es de exactamente \( 1.0000 \) unidad relativa. ¿Cuánto crees que mide todo el semicírculo? ¡Prueba agregar triángulos para descubrirlo!</p>
+                                <p style="margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.85; border-top: 1px dashed var(--color-svg-border); padding-top: 0.5rem;">
+                                    ¿Te fijaste cómo los nuevos triángulos son cada vez más numerosos y pequeños en cada paso? ¿Se te ocurrió si llegarán a sumar exactamente el área real de \(\pi / 2 \approx 1.5708\) en algún paso finito? Preguntale a mi autómata: <em>"¿Cómo se relaciona la exhausción del semicírculo con la integral de una función?"</em>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1025,10 +1041,10 @@
                             </div>
                         </div>
 
-                        <p>Arquímedes tenía la intuición del cálculo integral, pero carecía de dos herramientas fundamentales que Newton y Leibniz tendrían casi dos milenios después:</p>
+                        <p>Arquímedes tenía la intuición del <span class="tooltip-term" data-tooltip="Rama de la matemática centrada en la acumulación de cantidades infinitesimales para hallar áreas y volúmenes exactos.">cálculo integral</span>, pero carecía de dos herramientas fundamentales que Newton y Leibniz tendrían casi dos milenios después:</p>
                         <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--color-text-dark);">
-                            <li><strong>Un sistema de notación eficiente:</strong> Los griegos usaban letras para los números (sin un sistema decimal o cero) y carecían de álgebra simbólica. Toda demostración debía ser narrada geométricamente.</li>
-                            <li><strong>El horror al infinito:</strong> La filosofía griega desconfiaba del "infinito en acto" (un infinito completado). Por eso Arquímedes recurría a la exhausción y a la prueba por doble contradicción en lugar de operar directamente con el infinito matemático.</li>
+                            <li><strong>Un sistema de notación eficiente:</strong> Los griegos usaban letras para los números (sin un sistema decimal o cero) y carecían de <span class="tooltip-term" data-tooltip="Uso de letras y símbolos para representar números y operaciones en ecuaciones y fórmulas.">álgebra simbólica</span>. Toda demostración debía ser narrada geométricamente.</li>
+                            <li><strong>El horror al infinito:</strong> La filosofía griega desconfiaba del <span class="tooltip-term" data-tooltip="Concepto filosófico y matemático de un infinito completado y tratado como un valor u objeto definido.">"infinito en acto"</span> (un infinito completado). Por eso Arquímedes recurría a la exhausción y a la prueba por doble contradicción en lugar de operar directamente con el infinito matemático.</li>
                         </ul>
                         <button class="btn-secondary" style="margin-top: 1rem; width: 100%; background: transparent; border: 1px solid rgba(165, 180, 252, 0.3); color: #a5b4fc; padding: 0.5rem; border-radius: var(--border-radius-sm); cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 500;" onmouseover="this.style.background='rgba(165, 180, 252, 0.1)'" onmouseout="this.style.background='transparent'" onclick="toggleSubSection('sub-history')">⬆ Ocultar Profundización</button>
                     </div>

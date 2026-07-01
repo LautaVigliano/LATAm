@@ -1103,8 +1103,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (N < minN) {
                 let actualError = 1.0 / N;
-                epsilonFeedback.innerHTML = `<strong>¡Refutación!</strong> Elegiste N = ${N}, pero en ese paso de <strong>${metaphorName}</strong> la diferencia restante con el límite (error = ${actualError.toFixed(3)}) supera el tamaño de tu grano de arena (tol. = ${eps.toFixed(2)}). ¡Tenés que dar más pasos!`;
-                epsilonFeedback.className = 'callout danger';
+                epsilonFeedback.innerHTML = `<strong>¡Casi lo lográs!</strong> Elegiste N = ${N}, pero en ese paso de <strong>${metaphorName}</strong> la diferencia restante con el límite (diferencia = ${actualError.toFixed(3)}) todavía supera el tamaño de tu grano de arena (tol. = ${eps.toFixed(2)}). ¡Seguí experimentando y dale más pasos para ver cómo se achica la diferencia!`;
+                epsilonFeedback.className = 'callout warning';
             } else if (N === minN) {
                 epsilonFeedback.innerHTML = `<strong>¡Sintonía Perfecta!</strong> N = ${N} es el paso crítico donde <strong>${metaphorName}</strong> se estabiliza. De aquí en adelante, la diferencia es menor que un grano de arena y entra siempre dentro de la franja verde.`;
                 epsilonFeedback.className = 'callout success';
@@ -1772,8 +1772,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (maxYDiff > 30) {
                 archerDelta.setAttribute('fill', 'var(--archer-danger-bg)'); // Red warning
                 archerDelta.setAttribute('stroke', 'var(--color-danger)');
-                archerFeedback.className = "callout danger";
-                archerFeedback.innerHTML = "¡Cuidado! Tu mirilla es muy ancha. La trayectoria podría salirse de la zona verde y fallar el objetivo.";
+                archerFeedback.className = "callout warning";
+                archerFeedback.innerHTML = "¡Casi lo tenés! Tu mirilla es un poco ancha. Intentá achicarla un poco más para asegurar que la trayectoria quede contenida en la zona verde y alcance el objetivo.";
             } else {
                 archerDelta.setAttribute('fill', 'var(--archer-safe-bg)'); // Blue safe
                 archerDelta.setAttribute('stroke', 'var(--color-primary)');
