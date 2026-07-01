@@ -1877,9 +1877,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Coordinates range from (20, 180) to (180, 20) inside a 200x200 viewBox
         if (staircasePath) {
             const startX = 20;
-            const startY = 180;
+            const startY = 160;
             const endX = 180;
-            const endY = 20;
+            const endY = 40;
             
             const totalW = endX - startX;
             const totalH = startY - endY;
@@ -1905,14 +1905,16 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Update explanation dynamically
         if (staircaseExplanation) {
+            if (staircaseLengthDisplay) staircaseLengthDisplay.textContent = "7.0000";
+            
             if (currentStairSteps === 1) {
-                staircaseExplanation.innerHTML = `Con <strong>1 escalón</strong>, caminás 1.0m en horizontal y 1.0m en vertical. La longitud total es \\( 1.0 + 1.0 = 2.0 \\)m. Claramente está lejos de la diagonal.`;
+                staircaseExplanation.innerHTML = `Con <strong>1 escalón</strong>, caminás 4m en horizontal y 3m en vertical. La longitud total es \\( 4 + 3 = 7 \\)m. Claramente está lejos de la rampa diagonal.`;
             } else if (currentStairSteps <= 4) {
-                staircaseExplanation.innerHTML = `Con <strong>${currentStairSteps} escalones</strong>, la longitud total sigue siendo exactamente \\( ${currentStairSteps} \\times (${(1.0/currentStairSteps).toFixed(2)} + ${(1.0/currentStairSteps).toFixed(2)}) = 2.0 \\)m. Los dientes se achican, pero la distancia no cambia.`;
+                staircaseExplanation.innerHTML = `Con <strong>${currentStairSteps} escalones</strong>, la longitud total sigue siendo exactamente \\( ${currentStairSteps} \\times (${(4.0/currentStairSteps).toFixed(2)} + ${(3.0/currentStairSteps).toFixed(2)}) = 7.0 \\)m. Los dientes se achican, pero la distancia no cambia.`;
             } else if (currentStairSteps <= 16) {
-                staircaseExplanation.innerHTML = `¡Con <strong>${currentStairSteps} escalones</strong> se empieza a ver muy parecida a una línea diagonal! Pero si hacemos zoom microscópico, veremos millones de escalones ortogonales. La longitud sigue siendo <strong>2.0000m</strong>.`;
+                staircaseExplanation.innerHTML = `¡Con <strong>${currentStairSteps} escalones</strong> la escalera se empieza a ver muy parecida a la diagonal! Pero si hacemos zoom microscópico, veremos millones de pequeños escalones ortogonales. La longitud sigue siendo exactamente <strong>7.0000m</strong>.`;
             } else {
-                staircaseExplanation.innerHTML = `¡Espectacular! Con <strong>${currentStairSteps} escalones</strong> la escalera es indistinguible de la diagonal a simple vista. Esta paradoja (\\(2 = \\sqrt{2}\\)) demuestra que <strong>no todas las aproximaciones al límite son válidas</strong>. Para medir longitudes o curvas, las aproximaciones deben seguir también la dirección de la curva (tangente), que es la rigurosidad que inventó Arquímedes.`;
+                staircaseExplanation.innerHTML = `¡Espectacular! Con <strong>${currentStairSteps} escalones</strong> la escalera es indistinguible de la diagonal a simple vista. Esta paradoja (\\(7 = 5\\)) demuestra que <strong>no todas las aproximaciones al límite son válidas</strong>. Aunque la figura visualmente parezca fundirse con la diagonal, su longitud real sigue midiendo 7m frente a los 5m exactos de la rampa. Para medir curvas, las aproximaciones deben seguir también la dirección de la curva (tangente), que es la rigurosidad que inventó Arquímedes.`;
             }
             
             if (window.MathJax && window.MathJax.typesetPromise) {
